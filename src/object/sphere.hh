@@ -21,6 +21,4 @@ public:
     double radius;
     Color color;
 
-
 };
-
