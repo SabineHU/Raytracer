@@ -10,12 +10,12 @@
 #include <stdio.h>
 
 #include "ray.hh"
-#include "Camera.h"
+#include "camera.hh"
 #include "source.hh"
 #include "light.hh"
 #include "object.hh"
 #include "sphere.hh"
-#include "Image.hh"
+#include "image.hh"
 #include "plane.hh"
 
 
