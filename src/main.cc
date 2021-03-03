@@ -13,10 +13,10 @@
 #include "Camera.h"
 #include "source.hh"
 #include "light.hh"
-#include "Object.h"
-#include "Sphere.h"
+#include "object.hh"
+#include "sphere.hh"
 #include "Image.hh"
-#include "Plane.h"
+#include "plane.hh"
 
 
 #define AADEPTH 1
