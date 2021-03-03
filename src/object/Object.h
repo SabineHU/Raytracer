@@ -1,12 +1,11 @@
-#ifndef _OBJECT_H
-#define _OBJECT_H
+#pragma once
 
-#include "Ray.h"
+#include "ray.hh"
 #include "vector3.hh"
 
 class Object {
 public:
-    Object () = default;
+    Object() = default;
 
     virtual Color getColor() = 0;
 
@@ -15,5 +14,3 @@ public:
     virtual double findIntersection(Ray ray) = 0;
 
 };
-
-#endif

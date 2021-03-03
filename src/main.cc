@@ -9,10 +9,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "Ray.h"
+#include "ray.hh"
 #include "Camera.h"
-#include "Source.h"
-#include "Light.h"
+#include "source.hh"
+#include "light.hh"
 #include "Object.h"
 #include "Sphere.h"
 #include "Image.hh"
