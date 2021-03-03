@@ -13,7 +13,8 @@ SRC= src/main.cc \
      src/object/plane.cc \
      src/object/sphere.cc \
      src/scene/camera.cc \
-     src/image/image.cc
+     src/image/image.cc \
+     src/utils/vector3.cc
 
 OBJ=${SRC:.cc=.o}
 

@@ -148,7 +148,7 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, st
         }
     }
 
-    return final_color.clip();
+    return final_color.clamp();
 }
 
 int main () {
