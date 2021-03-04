@@ -12,6 +12,12 @@ Camera::Camera (const Vect& pos, const Vect& dir, const Vect& right,
     : campos(pos), camdir(dir), camright(right), camdown(down)
 {}
 
+Ray Camera::get_ray(double x, double y) const {
+    return Ray(campos, get_ray_direction(x, y));
+
+}
+
 Vect Camera::get_ray_direction(double x, double y) const {
     return (camdir + camright * (x - 0.5) + camdown * (y - 0.5)).normalize();
 }
+

@@ -6,7 +6,7 @@ class Ray {
 public:
     Ray();
 
-    Ray(Vect, Vect);
+    Ray(const Vect&, const Vect&);
 
     Vect getRayOrigin () { return origin; }
     Vect getRayDirection () { return direction; }

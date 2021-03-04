@@ -36,7 +36,7 @@ int winningObjectIndex(std::vector<double> object_intersections) {
     return index;
 }
 
-Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, std::vector<Object*> scene_objects, int index_of_winning_object, std::vector<Source*> light_sources, double accuracy, double ambientlight) {
+Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, std::vector<shared_object> scene_objects, int index_of_winning_object, std::vector<shared_light> light_sources, double accuracy, double ambientlight) {
 
     Color winning_object_color = scene_objects[index_of_winning_object]->getColor();
     Vect winning_object_normal = scene_objects[index_of_winning_object]->getNormalAt(intersection_position);
@@ -161,24 +161,25 @@ int main () {
     Vect Y(0,1,0);
     Vect Z(0,0,1);
 
+    /* Camera */
     Vect look_from(3, 1.5, -4);
     Vect look_at(0, 0, 0);
+
+    /* Scene */
     Scene scene(look_from, look_at);
     scene.ambient_light = 0.2;
 
-    Vect light_position (-7,10,-10);
-    Light scene_light (light_position, Color(1, 1, 1, 0));
-    std::vector<Source*> light_sources;
-    light_sources.push_back(dynamic_cast<Source*>(&scene_light));
+    /* Lights */
+    Color white(1, 1, 1, 0);
+    scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white));
 
-    // scene objects
-    Sphere scene_sphere (Point3(0, 0, 0), 1, Color(0.5, 1, 0.5, 0.3));
-    Sphere scene_sphere2 (Point3(1.74, -0.25, 0), 0.5, Color(0.5, 0.25, 0.25, 0));
-    Plane scene_plane (Point3(0, 1, 0), -1, Color(1, 1, 1, 2));
-    std::vector<Object*> scene_objects;
-    scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere));
-    scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere2));
-    scene_objects.push_back(dynamic_cast<Object*>(&scene_plane));
+    /* Objects */
+    Color color1(0.5, 1, 0.5, 0.3);
+    Color color2(0.5, 0.25, 0.25, 0);
+    Color color3(1, 1, 1, 2);
+    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, color1));
+    scene.add_object(std::make_shared<Sphere>(Point3(1.74, -0.25, 0), 0.5, color2));
+    scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, color3));
 
     double xamnt, yamnt;
     for (int x = 0; x < width; x++) {
@@ -231,14 +232,11 @@ int main () {
                         }
                     }
 
-                    Vect cam_ray_origin = scene.camera.get_position();
-                    Vect cam_ray_direction = scene.camera.get_ray_direction(xamnt, yamnt);
-
-                    Ray cam_ray(cam_ray_origin, cam_ray_direction);
+                    Ray cam_ray = scene.camera.get_ray(xamnt, yamnt);
 
                     std::vector<double> intersections;
 
-                    for (const auto& obj : scene_objects) {
+                    for (const auto& obj : scene.objects) {
                         intersections.push_back(obj->findIntersection(cam_ray));
                     }
 
@@ -253,10 +251,10 @@ int main () {
                         if (intersections.at(index_of_winning_object) > accuracy) {
                             // determine the position and direction vectors at the point of intersection
 
-                            Vect intersection_position = cam_ray_origin + (cam_ray_direction * intersections[index_of_winning_object]);
-                            Vect intersecting_ray_direction = cam_ray_direction;
+                            Vect intersection_position = cam_ray.origin + cam_ray.direction * intersections[index_of_winning_object];
+                            Vect intersecting_ray_direction = cam_ray.direction;
 
-                            Color intersection_color = getColorAt(intersection_position, intersecting_ray_direction, scene_objects, index_of_winning_object, light_sources, accuracy, scene.ambient_light);
+                            Color intersection_color = getColorAt(intersection_position, intersecting_ray_direction, scene.objects, index_of_winning_object, scene.lights, accuracy, scene.ambient_light);
 
                             pixel_color = pixel_color + intersection_color;
                         }

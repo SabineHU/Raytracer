@@ -3,7 +3,7 @@
 
 Scene::Scene(const Vect& look_from, const Vect& look_at)
     : ambient_light(0), objects(std::vector<shared_object>()),
-    sources(std::vector<shared_light>())
+    lights(std::vector<shared_light>())
 {
     Vect Y(0,1,0);
 
@@ -14,17 +14,17 @@ Scene::Scene(const Vect& look_from, const Vect& look_at)
 
 }
 
-void Scene::add_object(shared_object& obj) {
+void Scene::add_object(shared_object obj) {
     this->objects.push_back(obj);
 }
 
-void Scene::add_light(shared_light& src) {
-    this->sources.push_back(src);
+void Scene::add_light(shared_light src) {
+    this->lights.push_back(src);
 }
 
 void Scene::clear_objects() {
     this->objects.clear();
 }
 void Scene::clear_lights() {
-    this->sources.clear();
+    this->lights.clear();
 }
