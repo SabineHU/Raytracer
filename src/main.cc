@@ -17,6 +17,7 @@
 #include "sphere.hh"
 #include "image.hh"
 #include "plane.hh"
+#include "scene.hh"
 
 
 #define AADEPTH 1
@@ -44,18 +45,13 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, st
         // checkered/tile floor pattern
 
         int square = (int)std::floor(intersection_position.x) + (int)std::floor(intersection_position.z);
-
         if ((square % 2) == 0) {
             // black tile
-            winning_object_color.x = 0;
-            winning_object_color.y = 0;
-            winning_object_color.z = 0;
+            winning_object_color = Color(0, 0, 0, winning_object_color.s);
         }
         else {
             // white tile
-            winning_object_color.x = 1;
-            winning_object_color.y = 1;
-            winning_object_color.z = 1;
+            winning_object_color = Color(1, 1, 1, winning_object_color.s);
         }
     }
 
@@ -152,8 +148,8 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, st
 }
 
 int main () {
-    int width = 320;
-    int height = 240;
+    int width = 640;
+    int height = 480;
 
     image::Image img(width, height);
 
@@ -161,20 +157,14 @@ int main () {
     double ambientlight = 0.2;
     double accuracy = 0.00000001;
 
-    Vect O (0,0,0);
-    Vect X (1,0,0);
-    Vect Y (0,1,0);
-    Vect Z (0,0,1);
+    Vect O(0,0,0);
+    Vect X(1,0,0);
+    Vect Y(0,1,0);
+    Vect Z(0,0,1);
 
-    Vect campos (3, 1.5, -4);
-
-    Vect look_at (0, 0, 0);
-    Vect diff_btw (campos.x - look_at.x, campos.y - look_at.y, campos.z - look_at.z);
-
-    Vect camdir = diff_btw.negative().normalize();
-    Vect camright = Y.crossProduct(camdir).normalize();
-    Vect camdown = camright.crossProduct(camdir);
-    Camera scene_cam (campos, camdir, camright, camdown);
+    Vect look_from(3, 1.5, -4);
+    Vect look_at(0, 0, 0);
+    Scene scene(look_from, look_at);
 
     Vect light_position (-7,10,-10);
     Light scene_light (light_position, Color(1, 1, 1, 0));
@@ -190,23 +180,17 @@ int main () {
     scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere2));
     scene_objects.push_back(dynamic_cast<Object*>(&scene_plane));
 
-    int aa_index;
     double xamnt, yamnt;
-
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
 
             // start with a blank pixel
-            double tempRed[AADEPTH*AADEPTH];
-            double tempGreen[AADEPTH*AADEPTH];
-            double tempBlue[AADEPTH*AADEPTH];
+            Color pixel_color(0, 0, 0);
 
             for (int aax = 0; aax < AADEPTH; aax++) {
                 for (int aay = 0; aay < AADEPTH; aay++) {
 
-                    aa_index = aay*AADEPTH + aax;
-
-                    srand(time(0));
+                    std::cerr << "\rScanlines remaining: " << width - x - 1 << ' ' << std::flush;
 
                     // create the ray from the camera to this pixel
                     if (AADEPTH == 1) {
@@ -247,10 +231,10 @@ int main () {
                         }
                     }
 
-                    Vect cam_ray_origin = scene_cam.getCameraPosition();
-                    Vect cam_ray_direction = (camdir + camright * (xamnt - 0.5) + camdown * (yamnt - 0.5)).normalize();
+                    Vect cam_ray_origin = scene.camera.getCameraPosition();
+                    Vect cam_ray_direction = (scene.camera.camdir + scene.camera.camright * (xamnt - 0.5) + scene.camera.camdown * (yamnt - 0.5)).normalize();
 
-                    Ray cam_ray (cam_ray_origin, cam_ray_direction);
+                    Ray cam_ray(cam_ray_origin, cam_ray_direction);
 
                     std::vector<double> intersections;
 
@@ -262,9 +246,7 @@ int main () {
 
                     if (index_of_winning_object == -1) {
                         // set the backgroung black
-                        tempRed[aa_index] = 0;
-                        tempGreen[aa_index] = 0;
-                        tempBlue[aa_index] = 0;
+                        pixel_color = Color(0, 0, 0);
                     }
                     else{
                         // index coresponds to an object in our scene
@@ -276,36 +258,18 @@ int main () {
 
                             Color intersection_color = getColorAt(intersection_position, intersecting_ray_direction, scene_objects, index_of_winning_object, light_sources, accuracy, ambientlight);
 
-                            tempRed[aa_index] = intersection_color.x;
-                            tempGreen[aa_index] = intersection_color.y;
-                            tempBlue[aa_index] = intersection_color.z;
+                            pixel_color = pixel_color + intersection_color;
                         }
                     }
                 }
             }
 
             // average the pixel color
-            double totalRed = 0;
-            double totalGreen = 0;
-            double totalBlue = 0;
+            pixel_color = pixel_color / (double) (AADEPTH * AADEPTH);
 
-            for (int iRed = 0; iRed < AADEPTH*AADEPTH; iRed++) {
-                totalRed = totalRed + tempRed[iRed];
-            }
-            for (int iGreen = 0; iGreen < AADEPTH*AADEPTH; iGreen++) {
-                totalGreen = totalGreen + tempGreen[iGreen];
-            }
-            for (int iBlue = 0; iBlue < AADEPTH*AADEPTH; iBlue++) {
-                totalBlue = totalBlue + tempBlue[iBlue];
-            }
-
-            double avgRed = totalRed/(AADEPTH*AADEPTH);
-            double avgGreen = totalGreen/(AADEPTH*AADEPTH);
-            double avgBlue = totalBlue/(AADEPTH*AADEPTH);
-
-            img.pixels[x][y].x = avgRed;
-            img.pixels[x][y].y = avgGreen;
-            img.pixels[x][y].z = avgBlue;
+            img.pixels[x][y].x = pixel_color.x;
+            img.pixels[x][y].y = pixel_color.y;
+            img.pixels[x][y].z = pixel_color.z;
         }
     }
 

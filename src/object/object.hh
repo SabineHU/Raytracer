@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "ray.hh"
 #include "vector3.hh"
 
@@ -12,3 +14,5 @@ public:
     virtual double findIntersection(Ray ray) const = 0;
 
 };
+
+using shared_object = std::shared_ptr<Object>;
