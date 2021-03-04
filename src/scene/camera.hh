@@ -6,13 +6,13 @@ class Camera {
 public:
 
     Camera();
-    Camera(Vect, Vect, Vect, Vect);
+    Camera(const Vect&, const Vect&, const Vect&, const Vect&);
 
-    Vect getCameraPosition () { return campos; }
-    Vect getCameraDirection () { return camdir; }
-    Vect getCameraRight () { return camright; }
-    Vect getCameraDown () { return camdown; }
+    Vect get_position() const { return campos; }
 
+    Vect get_ray_direction(double x, double y) const;
+
+private:
     /* Attributes */
     Vect campos;
     Vect camdir;

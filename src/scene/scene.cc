@@ -2,7 +2,8 @@
 
 
 Scene::Scene(const Vect& look_from, const Vect& look_at)
-    : objects(std::vector<shared_object>()), sources(std::vector<shared_light>())
+    : ambient_light(0), objects(std::vector<shared_object>()),
+    sources(std::vector<shared_light>())
 {
     Vect Y(0,1,0);
 

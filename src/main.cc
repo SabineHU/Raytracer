@@ -154,7 +154,6 @@ int main () {
     image::Image img(width, height);
 
     double aspectratio = img.get_ratio();
-    double ambientlight = 0.2;
     double accuracy = 0.00000001;
 
     Vect O(0,0,0);
@@ -165,6 +164,7 @@ int main () {
     Vect look_from(3, 1.5, -4);
     Vect look_at(0, 0, 0);
     Scene scene(look_from, look_at);
+    scene.ambient_light = 0.2;
 
     Vect light_position (-7,10,-10);
     Light scene_light (light_position, Color(1, 1, 1, 0));
@@ -231,8 +231,8 @@ int main () {
                         }
                     }
 
-                    Vect cam_ray_origin = scene.camera.getCameraPosition();
-                    Vect cam_ray_direction = (scene.camera.camdir + scene.camera.camright * (xamnt - 0.5) + scene.camera.camdown * (yamnt - 0.5)).normalize();
+                    Vect cam_ray_origin = scene.camera.get_position();
+                    Vect cam_ray_direction = scene.camera.get_ray_direction(xamnt, yamnt);
 
                     Ray cam_ray(cam_ray_origin, cam_ray_direction);
 
@@ -256,7 +256,7 @@ int main () {
                             Vect intersection_position = cam_ray_origin + (cam_ray_direction * intersections[index_of_winning_object]);
                             Vect intersecting_ray_direction = cam_ray_direction;
 
-                            Color intersection_color = getColorAt(intersection_position, intersecting_ray_direction, scene_objects, index_of_winning_object, light_sources, accuracy, ambientlight);
+                            Color intersection_color = getColorAt(intersection_position, intersecting_ray_direction, scene_objects, index_of_winning_object, light_sources, accuracy, scene.ambient_light);
 
                             pixel_color = pixel_color + intersection_color;
                         }

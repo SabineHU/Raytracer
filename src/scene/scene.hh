@@ -18,6 +18,7 @@ public:
     void clear_lights();
 
     Camera camera;
+    double ambient_light;
     std::vector<shared_object> objects;
     std::vector<shared_light> sources;
 };
