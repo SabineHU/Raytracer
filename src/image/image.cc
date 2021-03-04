@@ -35,4 +35,12 @@ void Image::save() const {
         }
     }
 }
+
+void Image::set_pixel_color(int i, int j, const Color& color) {
+    this->pixels[i][j].x = color.x;
+    this->pixels[i][j].y = color.y;
+    this->pixels[i][j].z = color.z;
+
+}
+
 }

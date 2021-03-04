@@ -13,11 +13,13 @@ public:
 
     double get_ratio() const;
     void save() const;
+    void set_pixel_color(int, int, const Color&);
 
     /* Attributes */
     int width;
     int height;
 
+private:
     Vect **pixels;
 };
 

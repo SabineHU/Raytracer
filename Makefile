@@ -1,6 +1,7 @@
 CXX=g++
 CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -g3 -O0 -fno-inline -fsanitize=address \
+         -I./src \
          -I./src/utils \
          -I./src/light \
          -I./src/object \
@@ -8,6 +9,7 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/image
 
 SRC= src/main.cc \
+     src/init.cc \
      src/light/light.cc \
      src/light/ray.cc \
      src/object/plane.cc \
