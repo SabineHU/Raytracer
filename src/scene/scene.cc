@@ -28,3 +28,10 @@ void Scene::clear_objects() {
 void Scene::clear_lights() {
     this->lights.clear();
 }
+
+std::vector<double> Scene::get_intersections_distance(const Ray& ray) const {
+    std::vector<double> intersections;
+    for (const auto& obj : this->objects)
+        intersections.push_back(obj->findIntersection(ray));
+    return intersections;
+}

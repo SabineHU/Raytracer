@@ -1,13 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
 #include <vector>
 #include <cmath>
-#include <limits>
-
-#include <stdlib.h>
-#include <stdio.h>
+#include <iostream>
 
 #include "ray.hh"
 #include "camera.hh"
@@ -68,12 +61,7 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
         Ray reflection_ray (intersection_position, reflection_direction);
 
         // determine what the ray intersects with first
-        std::vector<double> reflection_intersections;
-
-        for (const auto& obj: scene.objects) {
-            reflection_intersections.push_back(obj->findIntersection(reflection_ray));
-        }
-
+        std::vector<double> reflection_intersections = scene.get_intersections_distance(reflection_ray);
         int index_of_winning_object_with_reflection = winningObjectIndex(reflection_intersections);
 
         if (index_of_winning_object_with_reflection != -1) {
@@ -106,11 +94,7 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
 
             Ray shadow_ray (intersection_position, (light->getLightPosition() - intersection_position).normalize());
 
-            std::vector<double> secondary_intersections;
-
-            for (const auto& obj: scene.objects) {
-                secondary_intersections.push_back(obj->findIntersection(shadow_ray));
-            }
+            std::vector<double> secondary_intersections = scene.get_intersections_distance(shadow_ray);
 
             for (auto inters: secondary_intersections) {
                 if (inters > accuracy && inters <= distance_to_light_magnitude) {
@@ -211,12 +195,7 @@ int main () {
 
                     Ray cam_ray = scene.camera.get_ray(x, y);
 
-                    std::vector<double> intersections;
-
-                    for (const auto& obj : scene.objects) {
-                        intersections.push_back(obj->findIntersection(cam_ray));
-                    }
-
+                    std::vector<double> intersections = scene.get_intersections_distance(cam_ray);
                     int index_of_winning_object = winningObjectIndex(intersections);
 
                     if (index_of_winning_object == -1) {
