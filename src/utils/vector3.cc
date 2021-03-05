@@ -23,7 +23,7 @@ Vect Vect::normalize() {
 }
 
 Vect Vect::negative() {
-    return Vect (-x, -y, -z);
+    return Vect(-x, -y, -z);
 }
 
 Vect Vect::operator+(const Vect& u) const {

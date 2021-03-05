@@ -5,12 +5,11 @@
 class Ray {
 public:
     Ray();
-
     Ray(const Vect&, const Vect&);
 
-    Vect getRayOrigin () { return origin; }
-    Vect getRayDirection () { return direction; }
+    Ray get_reflection_ray(Vect& normal);
 
+    /* Attributes */
     Vect origin;
     Vect direction;
 

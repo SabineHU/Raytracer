@@ -51,14 +51,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
 
     if (winning_object_color.s > 0 && winning_object_color.s <= 1) {
         // reflection from objects with specular intensity
-        double dot1 = winning_object_normal.dotProduct(intersection_ray.direction.negative());
-        Vect scalar1 = winning_object_normal * dot1;
-        Vect add1 = scalar1 + intersection_ray.direction;
-        Vect scalar2 = add1 * 2;
-        Vect add2 = intersection_ray.direction.negative() + scalar2;
-        Vect reflection_direction = add2.normalize();
-
-        Ray reflection_ray (intersection_ray.origin, reflection_direction);
+        Ray reflection_ray = intersection_ray.get_reflection_ray(winning_object_normal);
 
         // determine what the ray intersects with first
         std::vector<double> reflection_intersections = scene.get_intersections_distance(reflection_ray);
@@ -70,8 +63,8 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
                 // determine the position and direction at the point of intersection with the reflection ray
                 // the ray only affects the color if it reflected off something
 
-                Vect reflection_pos = intersection_ray.origin + reflection_direction * reflection_intersections.at(index_of_winning_object_with_reflection);
-                Ray reflection_ray(reflection_pos, reflection_direction);
+                Vect reflection_pos = intersection_ray.origin + reflection_ray.direction * reflection_intersections.at(index_of_winning_object_with_reflection);
+                Ray reflection_ray(reflection_pos, reflection_ray.direction);
 
                 Color reflection_intersection_color = getColorAt(scene, reflection_ray, scene.objects[index_of_winning_object_with_reflection], accuracy);
 
@@ -108,14 +101,8 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
 
                 if (winning_object_color.s > 0 && winning_object_color.s <= 1) {
                     // special [0-1]
-                    double dot1 = winning_object_normal.dotProduct(intersection_ray.direction.negative());
-                    Vect scalar1 = winning_object_normal * dot1;
-                    Vect add1 = scalar1 + intersection_ray.direction;
-                    Vect scalar2 = add1 * 2;
-                    Vect add2 = intersection_ray.direction.negative() + scalar2;
-                    Vect reflection_direction = add2.normalize();
-
-                    double specular = reflection_direction.dotProduct(light_direction);
+                    Ray reflection_ray = intersection_ray.get_reflection_ray(winning_object_normal);
+                    double specular = reflection_ray.direction.dotProduct(light_direction);
                     if (specular > 0) {
                         specular = pow(specular, 10);
                         final_color = final_color + (light->getLightColor() * (specular*winning_object_color.s));

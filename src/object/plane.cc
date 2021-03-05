@@ -17,13 +17,13 @@ Vect Plane::getNormalAt(Vect) const {
 }
 
 double Plane::findIntersection(Ray ray) const {
-    Vect ray_direction = ray.getRayDirection();
+    Vect ray_direction = ray.direction;
 
     double a = ray_direction.dotProduct(normal);
     if (a == 0)
         return -1;
 
     auto n = normal;
-    double b = n.dotProduct(ray.getRayOrigin() + normal * -distance);
-    return -1*b/a;
+    double b = n.dotProduct(ray.origin + normal * -distance);
+    return -1 * b / a;
 }

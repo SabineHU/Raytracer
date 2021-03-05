@@ -18,10 +18,10 @@ Vect Sphere::getNormalAt(Vect point) const {
 }
 
 double Sphere::findIntersection(Ray ray) const {
-    auto oc = ray.getRayOrigin() - this->center;
+    auto oc = ray.origin - this->center;
 
     double a = 1; // normalized
-    double b = 2 * oc.dotProduct(ray.getRayDirection());
+    double b = 2 * oc.dotProduct(ray.direction);
     double c = oc.dotProduct(oc) - this->radius * this->radius;
 
     double discriminant = b * b - 4 * a * c;
