@@ -9,8 +9,8 @@ public:
     Light();
     Light(Vect, Color);
 
-    virtual Vect getLightPosition() const override;
-    virtual Color getLightColor() const override;
+    virtual Vect get_light_position() const override;
+    virtual Color get_light_color() const override;
 
     Vect position;
     Color color;

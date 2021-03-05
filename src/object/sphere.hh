@@ -12,9 +12,9 @@ public:
     Vect getSphereCenter () { return center; }
     double getSphereRadius () { return radius; }
 
-    virtual Color getColor() const override;
-    virtual Vect getNormalAt(Vect point) const override;
-    virtual double findIntersection(Ray ray) const override;
+    virtual Color get_color() const override;
+    virtual Vect get_normal_at(Vect point) const override;
+    virtual double find_intersection(Ray ray) const override;
 
     /* Attribute */
     Vect center;

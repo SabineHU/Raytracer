@@ -9,8 +9,8 @@ public:
 
     Source() = default;
 
-    virtual Vect getLightPosition() const = 0;
-    virtual Color getLightColor() const = 0;
+    virtual Vect get_light_position() const = 0;
+    virtual Color get_light_color() const = 0;
 
 };
 

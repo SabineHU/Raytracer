@@ -9,15 +9,15 @@ Plane::Plane (Vect n, double d, Color c)
     : normal(n), distance(d), color(c)
 {}
 
-Color Plane::getColor() const {
+Color Plane::get_color() const {
     return color;
 }
 
-Vect Plane::getNormalAt(Vect) const {
+Vect Plane::get_normal_at(Vect) const {
     return normal;
 }
 
-double Plane::findIntersection(Ray ray) const {
+double Plane::find_intersection(Ray ray) const {
     Vect ray_direction = ray.direction;
     double a = vector::dot(ray_direction, normal);
     if (a == 0)

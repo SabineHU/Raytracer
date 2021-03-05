@@ -9,9 +9,9 @@ class Object {
 public:
     Object() = default;
 
-    virtual Color getColor() const = 0;
-    virtual Vect getNormalAt(Vect intersection_position) const = 0;
-    virtual double findIntersection(Ray ray) const = 0;
+    virtual Color get_color() const = 0;
+    virtual Vect get_normal_at(Vect intersection_position) const = 0;
+    virtual double find_intersection(Ray ray) const = 0;
 
 };
 

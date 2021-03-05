@@ -32,6 +32,6 @@ void Scene::clear_lights() {
 std::vector<double> Scene::get_intersections_distance(const Ray& ray) const {
     std::vector<double> intersections;
     for (const auto& obj : this->objects)
-        intersections.push_back(obj->findIntersection(ray));
+        intersections.push_back(obj->find_intersection(ray));
     return intersections;
 }

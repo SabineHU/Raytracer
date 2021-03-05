@@ -10,15 +10,15 @@ Sphere::Sphere (Vect cent, double rad, Color col)
     : center(cent), radius(rad), color(col)
 {}
 
-Color Sphere::getColor() const {
+Color Sphere::get_color() const {
     return color;
 }
 
-Vect Sphere::getNormalAt(Vect point) const {
+Vect Sphere::get_normal_at(Vect point) const {
     return (point - center).normalize();
 }
 
-double Sphere::findIntersection(Ray ray) const {
+double Sphere::find_intersection(Ray ray) const {
     auto oc = ray.origin - this->center;
 
     double a = 1; // normalized

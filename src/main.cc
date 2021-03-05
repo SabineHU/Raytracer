@@ -30,8 +30,8 @@ int winningObjectIndex(std::vector<double> object_intersections) {
 
 Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
 
-    Color winning_object_color = closest_obj->getColor();
-    Vect winning_object_normal = closest_obj->getNormalAt(intersection_ray.origin);
+    Color winning_object_color = closest_obj->get_color();
+    Vect winning_object_normal = closest_obj->get_normal_at(intersection_ray.origin);
 
     if (winning_object_color.s == 2) {
         // checkered/tile floor pattern
@@ -74,7 +74,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
     }
 
     for (const auto& light: scene.lights) {
-        Vect light_direction = (light->getLightPosition() - intersection_ray.origin).normalize();
+        Vect light_direction = (light->get_light_position() - intersection_ray.origin).normalize();
 
         float cosine_angle = vector::dot(winning_object_normal, light_direction);
 
@@ -82,10 +82,10 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
             // test for shadows
             bool shadowed = false;
 
-            Vect distance_to_light = (light->getLightPosition() - intersection_ray.origin).normalize();
+            Vect distance_to_light = (light->get_light_position() - intersection_ray.origin).normalize();
             float distance_to_light_magnitude = distance_to_light.magnitude();
 
-            Ray shadow_ray(intersection_ray.origin, (light->getLightPosition() - intersection_ray.origin).normalize());
+            Ray shadow_ray(intersection_ray.origin, (light->get_light_position() - intersection_ray.origin).normalize());
 
             std::vector<double> secondary_intersections = scene.get_intersections_distance(shadow_ray);
 
@@ -97,7 +97,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
             }
 
             if (shadowed == false) {
-                final_color = final_color + (winning_object_color * light->getLightColor() * cosine_angle);
+                final_color = final_color + (winning_object_color * light->get_light_color() * cosine_angle);
 
                 if (winning_object_color.s > 0 && winning_object_color.s <= 1) {
                     // special [0-1]
@@ -105,7 +105,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
                     double specular = vector::dot(reflection_ray.direction, light_direction);
                     if (specular > 0) {
                         specular = pow(specular, 10);
-                        final_color = final_color + (light->getLightColor() * (specular*winning_object_color.s));
+                        final_color = final_color + (light->get_light_color() * (specular*winning_object_color.s));
                     }
                 }
 

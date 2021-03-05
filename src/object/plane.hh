@@ -14,9 +14,9 @@ public:
     Vect getPlaneNormal () { return normal; }
     double getPlaneDistance () { return distance; }
 
-    virtual Color getColor() const override;
-    virtual Vect getNormalAt(Vect) const override;
-    virtual double findIntersection(Ray ray) const override;
+    virtual Color get_color() const override;
+    virtual Vect get_normal_at(Vect) const override;
+    virtual double find_intersection(Ray ray) const override;
 
     /* Attributes */
     Vect normal;
