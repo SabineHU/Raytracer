@@ -1,5 +1,5 @@
 #include "scene.hh"
-
+#include "vector3_op.hh"
 
 Scene::Scene(const Vect& look_from, const Vect& look_at)
     : ambient_light(0), objects(std::vector<shared_object>()),
@@ -8,8 +8,8 @@ Scene::Scene(const Vect& look_from, const Vect& look_at)
     Vect Y(0,1,0);
 
     Vect camdir = (look_at - look_from).normalize();
-    Vect camright = Y.crossProduct(camdir).normalize();
-    Vect camdown = camright.crossProduct(camdir);
+    Vect camright = vector::cross(Y, camdir).normalize();
+    Vect camdown = vector::cross(camright, camdir);
     camera = Camera(look_from, camdir, camright, camdown);
 
 }

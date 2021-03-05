@@ -1,5 +1,6 @@
 #include "sphere.hh"
 #include "math.hh"
+#include "vector3_op.hh"
 
 Sphere::Sphere ()
     : center(Vect(0, 0, 0)), radius(1), color(Color(0.5, 0.5, 0.5, 0))
@@ -21,8 +22,8 @@ double Sphere::findIntersection(Ray ray) const {
     auto oc = ray.origin - this->center;
 
     double a = 1; // normalized
-    double b = 2 * oc.dotProduct(ray.direction);
-    double c = oc.dotProduct(oc) - this->radius * this->radius;
+    double b = 2 * vector::dot(oc, ray.direction);
+    double c = vector::dot(oc, oc) - this->radius * this->radius;
 
     double discriminant = b * b - 4 * a * c;
 

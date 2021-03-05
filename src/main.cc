@@ -12,7 +12,7 @@
 #include "plane.hh"
 #include "scene.hh"
 #include "init.hh"
-
+#include "vector3_op.hh"
 
 int winningObjectIndex(std::vector<double> object_intersections) {
     int index = -1;
@@ -76,7 +76,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
     for (const auto& light: scene.lights) {
         Vect light_direction = (light->getLightPosition() - intersection_ray.origin).normalize();
 
-        float cosine_angle = winning_object_normal.dotProduct(light_direction);
+        float cosine_angle = vector::dot(winning_object_normal, light_direction);
 
         if (cosine_angle > 0) {
             // test for shadows
@@ -102,7 +102,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
                 if (winning_object_color.s > 0 && winning_object_color.s <= 1) {
                     // special [0-1]
                     Ray reflection_ray = intersection_ray.get_reflection_ray(winning_object_normal);
-                    double specular = reflection_ray.direction.dotProduct(light_direction);
+                    double specular = vector::dot(reflection_ray.direction, light_direction);
                     if (specular > 0) {
                         specular = pow(specular, 10);
                         final_color = final_color + (light->getLightColor() * (specular*winning_object_color.s));

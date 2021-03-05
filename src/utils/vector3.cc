@@ -14,15 +14,15 @@ Vect::Vect(double a, double b, double c, double d)
     : x(a), y(b), z(c), s(d)
 {}
 
-double Vect::magnitude() {
+double Vect::magnitude() const {
     return std::sqrt(x * x + y * y + z * z);
 }
 
-Vect Vect::normalize() {
+Vect Vect::normalize() const {
     return Vect(x, y, z) / magnitude();
 }
 
-Vect Vect::negative() {
+Vect Vect::negative() const {
     return Vect(-x, -y, -z);
 }
 

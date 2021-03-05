@@ -7,11 +7,10 @@ public:
     Ray();
     Ray(const Vect&, const Vect&);
 
-    Ray get_reflection_ray(Vect& normal);
+    Ray get_reflection_ray(const Vect& normal) const;
 
     /* Attributes */
     Vect origin;
     Vect direction;
-
 };
 
