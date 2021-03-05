@@ -28,15 +28,15 @@ int winningObjectIndex(std::vector<double> object_intersections) {
     return index;
 }
 
-Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecting_ray_direction, int index_of_winning_object, double accuracy) {
+Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
 
-    Color winning_object_color = scene.objects[index_of_winning_object]->getColor();
-    Vect winning_object_normal = scene.objects[index_of_winning_object]->getNormalAt(intersection_position);
+    Color winning_object_color = closest_obj->getColor();
+    Vect winning_object_normal = closest_obj->getNormalAt(intersection_ray.origin);
 
     if (winning_object_color.s == 2) {
         // checkered/tile floor pattern
 
-        int square = (int) std::floor(intersection_position.x) + (int) std::floor(intersection_position.z);
+        int square = (int) std::floor(intersection_ray.origin.x) + (int) std::floor(intersection_ray.origin.z);
         if ((square % 2) == 0) {
             // black tile
             winning_object_color = Color(0, 0, 0, winning_object_color.s);
@@ -51,14 +51,14 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
 
     if (winning_object_color.s > 0 && winning_object_color.s <= 1) {
         // reflection from objects with specular intensity
-        double dot1 = winning_object_normal.dotProduct(intersecting_ray_direction.negative());
+        double dot1 = winning_object_normal.dotProduct(intersection_ray.direction.negative());
         Vect scalar1 = winning_object_normal * dot1;
-        Vect add1 = scalar1 + intersecting_ray_direction;
+        Vect add1 = scalar1 + intersection_ray.direction;
         Vect scalar2 = add1 * 2;
-        Vect add2 = intersecting_ray_direction.negative() + scalar2;
+        Vect add2 = intersection_ray.direction.negative() + scalar2;
         Vect reflection_direction = add2.normalize();
 
-        Ray reflection_ray (intersection_position, reflection_direction);
+        Ray reflection_ray (intersection_ray.origin, reflection_direction);
 
         // determine what the ray intersects with first
         std::vector<double> reflection_intersections = scene.get_intersections_distance(reflection_ray);
@@ -70,10 +70,10 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
                 // determine the position and direction at the point of intersection with the reflection ray
                 // the ray only affects the color if it reflected off something
 
-                Vect reflection_intersection_position = intersection_position + reflection_direction * reflection_intersections.at(index_of_winning_object_with_reflection);
-                Vect reflection_intersection_ray_direction = reflection_direction;
+                Vect reflection_pos = intersection_ray.origin + reflection_direction * reflection_intersections.at(index_of_winning_object_with_reflection);
+                Ray reflection_ray(reflection_pos, reflection_direction);
 
-                Color reflection_intersection_color = getColorAt(scene, reflection_intersection_position, reflection_intersection_ray_direction, index_of_winning_object_with_reflection, accuracy);
+                Color reflection_intersection_color = getColorAt(scene, reflection_ray, scene.objects[index_of_winning_object_with_reflection], accuracy);
 
                 final_color = final_color + (reflection_intersection_color * winning_object_color.s);
             }
@@ -81,7 +81,7 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
     }
 
     for (const auto& light: scene.lights) {
-        Vect light_direction = (light->getLightPosition() - intersection_position).normalize();
+        Vect light_direction = (light->getLightPosition() - intersection_ray.origin).normalize();
 
         float cosine_angle = winning_object_normal.dotProduct(light_direction);
 
@@ -89,10 +89,10 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
             // test for shadows
             bool shadowed = false;
 
-            Vect distance_to_light = (light->getLightPosition() - intersection_position).normalize();
+            Vect distance_to_light = (light->getLightPosition() - intersection_ray.origin).normalize();
             float distance_to_light_magnitude = distance_to_light.magnitude();
 
-            Ray shadow_ray (intersection_position, (light->getLightPosition() - intersection_position).normalize());
+            Ray shadow_ray(intersection_ray.origin, (light->getLightPosition() - intersection_ray.origin).normalize());
 
             std::vector<double> secondary_intersections = scene.get_intersections_distance(shadow_ray);
 
@@ -108,11 +108,11 @@ Color getColorAt(const Scene& scene, Vect intersection_position, Vect intersecti
 
                 if (winning_object_color.s > 0 && winning_object_color.s <= 1) {
                     // special [0-1]
-                    double dot1 = winning_object_normal.dotProduct(intersecting_ray_direction.negative());
+                    double dot1 = winning_object_normal.dotProduct(intersection_ray.direction.negative());
                     Vect scalar1 = winning_object_normal * dot1;
-                    Vect add1 = scalar1 + intersecting_ray_direction;
+                    Vect add1 = scalar1 + intersection_ray.direction;
                     Vect scalar2 = add1 * 2;
-                    Vect add2 = intersecting_ray_direction.negative() + scalar2;
+                    Vect add2 = intersection_ray.direction.negative() + scalar2;
                     Vect reflection_direction = add2.normalize();
 
                     double specular = reflection_direction.dotProduct(light_direction);
@@ -207,10 +207,10 @@ int main () {
                         if (intersections.at(index_of_winning_object) > accuracy) {
                             // determine the position and direction vectors at the point of intersection
 
-                            Vect intersection_position = cam_ray.origin + cam_ray.direction * intersections[index_of_winning_object];
-                            Vect intersecting_ray_direction = cam_ray.direction;
+                            Vect intersection_pos = cam_ray.origin + cam_ray.direction * intersections[index_of_winning_object];
+                            Ray intersection_ray(intersection_pos, cam_ray.direction);
 
-                            Color intersection_color = getColorAt(scene, intersection_position, intersecting_ray_direction, index_of_winning_object, accuracy);
+                            Color intersection_color = getColorAt(scene, intersection_ray, scene.objects[index_of_winning_object], accuracy);
 
                             pixel_color = pixel_color + intersection_color;
                         }
