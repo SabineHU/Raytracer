@@ -13,22 +13,9 @@
 #include "scene.hh"
 #include "init.hh"
 #include "vector3_op.hh"
+#include "array.hh"
 
-int winningObjectIndex(std::vector<double> object_intersections) {
-    int index = -1;
-    double min = -1;
-    for (size_t i = 0; i < object_intersections.size(); ++i) {
-        if (object_intersections[i] < 0)
-            continue;
-        if (min == -1 || object_intersections[i] < min) {
-            index = i;
-            min = object_intersections[i];
-        }
-    }
-    return index;
-}
-
-Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
+Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
 
     Color winning_object_color = closest_obj->get_color();
     Vect winning_object_normal = closest_obj->get_normal_at(intersection_ray.origin);
@@ -55,7 +42,7 @@ Color getColorAt(const Scene& scene, Ray& intersection_ray, const shared_object 
 
         // determine what the ray intersects with first
         std::vector<double> reflection_intersections = scene.get_intersections_distance(reflection_ray);
-        int index_of_winning_object_with_reflection = winningObjectIndex(reflection_intersections);
+        int index_of_winning_object_with_reflection = array::get_min_index(reflection_intersections);
 
         if (index_of_winning_object_with_reflection != -1) {
             // reflection ray missed everthing else
@@ -183,7 +170,7 @@ int main () {
                     Ray cam_ray = scene.camera.get_ray(x, y);
 
                     std::vector<double> intersections = scene.get_intersections_distance(cam_ray);
-                    int index_of_winning_object = winningObjectIndex(intersections);
+                    int index_of_winning_object = array::get_min_index(intersections);
 
                     if (index_of_winning_object == -1) {
                         // set the backgroung black

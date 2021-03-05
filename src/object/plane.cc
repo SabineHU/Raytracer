@@ -13,11 +13,11 @@ Color Plane::get_color() const {
     return color;
 }
 
-Vect Plane::get_normal_at(Vect) const {
+Vect Plane::get_normal_at(const Vect&) const {
     return normal;
 }
 
-double Plane::find_intersection(Ray ray) const {
+double Plane::find_intersection(const Ray& ray) const {
     Vect ray_direction = ray.direction;
     double a = vector::dot(ray_direction, normal);
     if (a == 0)

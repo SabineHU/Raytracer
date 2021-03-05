@@ -14,11 +14,11 @@ Color Sphere::get_color() const {
     return color;
 }
 
-Vect Sphere::get_normal_at(Vect point) const {
+Vect Sphere::get_normal_at(const Vect& point) const {
     return (point - center).normalize();
 }
 
-double Sphere::find_intersection(Ray ray) const {
+double Sphere::find_intersection(const Ray& ray) const {
     auto oc = ray.origin - this->center;
 
     double a = 1; // normalized
