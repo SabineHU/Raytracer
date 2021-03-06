@@ -55,6 +55,45 @@ bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
     return false;
 }
 
+Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
+        const Color& color, double accuracy) const {
+    Color res_color(0, 0, 0);
+
+    auto normal = obj->get_normal_at(ray.origin);
+
+    for (const auto& light: this->lights) {
+
+        Vect light_direction = (light->get_light_position() - ray.origin).normalize();
+        float cosine_angle = vector::dot(normal, light_direction);
+
+        if (cosine_angle > 0) {
+            // test for shadows
+
+            Vect distance_to_light = (light->get_light_position() - ray.origin).normalize();
+            float distance_to_light_magnitude = distance_to_light.magnitude();
+
+            Ray shadow_ray(ray.origin, (light->get_light_position() - ray.origin).normalize());
+
+            if (!this->has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
+                res_color = res_color + (color * light->get_light_color() * cosine_angle);
+
+                if (color.s > 0 && color.s <= 1) {
+                    // special [0-1]
+                    Ray reflection_ray = ray.get_reflection_ray(normal);
+                    double specular = vector::dot(reflection_ray.direction, light_direction);
+                    if (specular > 0) {
+                        // reduce specular to have less luminosity
+                        // specular = std::pow(specular, 5);
+                        res_color = res_color + light->get_light_color() * specular * color.s;
+                    }
+                }
+
+            }
+        }
+    }
+    return res_color;
+}
+
 std::vector<double> Scene::get_intersections_distance(const Ray& ray) const {
     std::vector<double> intersections;
     for (const auto& obj : this->objects)

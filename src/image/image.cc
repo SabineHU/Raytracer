@@ -82,37 +82,7 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
         }
     }
 
-    for (const auto& light: scene.lights) {
-
-        Vect light_direction = (light->get_light_position() - intersection_ray.origin).normalize();
-        float cosine_angle = vector::dot(object_normal, light_direction);
-
-        if (cosine_angle > 0) {
-            // test for shadows
-
-            Vect distance_to_light = (light->get_light_position() - intersection_ray.origin).normalize();
-            float distance_to_light_magnitude = distance_to_light.magnitude();
-
-            Ray shadow_ray(intersection_ray.origin, (light->get_light_position() - intersection_ray.origin).normalize());
-
-            if (!scene.has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
-                final_color = final_color + (object_color * light->get_light_color() * cosine_angle);
-
-                if (object_color.s > 0 && object_color.s <= 1) {
-                    // special [0-1]
-                    Ray reflection_ray = intersection_ray.get_reflection_ray(object_normal);
-                    double specular = vector::dot(reflection_ray.direction, light_direction);
-                    if (specular > 0) {
-                        specular = pow(specular, 10);
-                        final_color = final_color + light->get_light_color() * specular * object_color.s;
-                    }
-                }
-
-            }
-        }
-    }
-
-    return final_color.clamp();
+    return (final_color + scene.get_color_with_light(intersection_ray, closest_obj, object_color, accuracy)).clamp();
 }
 
 void Image::set_index_x_y(double& x, double& y, int samples, int i, int j, int k) {

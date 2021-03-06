@@ -18,7 +18,8 @@ Scene init_scene() {
     Color color2(0.5, 0.25, 0.25, 0);
     Color color3(1, 1, 1, 2);
     scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, color1));
-    scene.add_object(std::make_shared<Sphere>(Point3(1.74, -0.25, 0), 0.5, color2));
+    scene.add_object(std::make_shared<Sphere>(Point3(1.75, -0.25, 0), 0.5, color2));
+    scene.add_object(std::make_shared<Sphere>(Point3(-1.75, -0.25, 0), 0.5, color2));
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, color3));
 
     return scene;
