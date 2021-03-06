@@ -24,7 +24,7 @@ Scene init_scene() {
     /* Textures */
 
     //auto texture = std::make_shared<Unique>(white);
-    auto board_black_white = std::make_shared<CheckerBoard>(red, white);
+    auto board_black_white = std::make_shared<CheckerBoard>(black, white);
 
     /* Objects */
     Color color1(0.5, 1, 0.5, 0.3);

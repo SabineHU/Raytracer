@@ -3,18 +3,22 @@
 #include "vector3_op.hh"
 #include "unique.hh"
 
-Sphere::Sphere ()
+Sphere::Sphere()
     : center(Vect(0, 0, 0)), radius(1)
 {
     color = Color(0.5, 0.5, 0.5, 0);
     texture = std::make_shared<Unique>(color);
 }
 
-Sphere::Sphere (Vect cent, double rad, Color c)
+Sphere::Sphere(const Vect& cent, double rad, const Color& c)
     : center(cent), radius(rad), color(c)
 {
     texture = std::make_shared<Unique>(c);
 }
+
+Sphere::Sphere(const Vect& cent, double rad, const Color& c, shared_texture t)
+    : Object(t), center(cent), radius(rad), color(c)
+{}
 
 Color Sphere::get_color() const {
     return color;

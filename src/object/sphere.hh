@@ -7,7 +7,8 @@ class Sphere : public Object {
 public:
 
     Sphere();
-    Sphere(Vect, double, Color);
+    Sphere(const Vect&, double, const Color&);
+    Sphere(const Vect&, double, const Color&, shared_texture);
 
     Vect getSphereCenter () { return center; }
     double getSphereRadius () { return radius; }

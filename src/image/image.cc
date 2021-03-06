@@ -45,7 +45,6 @@ void Image::set_pixel_color(int i, int j, const Color& color) {
 
 }
 
-
 static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
 
     auto x = intersection_ray.origin.x;
