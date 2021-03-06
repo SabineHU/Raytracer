@@ -1,4 +1,5 @@
 #include "scene.hh"
+#include "array.hh"
 #include "vector3_op.hh"
 
 Scene::Scene(const Vect& look_from, const Vect& look_at)
@@ -27,6 +28,31 @@ void Scene::clear_objects() {
 }
 void Scene::clear_lights() {
     this->lights.clear();
+}
+
+bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
+        double accuracy) const {
+    std::vector<double> intersections = this->get_intersections_distance(ray);
+    int index = array::get_min_index(intersections);
+
+    if (index == -1 || intersections[index] < accuracy)
+        return false;
+
+    info.object = this->objects[index];
+    info.normal = this->objects[index]->get_normal_at(ray.origin);
+    info.color = this->objects[index]->get_color();
+    info.distance = intersections[index];
+    return true;
+}
+
+bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
+    std::vector<double> intersections = this->get_intersections_distance(ray);
+
+    for (auto inters: intersections) {
+        if (inters > accuracy && inters <= distance)
+            return true;
+    }
+    return false;
 }
 
 std::vector<double> Scene::get_intersections_distance(const Ray& ray) const {

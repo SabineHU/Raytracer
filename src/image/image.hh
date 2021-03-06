@@ -12,8 +12,8 @@ public:
 
     ~Image();
 
+    /* Methods */
     void save() const;
-
     void render(const Scene&, double, int);
 
 private:
