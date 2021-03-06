@@ -6,7 +6,8 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/light \
          -I./src/object \
          -I./src/scene \
-         -I./src/image
+         -I./src/image \
+         -I./src/texture
 
 SRC= src/main.cc \
      src/init.cc \
@@ -17,7 +18,10 @@ SRC= src/main.cc \
      src/scene/camera.cc \
      src/scene/scene.cc \
      src/image/image.cc \
-     src/utils/vector3.cc
+     src/utils/vector3.cc \
+     src/texture/metal.cc \
+     src/texture/unique.cc \
+     src/texture/checkerboard.cc
 
 OBJ=${SRC:.cc=.o}
 

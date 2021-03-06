@@ -1,12 +1,22 @@
 #include "plane.hh"
 #include "vector3_op.hh"
+#include "unique.hh"
 
 Plane::Plane ()
-    : normal(Vect(1, 0, 0)), distance(0), color(Color(0.5, 0.5, 0.5))
-{}
+    : normal(Vect(1, 0, 0)), distance(0)
+{
+    color = Color(0.5, 0.5, 0.5, 0);
+    texture = std::make_shared<Unique>(color);
+}
 
-Plane::Plane (Vect n, double d, Color c)
+Plane::Plane (const Vect& n, double d, const Color& c)
     : normal(n), distance(d), color(c)
+{
+    texture = std::make_shared<Unique>(c);
+}
+
+Plane::Plane(const Vect& n, double d, const Color& c, shared_texture t)
+    : Object(t), normal(n), distance(d), color(c)
 {}
 
 Color Plane::get_color() const {

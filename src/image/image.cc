@@ -48,27 +48,15 @@ void Image::set_pixel_color(int i, int j, const Color& color) {
 
 static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
 
-    // Texture
-    Color object_color = closest_obj->get_color();
-    Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
-
-    if (object_color.s == 2) {
-        // checkered/tile floor pattern
-
-        int square = (int) std::floor(intersection_ray.origin.x) + (int) std::floor(intersection_ray.origin.z);
-        if ((square % 2) == 0) {
-            // black tile
-            object_color = Color(0, 0, 0, object_color.s);
-        }
-        else {
-            // white tile
-            object_color = Color(1, 1, 1, object_color.s);
-        }
-    }
+    auto x = intersection_ray.origin.x;
+    auto y = intersection_ray.origin.y;
+    auto z = intersection_ray.origin.z;
 
     // Color
-    Color final_color = object_color * scene.ambient_light;
+    Color object_color = closest_obj->texture->get_color(x, y, z);
+    Color final_color = closest_obj->texture->get_color(x, y, z) * scene.ambient_light;
 
+    Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
     if (object_color.s > 0 && object_color.s <= 1) {
         // reflection from objects with specular intensity
         IntersectionInfo reflection_info;

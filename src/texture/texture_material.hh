@@ -1,10 +1,12 @@
 #pragma once
 
-#include "ray.hh"
+#include <memory>
+
+#include "vector3.hh"
 
 class TextureMaterial {
 public:
-    //virtual bool scatter(const Ray& ray, const IntersectionInfo& inters,
-    //        Color& attenuation, Ray& scattered) const = 0;
-
+    virtual Color get_color(double, double, double) const = 0;
 };
+
+using shared_texture = std::shared_ptr<TextureMaterial>;

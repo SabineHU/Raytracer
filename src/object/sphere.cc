@@ -1,14 +1,20 @@
 #include "sphere.hh"
 #include "math.hh"
 #include "vector3_op.hh"
+#include "unique.hh"
 
 Sphere::Sphere ()
-    : center(Vect(0, 0, 0)), radius(1), color(Color(0.5, 0.5, 0.5, 0))
-{}
+    : center(Vect(0, 0, 0)), radius(1)
+{
+    color = Color(0.5, 0.5, 0.5, 0);
+    texture = std::make_shared<Unique>(color);
+}
 
-Sphere::Sphere (Vect cent, double rad, Color col)
-    : center(cent), radius(rad), color(col)
-{}
+Sphere::Sphere (Vect cent, double rad, Color c)
+    : center(cent), radius(rad), color(c)
+{
+    texture = std::make_shared<Unique>(c);
+}
 
 Color Sphere::get_color() const {
     return color;
