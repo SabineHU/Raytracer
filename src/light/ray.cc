@@ -10,13 +10,11 @@ Ray::Ray (const Vect& o, const Vect& d)
 {}
 
 Ray Ray::get_reflection_ray(const Vect& normal) const {
-    double dot1 = vector::dot(normal, this->direction.negative());
-    Vect scalar1 = normal * dot1;
-    Vect add1 = scalar1 + this->direction;
-    Vect scalar2 = add1 * 2;
-    Vect add2 = scalar2 - this->direction;
-    Vect reflection_direction = add2.normalize();
+    auto prod = normal * vector::dot(normal, this->direction.negative());
+    Vect add = (this->direction + prod) * 2;
+    Vect res = add - this->direction;
 
+    Vect reflection_direction = res.normalize();
     return Ray(this->origin, reflection_direction);
 }
 
