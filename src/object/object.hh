@@ -9,8 +9,7 @@
 class Object {
 public:
     Object() = default;
-    Object(shared_texture t) : texture(t), specular(0) {}
-    Object(shared_texture t, double s) : texture(t), specular(s) {}
+    Object(shared_texture t) : texture(t) {}
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& intersection_position) const = 0;
@@ -18,7 +17,6 @@ public:
 
     /* Attributes */
     shared_texture texture;
-    double specular;
 };
 
 using shared_object = std::shared_ptr<Object>;

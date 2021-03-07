@@ -9,7 +9,6 @@ public:
     Sphere();
     Sphere(const Vect&, double);
     Sphere(const Vect&, double, shared_texture);
-    Sphere(const Vect&, double, shared_texture, double);
 
     Vect getSphereCenter () { return center; }
     double getSphereRadius () { return radius; }

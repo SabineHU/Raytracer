@@ -7,8 +7,11 @@
 
 class TextureMaterial {
 public:
+    TextureMaterial(double s) : specular(s) {}
 
-    virtual Color get_color(const Ray&) const = 0;
+    virtual Color get_color(const Ray&, const Vect&) const = 0;
+
+    double specular; //ks
 };
 
 using shared_texture = std::shared_ptr<TextureMaterial>;

@@ -8,7 +8,6 @@ public:
     Plane();
     Plane(const Vect&, double);
     Plane(const Vect&, double, shared_texture);
-    Plane(const Vect&, double, shared_texture, double);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect&) const override;

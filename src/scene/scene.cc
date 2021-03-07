@@ -40,7 +40,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
 
     info.object = this->objects[index];
     info.normal = this->objects[index]->get_normal_at(ray.origin);
-    info.color = this->objects[index]->texture->get_color(ray);
+    info.color = this->objects[index]->texture->get_color(ray, info.normal);
     info.distance = intersections[index];
     return true;
 }
@@ -60,6 +60,7 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
     Color res_color(0, 0, 0);
 
     auto normal = obj->get_normal_at(ray.origin);
+    double obj_specular = obj->texture->specular;
 
     for (const auto& light: this->lights) {
 
@@ -77,14 +78,14 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
             if (!this->has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
                 res_color = res_color + (color * light->get_light_color() * cosine_angle);
 
-                if (obj->specular > 0 && obj->specular <= 1) {
+                if (obj_specular > 0 && obj_specular <= 1) {
                     // special [0-1]
                     Ray reflection_ray = ray.get_reflection_ray(normal);
                     double specular = vector::dot(reflection_ray.direction, light_direction);
                     if (specular > 0) {
                         // reduce specular to have less luminosity
                         // specular = std::pow(specular, 5);
-                        res_color = res_color + light->get_light_color() * specular * obj->specular * light->get_intensity();
+                        res_color = res_color + light->get_light_color() * specular * obj_specular * light->get_intensity();
                     }
                 }
 

@@ -3,14 +3,18 @@
 #include "checkerboard.hh"
 
 CheckerBoard::CheckerBoard()
-    : color1(Color(0, 0, 0)), color2(Color(1, 1, 1))
+    : TextureMaterial(0), color1(Color(0, 0, 0)), color2(Color(1, 1, 1))
 {}
 
 CheckerBoard::CheckerBoard(const Color& c1, const Color& c2)
-    : color1(c1), color2(c2)
+    : TextureMaterial(0), color1(c1), color2(c2)
 {}
 
-Color CheckerBoard::get_color(const Ray& ray) const {
+CheckerBoard::CheckerBoard(const Color& c1, const Color& c2, double s)
+    : TextureMaterial(s), color1(c1), color2(c2)
+{}
+
+Color CheckerBoard::get_color(const Ray& ray, const Vect&) const {
     auto x = ray.origin.x;
     auto z = ray.origin.z;
 
