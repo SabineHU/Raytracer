@@ -7,16 +7,23 @@ Plane::Plane ()
 {
     color = Color(0.5, 0.5, 0.5, 0);
     texture = std::make_shared<Unique>(color);
+    specular = 0;
 }
 
 Plane::Plane (const Vect& n, double d, const Color& c)
     : normal(n), distance(d), color(c)
 {
     texture = std::make_shared<Unique>(c);
+    specular = 0;
 }
 
 Plane::Plane(const Vect& n, double d, const Color& c, shared_texture t)
-    : Object(t), normal(n), distance(d), color(c)
+    : Object(t, 0), normal(n), distance(d), color(c)
+{}
+
+Plane::Plane(const Vect& n, double d, const Color& c, shared_texture t,
+        double s)
+    : Object(t, s), normal(n), distance(d), color(c)
 {}
 
 Color Plane::get_color() const {

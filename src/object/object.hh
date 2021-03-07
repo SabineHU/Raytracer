@@ -9,7 +9,8 @@
 class Object {
 public:
     Object() = default;
-    Object(shared_texture t) : texture(t) {}
+    Object(shared_texture t) : texture(t), specular(0) {}
+    Object(shared_texture t, double s) : texture(t), specular(s) {}
 
     /* Methods */
     virtual Color get_color() const = 0;
@@ -18,7 +19,7 @@ public:
 
     /* Attributes */
     shared_texture texture;
-
+    double specular;
 };
 
 using shared_object = std::shared_ptr<Object>;

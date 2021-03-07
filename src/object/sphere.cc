@@ -8,16 +8,23 @@ Sphere::Sphere()
 {
     color = Color(0.5, 0.5, 0.5, 0);
     texture = std::make_shared<Unique>(color);
+    specular = 0;
 }
 
 Sphere::Sphere(const Vect& cent, double rad, const Color& c)
     : center(cent), radius(rad), color(c)
 {
     texture = std::make_shared<Unique>(c);
+    specular = 0;
 }
 
 Sphere::Sphere(const Vect& cent, double rad, const Color& c, shared_texture t)
-    : Object(t), center(cent), radius(rad), color(c)
+    : Object(t, 0), center(cent), radius(rad), color(c)
+{}
+
+Sphere::Sphere(const Vect& cent, double rad, const Color& c, shared_texture t,
+        double s)
+    : Object(t, s), center(cent), radius(rad), color(c)
 {}
 
 Color Sphere::get_color() const {

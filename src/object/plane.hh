@@ -8,6 +8,7 @@ public:
     Plane();
     Plane(const Vect&, double, const Color&);
     Plane(const Vect&, double, const Color&, shared_texture);
+    Plane(const Vect&, double, const Color&, shared_texture, double);
 
     /* Methods */
     virtual Color get_color() const override;

@@ -56,7 +56,7 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
     Color final_color = closest_obj->texture->get_color(x, y, z) * scene.ambient_light;
 
     Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
-    if (object_color.s > 0 && object_color.s <= 1) {
+    if (closest_obj->specular > 0 && closest_obj->specular <= 1) {
         // reflection from objects with specular intensity
         IntersectionInfo reflection_info;
         Ray reflection_ray = intersection_ray.get_reflection_ray(object_normal);
@@ -65,11 +65,13 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
             Vect reflection_pos = reflection_ray.origin + reflection_ray.direction * reflection_info.distance;
             Ray reflection_ray(reflection_pos, reflection_ray.direction);
 
-            final_color = final_color + getColorAt(scene, reflection_ray, reflection_info.object, accuracy) * object_color.s;
+            final_color = final_color + getColorAt(scene, reflection_ray, reflection_info.object, accuracy) * closest_obj->specular;
         }
     }
 
-    return (final_color + scene.get_color_with_light(intersection_ray, closest_obj, object_color, accuracy)).clamp();
+    auto light_color = scene.get_color_with_light(intersection_ray, closest_obj, object_color, accuracy);
+
+    return (final_color + light_color).clamp();
 }
 
 void Image::set_index_x_y(double& x, double& y, int samples, int i, int j, int k) {
