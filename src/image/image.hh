@@ -14,7 +14,7 @@ public:
 
     /* Methods */
     void save() const;
-    void render(const Scene&, double, int);
+    void render(const Scene&, double, int, int);
 
 private:
     double get_ratio() const;

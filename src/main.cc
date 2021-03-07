@@ -20,11 +20,12 @@ int main () {
     int height = 480;
     image::Image img(width, height);
 
-    int samples = 1;
+    int samples = 5;
+    int depth = 50;
     double accuracy = 0.00000001;
     Scene scene = init_scene();
 
-    img.render(scene, accuracy, samples);
+    img.render(scene, accuracy, samples, depth);
     img.save();
     return 0;
 }

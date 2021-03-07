@@ -6,7 +6,6 @@ class Vect {
 public:
     Vect();
     Vect(double, double, double);
-    Vect(double, double, double, double);
 
     double magnitude() const;
 

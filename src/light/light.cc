@@ -1,7 +1,7 @@
 #include "light.hh"
 
 Light::Light ()
-    : position(Vect(0, 0, 0)), color(Color(1, 1, 1, 0)), intensity(1)
+    : position(Vect(0, 0, 0)), color(Color(1, 1, 1)), intensity(1)
 
 {}
 

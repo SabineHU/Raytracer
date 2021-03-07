@@ -96,7 +96,7 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
 }
 
 std::vector<double> Scene::get_intersections_distance(const Ray& ray) const {
-    std::vector<double> intersections;
+    std::vector<double> intersections = std::vector<double>();
     for (const auto& obj : this->objects)
         intersections.push_back(obj->find_intersection(ray));
     return intersections;

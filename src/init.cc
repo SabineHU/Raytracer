@@ -13,15 +13,15 @@ Scene init_scene() {
     scene.ambient_light = 0.2;
 
     /* Colors */
-    Color white(1, 1, 1, 0);
-    Color red(1, 0, 0, 0);
-    Color green(0, 1, 0, 0);
-    Color blue(0, 0, 1, 0);
-    Color black(0, 0, 0, 0);
+    Color white(1, 1, 1);
+    Color red(1, 0, 0);
+    Color green(0, 1, 0);
+    Color blue(0, 0, 1);
+    Color black(0, 0, 0);
 
-    Color green2(0.5, 1, 0.5, 0);
-    Color red2(0.5, 0.25, 0.25, 0);
-    Color color3(1, 1, 1, 0);
+    Color green2(0.5, 1, 0.5);
+    Color red2(0.5, 0.25, 0.25);
+    Color color3(1, 1, 1);
 
     /* Lights */
     scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 2.5));

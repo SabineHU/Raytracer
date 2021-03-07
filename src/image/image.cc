@@ -88,7 +88,10 @@ void Image::set_index_x_y(double& x, double& y, int samples, int i, int j, int k
     }
 }
 
-static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
+static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy, int depth) {
+
+    if (depth == 0)
+        return Color(0, 0, 0);
 
     // Color
     Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
@@ -105,7 +108,7 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
             Vect reflection_pos = reflection_ray.origin + reflection_ray.direction * reflection_info.distance;
             Ray reflection_ray(reflection_pos, reflection_ray.direction);
 
-            final_color = final_color + getColorAt(scene, reflection_ray, reflection_info.object, accuracy) * specular;
+            final_color = final_color + getColorAt(scene, reflection_ray, reflection_info.object, accuracy, depth - 1) * specular;
         }
     }
 
@@ -115,7 +118,7 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
 }
 
 
-void Image::render(const Scene& scene, double accuracy, int samples) {
+void Image::render(const Scene& scene, double accuracy, int samples, int depth) {
     for (int i = 0; i < width; ++i) {
         std::cerr << "\rScanlines remaining: " << width - i - 1 << ' ' << std::flush;
         for (int j = 0; j < height; ++j) {
@@ -133,7 +136,7 @@ void Image::render(const Scene& scene, double accuracy, int samples) {
                     Vect intersection_pos = cam_ray.origin + cam_ray.direction * info.distance;
                     Ray intersection_ray(intersection_pos, cam_ray.direction);
 
-                    pixel_color = pixel_color + getColorAt(scene, intersection_ray, info.object, accuracy);
+                    pixel_color = pixel_color + getColorAt(scene, intersection_ray, info.object, accuracy, depth);
                 } else {
                     pixel_color = Color(0, 0, 0);
                 }

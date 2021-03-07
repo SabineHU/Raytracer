@@ -3,15 +3,11 @@
 #include "vector3.hh"
 
 Vect::Vect()
-    : x(0), y(0), z(0), s(0)
+    : x(0), y(0), z(0)
 {}
 
 Vect::Vect(double a, double b, double c)
-    : x(a), y(b), z(c), s(0)
-{}
-
-Vect::Vect(double a, double b, double c, double d)
-    : x(a), y(b), z(c), s(d)
+    : x(a), y(b), z(c)
 {}
 
 double Vect::magnitude() const {
@@ -27,29 +23,29 @@ Vect Vect::negative() const {
 }
 
 Vect Vect::operator+(const Vect& u) const {
-    return Vect(x + u.x, y + u.y, z + u.z, s);
+    return Vect(x + u.x, y + u.y, z + u.z);
 }
 Vect Vect::operator-(const Vect& u) const {
-    return Vect(x - u.x, y - u.y, z - u.z, s);
+    return Vect(x - u.x, y - u.y, z - u.z);
 }
 Vect Vect::operator*(const Vect& u) const {
-    return Vect(x * u.x, y * u.y, z * u.z, s);
+    return Vect(x * u.x, y * u.y, z * u.z);
 }
 Vect Vect::operator/(const Vect& u) const {
-    return Vect(x / u.x, y / u.y, z / u.z, s);
+    return Vect(x / u.x, y / u.y, z / u.z);
 }
 
 Vect Vect::operator+(double u) const {
-    return Vect(x + u, y + u, z + u, s);
+    return Vect(x + u, y + u, z + u);
 }
 Vect Vect::operator-(double u) const {
-    return Vect(x - u, y - u, z - u, s);
+    return Vect(x - u, y - u, z - u);
 }
 Vect Vect::operator*(double u) const {
-    return Vect(x * u, y * u, z * u, s);
+    return Vect(x * u, y * u, z * u);
 }
 Vect Vect::operator/(double u) const {
-    return Vect(x / u, y / u, z / u, s);
+    return Vect(x / u, y / u, z / u);
 }
 
 static double clamp_value(double value) {
@@ -70,5 +66,5 @@ Vect Vect::clamp() const {
         zz = z + (sum - 3) * (z / sum);
     }
 
-    return Vect(clamp_value(xx), clamp_value(yy), clamp_value(zz), s);
+    return Vect(clamp_value(xx), clamp_value(yy), clamp_value(zz));
 }

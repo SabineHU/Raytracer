@@ -5,14 +5,14 @@
 Plane::Plane ()
     : normal(Vect(1, 0, 0)), distance(0)
 {
-    auto color = Color(0.5, 0.5, 0.5, 0);
+    auto color = Color(0.5, 0.5, 0.5);
     texture = std::make_shared<Unique>(color);
 }
 
 Plane::Plane (const Vect& n, double d)
     : normal(n), distance(d)
 {
-    auto color = Color(0.5, 0.5, 0.5, 0);
+    auto color = Color(0.5, 0.5, 0.5);
     texture = std::make_shared<Unique>(color);
 }
 

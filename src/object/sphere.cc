@@ -6,14 +6,14 @@
 Sphere::Sphere()
     : center(Vect(0, 0, 0)), radius(1)
 {
-    auto color = Color(0.5, 0.5, 0.5, 0);
+    auto color = Color(0.5, 0.5, 0.5);
     texture = std::make_shared<Unique>(color);
 }
 
 Sphere::Sphere(const Vect& cent, double rad)
     : center(cent), radius(rad)
 {
-    auto color = Color(0.5, 0.5, 0.5, 0);
+    auto color = Color(0.5, 0.5, 0.5);
     texture = std::make_shared<Unique>(color);
 }
 
