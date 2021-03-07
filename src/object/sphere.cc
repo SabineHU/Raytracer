@@ -6,30 +6,27 @@
 Sphere::Sphere()
     : center(Vect(0, 0, 0)), radius(1)
 {
-    color = Color(0.5, 0.5, 0.5, 0);
+    auto color = Color(0.5, 0.5, 0.5, 0);
     texture = std::make_shared<Unique>(color);
     specular = 0;
 }
 
-Sphere::Sphere(const Vect& cent, double rad, const Color& c)
-    : center(cent), radius(rad), color(c)
+Sphere::Sphere(const Vect& cent, double rad)
+    : center(cent), radius(rad)
 {
-    texture = std::make_shared<Unique>(c);
+    auto color = Color(0.5, 0.5, 0.5, 0);
+    texture = std::make_shared<Unique>(color);
     specular = 0;
 }
 
-Sphere::Sphere(const Vect& cent, double rad, const Color& c, shared_texture t)
-    : Object(t, 0), center(cent), radius(rad), color(c)
+Sphere::Sphere(const Vect& cent, double rad, shared_texture t)
+    : Object(t, 0), center(cent), radius(rad)
 {}
 
-Sphere::Sphere(const Vect& cent, double rad, const Color& c, shared_texture t,
+Sphere::Sphere(const Vect& cent, double rad, shared_texture t,
         double s)
-    : Object(t, s), center(cent), radius(rad), color(c)
+    : Object(t, s), center(cent), radius(rad)
 {}
-
-Color Sphere::get_color() const {
-    return color;
-}
 
 Vect Sphere::get_normal_at(const Vect& point) const {
     return (point - center).normalize();

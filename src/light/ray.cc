@@ -19,3 +19,7 @@ Ray Ray::get_reflection_ray(const Vect& normal) const {
 
     return Ray(this->origin, reflection_direction);
 }
+
+Point3 Ray::at(double i) const {
+    return this->origin + this->direction * i;
+}

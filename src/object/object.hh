@@ -13,7 +13,6 @@ public:
     Object(shared_texture t, double s) : texture(t), specular(s) {}
 
     /* Methods */
-    virtual Color get_color() const = 0;
     virtual Vect get_normal_at(const Vect& intersection_position) const = 0;
     virtual double find_intersection(const Ray& ray) const = 0;
 

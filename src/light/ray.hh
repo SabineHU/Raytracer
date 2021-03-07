@@ -8,6 +8,7 @@ public:
     Ray(const Vect&, const Vect&);
 
     Ray get_reflection_ray(const Vect& normal) const;
+    Point3 at(double i) const;
 
     /* Attributes */
     Vect origin;

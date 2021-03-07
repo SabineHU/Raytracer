@@ -18,6 +18,10 @@ Scene init_scene() {
     Color blue(0, 0, 1, 0);
     Color black(0, 0, 0, 0);
 
+    Color green2(0.5, 1, 0.5, 0);
+    Color red2(0.5, 0.25, 0.25, 0);
+    Color color3(1, 1, 1, 0);
+
     /* Lights */
     scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 2.5));
 
@@ -25,16 +29,15 @@ Scene init_scene() {
 
     //auto texture = std::make_shared<Unique>(white);
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
-    auto unique_green = std::make_shared<Unique>(green);
+    auto board_black_blue = std::make_shared<CheckerBoard>(black, blue);
+    auto unique_green = std::make_shared<Unique>(green2);
+    auto unique_red = std::make_shared<Unique>(red2);
 
     /* Objects */
-    Color color1(0.5, 1, 0.5, 0);
-    Color color2(0.5, 0.25, 0.25, 0);
-    Color color3(1, 1, 1, 0);
-    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, color1, unique_green, 0.3));
-    scene.add_object(std::make_shared<Sphere>(Point3(1.75, -0.25, 0), 0.5, color2));
-    scene.add_object(std::make_shared<Sphere>(Point3(-1.75, -0.25, 0), 0.5, color2));
-    scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, color3, board_black_white));
+    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue, 0.3));
+    scene.add_object(std::make_shared<Sphere>(Point3(1.75, -0.25, 0), 0.5, unique_green));
+    scene.add_object(std::make_shared<Sphere>(Point3(-1.75, -0.25, 0), 0.5, unique_red));
+    scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 
     return scene;
 }

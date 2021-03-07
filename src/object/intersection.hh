@@ -4,6 +4,7 @@
 
 class IntersectionInfo {
 public:
+    Point3 point;
     shared_object object;
     double distance;
     Vect normal;

@@ -40,7 +40,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
 
     info.object = this->objects[index];
     info.normal = this->objects[index]->get_normal_at(ray.origin);
-    info.color = this->objects[index]->get_color();
+    info.color = this->objects[index]->texture->get_color(info.point.x, info.point.y, info.point.z);
     info.distance = intersections[index];
     return true;
 }
