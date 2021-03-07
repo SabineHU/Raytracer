@@ -47,13 +47,9 @@ void Image::set_pixel_color(int i, int j, const Color& color) {
 
 static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy) {
 
-    auto x = intersection_ray.origin.x;
-    auto y = intersection_ray.origin.y;
-    auto z = intersection_ray.origin.z;
-
     // Color
-    Color object_color = closest_obj->texture->get_color(x, y, z);
-    Color final_color = closest_obj->texture->get_color(x, y, z) * scene.ambient_light;
+    Color object_color = closest_obj->texture->get_color(intersection_ray);
+    Color final_color = object_color * scene.ambient_light;
 
     Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
     if (closest_obj->specular > 0 && closest_obj->specular <= 1) {

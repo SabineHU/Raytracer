@@ -7,7 +7,7 @@ public:
     CheckerBoard();
     CheckerBoard(const Color&, const Color&);
 
-    virtual Color get_color(double, double, double) const;
+    virtual Color get_color(const Ray&) const override;
 
 private:
     Color color1;
