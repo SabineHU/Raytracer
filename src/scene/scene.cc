@@ -12,7 +12,6 @@ Scene::Scene(const Vect& look_from, const Vect& look_at)
     Vect camright = vector::cross(Y, camdir).normalize();
     Vect camdown = vector::cross(camright, camdir);
     camera = Camera(look_from, camdir, camright, camdown);
-
 }
 
 void Scene::add_object(shared_object obj) {
@@ -57,8 +56,8 @@ bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
 
 Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
         const Color& color, double accuracy) const {
-    Color res_color(0, 0, 0);
 
+    Color res_color(0, 0, 0);
     auto normal = obj->get_normal_at(ray.origin);
     double obj_specular = obj->texture->specular;
 
@@ -76,7 +75,7 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
             Ray shadow_ray(ray.origin, (light->get_light_position() - ray.origin).normalize());
 
             if (!this->has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
-                res_color = res_color + (color * light->get_light_color() * cosine_angle);
+                res_color += color * light->get_light_color() * cosine_angle;
 
                 if (obj_specular > 0 && obj_specular <= 1) {
                     // special [0-1]
@@ -85,7 +84,7 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
                     if (specular > 0) {
                         // reduce specular to have less luminosity
                         // specular = std::pow(specular, 5);
-                        res_color = res_color + light->get_light_color() * specular * obj_specular * light->get_intensity();
+                        res_color += light->get_light_color() * specular * obj_specular * light->get_intensity();
                     }
                 }
 

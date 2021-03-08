@@ -108,7 +108,7 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
             Vect reflection_pos = reflection_ray.origin + reflection_ray.direction * reflection_info.distance;
             Ray reflection_ray(reflection_pos, reflection_ray.direction);
 
-            final_color = final_color + getColorAt(scene, reflection_ray, reflection_info.object, accuracy, depth - 1) * specular;
+            final_color += getColorAt(scene, reflection_ray, reflection_info.object, accuracy, depth - 1) * specular;
         }
     }
 
@@ -136,9 +136,9 @@ void Image::render(const Scene& scene, double accuracy, int samples, int depth) 
                     Vect intersection_pos = cam_ray.origin + cam_ray.direction * info.distance;
                     Ray intersection_ray(intersection_pos, cam_ray.direction);
 
-                    pixel_color = pixel_color + getColorAt(scene, intersection_ray, info.object, accuracy, depth);
+                    pixel_color += getColorAt(scene, intersection_ray, info.object, accuracy, depth);
                 } else {
-                    pixel_color = Color(0, 0, 0);
+                    pixel_color += Color(0, 0, 0.3);
                 }
 
             }

@@ -14,7 +14,6 @@ Camera::Camera (const Vect& pos, const Vect& dir, const Vect& right,
 
 Ray Camera::get_ray(double x, double y) const {
     return Ray(campos, get_ray_direction(x, y));
-
 }
 
 Vect Camera::get_ray_direction(double x, double y) const {

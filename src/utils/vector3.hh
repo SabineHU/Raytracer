@@ -17,10 +17,20 @@ public:
     Vect operator*(const Vect& u) const;
     Vect operator/(const Vect& u) const;
 
+    Vect& operator+=(const Vect& u);
+    Vect& operator-=(const Vect& u);
+    Vect& operator*=(const Vect& u);
+    Vect& operator/=(const Vect& u);
+
     Vect operator+(double u) const;
     Vect operator-(double u) const;
     Vect operator*(double u) const;
     Vect operator/(double u) const;
+
+    Vect& operator+=(double u);
+    Vect& operator-=(double u);
+    Vect& operator*=(double u);
+    Vect& operator/=(double u);
 
     Vect clamp() const;
 

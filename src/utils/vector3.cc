@@ -35,6 +35,31 @@ Vect Vect::operator/(const Vect& u) const {
     return Vect(x / u.x, y / u.y, z / u.z);
 }
 
+Vect& Vect::operator+=(const Vect& u) {
+    this->x += u.x;
+    this->y += u.y;
+    this->z += u.z;
+    return *this;
+}
+Vect& Vect::operator-=(const Vect& u) {
+    this->x -= u.x;
+    this->y -= u.y;
+    this->z -= u.z;
+    return *this;
+}
+Vect& Vect::operator*=(const Vect& u) {
+    this->x *= u.x;
+    this->y *= u.y;
+    this->z *= u.z;
+    return *this;
+}
+Vect& Vect::operator/=(const Vect& u) {
+    this->x /= u.x;
+    this->y /= u.y;
+    this->z /= u.z;
+    return *this;
+}
+
 Vect Vect::operator+(double u) const {
     return Vect(x + u, y + u, z + u);
 }
@@ -46,6 +71,31 @@ Vect Vect::operator*(double u) const {
 }
 Vect Vect::operator/(double u) const {
     return Vect(x / u, y / u, z / u);
+}
+
+Vect& Vect::operator+=(double u) {
+    this->x += u;
+    this->y += u;
+    this->z += u;
+    return *this;
+}
+Vect& Vect::operator-=(double u) {
+    this->x -= u;
+    this->y -= u;
+    this->z -= u;
+    return *this;
+}
+Vect& Vect::operator*=(double u) {
+    this->x *= u;
+    this->y *= u;
+    this->z *= u;
+    return *this;
+}
+Vect& Vect::operator/=(double u) {
+    this->x /= u;
+    this->y /= u;
+    this->z /= u;
+    return *this;
 }
 
 static double clamp_value(double value) {
