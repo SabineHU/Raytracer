@@ -12,13 +12,20 @@
 #include "plane.hh"
 #include "scene.hh"
 #include "init.hh"
+#include "math.hh"
 
 
 int main () {
     /* Image */
-    int width = 640;
-    int height = 480;
-    image::Image img(width, height);
+    //int width = 640;
+    //int height = 480;
+    //image::Image img(width, height);
+
+    //double alpha = math::degree_to_radian(35);
+    double alpha = math::degree_to_radian(20);
+    double beta = alpha * 16.0 / 9.0; // Get ratio 16:9
+    double zmin = 1000;
+    image::Image img(alpha, beta, zmin);
 
     int samples = 5;
     int depth = 50;

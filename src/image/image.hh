@@ -9,6 +9,7 @@ class Image {
 public:
     Image() = delete;
     Image(int w, int h);
+    Image(double alpha, double beta, double zmin);
 
     ~Image();
 

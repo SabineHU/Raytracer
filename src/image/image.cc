@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "image.hh"
 #include "array.hh"
@@ -9,6 +10,16 @@ namespace image {
 Image::Image(int w, int h)
     : width(w), height(h)
 {
+    pixels = new Point3*[width];
+    for (int i = 0; i < width; ++i)
+        pixels[i] = new Point3[height];
+}
+
+Image::Image(double alpha, double beta, double zmin)
+{
+    width = 2 * zmin * std::tan(beta / 2.0);
+    height = 2 * zmin * std::tan(alpha / 2.0);
+
     pixels = new Point3*[width];
     for (int i = 0; i < width; ++i)
         pixels[i] = new Point3[height];
@@ -47,43 +58,24 @@ void Image::set_pixel_color(int i, int j, const Color& color) {
 
 void Image::set_index_x_y(double& x, double& y, int samples, int i, int j, int k) {
     auto ratio = this->get_ratio();
-
-    // create the ray from the camera to this pixel
     if (samples == 1) {
-
-        // start with no anti-aliasing
+        x = (i + 0.5)/width;
+        y = ((height - j) + 0.5)/height;
         if (width > height) {
-            // the image is wider than it is tall
             x = ((i+0.5)/width)*ratio - (((width-height)/(double)height)/2);
-            y = ((height - j) + 0.5)/height;
         }
         else if (height > width) {
-            // the imager is taller than it is wide
-            x = (i + 0.5)/ width;
             y = (((height - j) + 0.5)/height)/ratio - (((height - width)/(double)width)/2);
         }
-        else {
-            // the image is square
-            x = (i + 0.5)/width;
-            y = ((height - j) + 0.5)/height;
-        }
-    }
-    else {
+    } else {
         // anti-aliasing
+        x = (i + (double)k/((double)samples - 1))/width;
+        y = ((height - j) + (double)k/((double)samples - 1))/height;
         if (width > height) {
-            // the image is wider than it is tall
             x = ((i + (double)k/((double)samples - 1))/width)*ratio - (((width-height)/(double)height)/2);
-            y = ((height - j) + (double)k/((double)samples - 1))/height;
         }
         else if (height > width) {
-            // the imager is taller than it is wide
-            x = (i + (double)k/((double)samples - 1))/ width;
             y = (((height - j) + (double)k/((double)samples - 1))/height)/ratio - (((height - width)/(double)width)/2);
-        }
-        else {
-            // the image is square
-            x = (i + (double)k/((double)samples - 1))/width;
-            y = ((height - j) + (double)k/((double)samples - 1))/height;
         }
     }
 }
