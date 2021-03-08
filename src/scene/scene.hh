@@ -10,7 +10,7 @@
 class Scene {
 public:
     Scene() = default;
-    Scene(const Vect& look_from, const Vect& look_at);
+    Scene(const Camera&);
 
     /* Methods */
     void add_object(shared_object);

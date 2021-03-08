@@ -7,9 +7,13 @@ Scene init_scene() {
     /* Camera */
     Vect look_from(3, 1.5, -4);
     Vect look_at(0, 0, 0);
+    Vect vup(0,1,0);
+    Camera cam(look_from, look_at, vup);
+
+    //    point3(-2,2,1), point3(0,0,-1), vec3(0,1,0)
 
     /* Scene */
-    Scene scene(look_from, look_at);
+    Scene scene(cam);
     scene.ambient_light = 0.2;
 
     /* Colors */

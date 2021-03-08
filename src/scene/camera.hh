@@ -7,7 +7,7 @@ class Camera {
 public:
 
     Camera();
-    Camera(const Vect&, const Vect&, const Vect&, const Vect&);
+    Camera(const Vect&, const Vect&, const Vect&);
 
     Vect get_position() const { return campos; }
     Ray get_ray(double x, double y) const;

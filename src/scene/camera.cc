@@ -1,16 +1,20 @@
 #include "camera.hh"
+#include "vector3_op.hh"
 
-Camera::Camera () {
+Camera::Camera() {
     campos = Vect(0,0,0);
     camdir = Vect(0,0,1);
     camright = Vect(0,0,0);
     camdown = Vect(0,0,0);
 }
 
-Camera::Camera (const Vect& pos, const Vect& dir, const Vect& right,
-        const Vect& down)
-    : campos(pos), camdir(dir), camright(right), camdown(down)
-{}
+Camera::Camera(const Vect& look_from, const Vect& look_at, const Vect& vup)
+{
+    this->campos = look_from;
+    this->camdir = (look_at - look_from).normalize();
+    this->camright = vector::cross(vup, camdir).normalize();
+    this->camdown = vector::cross(camright, camdir);
+}
 
 Ray Camera::get_ray(double x, double y) const {
     return Ray(campos, get_ray_direction(x, y));
