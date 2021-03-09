@@ -23,9 +23,10 @@ Cone::Cone(const Point3& p, double r, double h, shared_texture t)
 {}
 
 Vect Cone::get_normal_at(const Vect& point) const {
-    float r = std::sqrt((point.x-position.x)*(point.x - position.x) + (point.z - position.z)*(point.z-position.z));
-    Vect n = Vect(point.x-position.x, r*(radius/height), point.z-position.z);
-    return n.normalize();
+    // center of cone and intersection point vector
+    Vect PP = point - this->position;
+    double r = std::sqrt(PP.dot_x() + PP.dot_z());
+    return Vect(PP.x, r * this->radius / this->height, PP.z).normalize();
 }
 
 double Cone::find_intersection(const Ray& ray) const {
@@ -43,7 +44,6 @@ double Cone::find_intersection(const Ray& ray) const {
     double c = PO.dot_x() + PO.dot_z() - tan * PO.dot_y();
 
     double discriminant = b * b - 4 * a * c;
-
     if (discriminant <= 0)
         return -1;
 
