@@ -34,6 +34,10 @@ double Vect::dot_z() const {
     return z * z;
 }
 
+double Vect::sum() const {
+    return x + y + z;
+}
+
 Vect Vect::operator+(const Vect& u) const {
     return Vect(x + u.x, y + u.y, z + u.z);
 }

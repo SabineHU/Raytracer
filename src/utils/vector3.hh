@@ -16,6 +16,8 @@ public:
     double dot_y() const;
     double dot_z() const;
 
+    double sum() const;
+
     Vect operator+(const Vect& u) const;
     Vect operator-(const Vect& u) const;
     Vect operator*(const Vect& u) const;

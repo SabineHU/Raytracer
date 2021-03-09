@@ -29,18 +29,18 @@ Vect Cone::get_normal_at(const Vect& point) const {
 }
 
 double Cone::find_intersection(const Ray& ray) const {
+    const Vect dir = ray.direction;
 
-    double aa = ray.origin.x - this->position.x;
-    double bb = ray.origin.z - this->position.z;
-    double dd = height - ray.origin.y + this->position.y;
+    // Position Origin vector
+    Vect PO = ray.origin - this->position;
+    PO *= Vect(1, -1, 1);
+    PO += Vect(0, height, 0);
 
     double tan = this->radius * this->radius / (this->height * this->height);
 
-    double a = ray.direction.dot_x() + ray.direction.dot_z()
-        - tan * ray.direction.dot_y();
-    double b = 2 * aa * ray.direction.x + 2 * bb * ray.direction.z
-        + 2 * tan * dd * ray.direction.y;
-    double c = aa * aa + bb * bb - tan * dd * dd;
+    double a = dir.dot_x() + dir.dot_z() - tan * dir.dot_y();
+    double b = (PO * dir * Vect(1, tan, 1) * 2).sum();
+    double c = PO.dot_x() + PO.dot_z() - tan * PO.dot_y();
 
     double discriminant = b * b - 4 * a * c;
 
