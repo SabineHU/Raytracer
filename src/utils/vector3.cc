@@ -22,6 +22,18 @@ Vect Vect::negative() const {
     return Vect(-x, -y, -z);
 }
 
+double Vect::dot_x() const {
+    return x * x;
+}
+
+double Vect::dot_y() const {
+    return y * y;
+}
+
+double Vect::dot_z() const {
+    return z * z;
+}
+
 Vect Vect::operator+(const Vect& u) const {
     return Vect(x + u.x, y + u.y, z + u.z);
 }

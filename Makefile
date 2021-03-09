@@ -13,6 +13,7 @@ SRC= src/main.cc \
      src/init.cc \
      src/light/light.cc \
      src/light/ray.cc \
+     src/object/cone.cc \
      src/object/plane.cc \
      src/object/sphere.cc \
      src/scene/camera.cc \

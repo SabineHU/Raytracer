@@ -2,18 +2,17 @@
 
 #include "object.hh"
 
-class Sphere : public Object {
+class Cone : public Object {
 public:
 
-    Sphere();
-    Sphere(const Vect&, double);
-    Sphere(const Vect&, double, shared_texture);
+    Cone();
+    Cone(const Point3&, double, double);
+    Cone(const Point3&, double, double, shared_texture);
 
     virtual Vect get_normal_at(const Vect& point) const override;
     virtual double find_intersection(const Ray& ray) const override;
 
-    /* Attribute */
-    Vect center;
+    Point3 position;
     double radius;
-
+    double height;
 };

@@ -12,6 +12,10 @@ public:
     Vect normalize() const;
     Vect negative() const;
 
+    double dot_x() const;
+    double dot_y() const;
+    double dot_z() const;
+
     Vect operator+(const Vect& u) const;
     Vect operator-(const Vect& u) const;
     Vect operator*(const Vect& u) const;
