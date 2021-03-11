@@ -21,6 +21,10 @@ Sphere::Sphere(const Vect& cent, double rad, shared_texture t)
     : Object(t), center(cent), radius(rad)
 {}
 
+Sphere::Sphere(const Vect& cent, double rad, const Color& c)
+    : Object(std::make_shared<Unique>(c)), center(cent), radius(rad)
+{}
+
 Vect Sphere::get_normal_at(const Vect& point) const {
     return (point - center).normalize();
 }

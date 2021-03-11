@@ -16,6 +16,7 @@ SRC= src/main.cc \
      src/object/cone.cc \
      src/object/plane.cc \
      src/object/sphere.cc \
+     src/object/triangle.cc \
      src/scene/camera.cc \
      src/scene/scene.cc \
      src/image/image.cc \

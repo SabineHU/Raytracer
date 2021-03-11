@@ -6,6 +6,7 @@
 #include "sphere.hh"
 #include "cone.hh"
 #include "plane.hh"
+#include "triangle.hh"
 #include "light.hh"
 
 Scene init_scene() {
@@ -27,6 +28,7 @@ Scene init_scene() {
     Color green(0, 1, 0);
     Color blue(0, 0, 1);
     Color black(0, 0, 0);
+    Color purple(0.6, 0, 0.6);
 
     Color green2(0.5, 1, 0.5);
     Color red2(0.5, 0.25, 0.25);
@@ -45,8 +47,9 @@ Scene init_scene() {
 
     /* Objects */
     scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
-    scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
-    //scene.add_object(std::make_shared<Sphere>(Point3(1.75, -0.25, 0), 0.5, unique_green));
+    //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
+    scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
+    scene.add_object(std::make_shared<Sphere>(Point3(1.75, 0.25, 0), 0.5, unique_green));
     scene.add_object(std::make_shared<Sphere>(Point3(-1.75, -0.25, 0), 0.5, unique_red));
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 

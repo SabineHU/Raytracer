@@ -22,6 +22,10 @@ Cone::Cone(const Point3& p, double r, double h, shared_texture t)
     : Object(t), position(p), radius(r), height(h)
 {}
 
+Cone::Cone(const Point3& p, double r, double h, const Color& c)
+    : Object(std::make_shared<Unique>(c)), position(p), radius(r), height(h)
+{}
+
 Vect Cone::get_normal_at(const Vect& point) const {
     // center of cone and intersection point vector
     Vect PP = point - this->position;
