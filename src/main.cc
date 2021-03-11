@@ -14,8 +14,7 @@
 #include "init.hh"
 #include "math.hh"
 
-
-int main () {
+void simple_raytracer_tp1() {
     /* Image */
     //int width = 640;
     //int height = 480;
@@ -34,5 +33,9 @@ int main () {
 
     img.render(scene, accuracy, samples, depth);
     img.save();
+}
+
+int main () {
+    simple_raytracer_tp1();
     return 0;
 }
