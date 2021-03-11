@@ -2,4 +2,5 @@
 
 #include "scene.hh"
 
-Scene init_scene();
+Camera init_camera();
+Scene init_scene(Camera& cam);

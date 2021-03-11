@@ -14,8 +14,7 @@
 #include "init.hh"
 #include "math.hh"
 
-void simple_raytracer_tp1() {
-    /* Image */
+int main () {
     //int width = 640;
     //int height = 480;
     //image::Image img(width, height);
@@ -29,13 +28,11 @@ void simple_raytracer_tp1() {
     int samples = 5;
     int depth = 50;
     double accuracy = 0.00000001;
-    Scene scene = init_scene();
+
+    Camera cam = init_camera();
+    Scene scene = init_scene(cam);;
 
     img.render(scene, accuracy, samples, depth);
     img.save();
-}
-
-int main () {
-    simple_raytracer_tp1();
     return 0;
 }

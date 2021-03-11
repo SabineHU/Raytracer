@@ -9,14 +9,16 @@
 #include "triangle.hh"
 #include "light.hh"
 
-Scene init_scene() {
+Camera init_camera() {
     /* Camera */
+    //    point3(-2,2,1), point3(0,0,-1), vec3(0,1,0)
     Vect look_from(3, 1.5, -4);
     Vect look_at(0, 0, 0);
     Vect vup(0,1,0);
-    Camera cam(look_from, look_at, vup);
+    return Camera(look_from, look_at, vup);
+}
 
-    //    point3(-2,2,1), point3(0,0,-1), vec3(0,1,0)
+Scene init_scene(Camera& cam) {
 
     /* Scene */
     Scene scene(cam);
@@ -38,8 +40,6 @@ Scene init_scene() {
     scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 2.5));
 
     /* Textures */
-
-    //auto texture = std::make_shared<Unique>(white);
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     auto board_black_blue = std::make_shared<CheckerBoard>(black, blue, 0.3);
     auto unique_green = std::make_shared<Unique>(green2, 0.05);
