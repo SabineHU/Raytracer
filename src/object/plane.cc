@@ -36,3 +36,8 @@ double Plane::find_intersection(const Ray& ray) const {
     double b = vector::dot(normal, ray.origin + normal * -distance);
     return - b / a;
 }
+
+int Plane::get_isolevel_at(const Point3&) const {
+    // TODO
+    return 100;
+}

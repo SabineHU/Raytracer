@@ -15,8 +15,11 @@ public:
     virtual Vect get_normal_at(const Vect& intersection_position) const = 0;
     virtual double find_intersection(const Ray& ray) const = 0;
 
+    virtual int get_isolevel_at(const Point3&) const = 0;
+
     /* Attributes */
     shared_texture texture;
 };
+
 
 using shared_object = std::shared_ptr<Object>;

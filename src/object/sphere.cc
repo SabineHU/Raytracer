@@ -46,3 +46,18 @@ double Sphere::find_intersection(const Ray& ray) const {
         return x1;
     return math::quadratic_equation_root_2(a, b, discriminant) - 0.000001;
 }
+
+int Sphere::get_isolevel_at(const Point3& point) const {
+    double distance = (point - this->center).magnitude();
+    if (distance > radius)
+        return 100;
+    if (distance / radius * 100 > 80)
+        return 1;
+    if (distance / radius * 100 > 60)
+        return 2;
+    if (distance / radius * 100 > 40)
+        return 3;
+    if (distance / radius * 100 > 20)
+        return 4;
+    return 5;
+}

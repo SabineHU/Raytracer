@@ -58,3 +58,8 @@ double Triangle::find_intersection(const Ray& ray) const {
         return distance;
     return -1;
 }
+
+int Triangle::get_isolevel_at(const Point3&) const {
+    // TODO
+    return 100;
+}

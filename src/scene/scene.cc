@@ -4,10 +4,10 @@
 
 
 Scene::Scene(const Camera& cam)
-    : camera(cam), ambient_light(0), objects(std::vector<shared_object>()),
+    : camera(cam), ambient_light(0),
+    objects(std::vector<shared_object>()),
     lights(std::vector<shared_light>())
 {}
-
 
 void Scene::add_object(shared_object obj) {
     this->objects.push_back(obj);

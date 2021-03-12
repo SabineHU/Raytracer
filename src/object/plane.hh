@@ -14,6 +14,8 @@ public:
     virtual Vect get_normal_at(const Vect&) const override;
     virtual double find_intersection(const Ray& ray) const override;
 
+    virtual int get_isolevel_at(const Point3&) const override;
+
     /* Attributes */
     Vect normal;
     double distance;

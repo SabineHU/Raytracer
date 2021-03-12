@@ -59,26 +59,19 @@ void tp2() {
 
     scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 0.2));
 
+    /* Init blob objects */
+    std::vector<shared_object> blob_objects;
+    blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0, 0), 0.5, orange));
+
+    Blob blob(Point3(-1, -1, -1), 4, 0.125, 10, blob_objects);
+    scene.add_object(std::make_shared<Sphere>(Point3(-1.5, 0, 0), 0.5, orange));
+
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 
-    Point3 points[8] = {
-        Point3(0, 0, 0, 1),
-        Point3(1, 0, 0, 3),
-        Point3(1, 0, 1, 1),
-        Point3(0, 0, 1, 1),
+    blob.compute();
 
-        Point3(0, 1, 0, 3),
-        Point3(1, 1, 0, 4),
-        Point3(1, 1, 1, 8),
-        Point3(0, 1, 1, 3)
-    };
-    double s = 3;
-
-    Blob blob;
-    blob.compute_cube(points, s);
-
-    for (auto& triangle: blob.triangles) {
+    for (auto& triangle: blob.get_triangles()) {
         scene.add_object(std::make_shared<Triangle>(triangle));
     }
 

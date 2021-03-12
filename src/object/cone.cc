@@ -57,3 +57,8 @@ double Cone::find_intersection(const Ray& ray) const {
         return x;
     return -1;
 }
+
+int Cone::get_isolevel_at(const Point3&) const {
+    // TODO
+    return 100;
+}
