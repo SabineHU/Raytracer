@@ -6,6 +6,7 @@ class Vect {
 public:
     Vect();
     Vect(double, double, double);
+    Vect(double, double, double, double);
 
     double magnitude() const;
 
@@ -38,10 +39,14 @@ public:
     Vect& operator*=(double u);
     Vect& operator/=(double u);
 
+    bool operator==(const Vect& u) const;
+    bool operator!=(const Vect& u) const;
+
     Vect clamp() const;
 
     /* Attributes */
-    double x, y, z, s;
+    double x, y, z;
+    double iso;
 
 };
 

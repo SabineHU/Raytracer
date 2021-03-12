@@ -42,8 +42,7 @@ void tp1() {
     img.save();
 }
 
-int main () {
-
+void tp2() {
     std::srand(std::time(nullptr));
 
     double alpha = math::degree_to_radian(20);
@@ -63,21 +62,21 @@ int main () {
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 
-    double values[8] = {1, 3, 1, 1, 3, 4, 8, 3 };
     Point3 points[8] = {
-    Point3(0, 0, 0),
-    Point3(2, 0, 0),
-    Point3(2, 0, 2),
-    Point3(0, 0, 2),
-    Point3(0, 2, 0),
-    Point3(2, 2, 0),
-    Point3(2, 2, 2),
-    Point3(0, 2, 2)
+        Point3(0, 0, 0, 1),
+        Point3(1, 0, 0, 3),
+        Point3(1, 0, 1, 1),
+        Point3(0, 0, 1, 1),
+
+        Point3(0, 1, 0, 3),
+        Point3(1, 1, 0, 4),
+        Point3(1, 1, 1, 8),
+        Point3(0, 1, 1, 3)
     };
     double s = 3;
 
     Blob blob;
-    blob.compute_cube(values, points, s);
+    blob.compute_cube(points, s);
 
     for (auto& triangle: blob.triangles) {
         scene.add_object(std::make_shared<Triangle>(triangle));
@@ -85,5 +84,10 @@ int main () {
 
     img.render(scene, accuracy, samples, depth);
     img.save();
+}
+
+int main () {
+    //tp1();
+    tp2();
     return 0;
 }

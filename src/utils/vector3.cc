@@ -3,11 +3,15 @@
 #include "vector3.hh"
 
 Vect::Vect()
-    : x(0), y(0), z(0)
+    : x(0), y(0), z(0), iso(0)
 {}
 
 Vect::Vect(double a, double b, double c)
-    : x(a), y(b), z(c)
+    : x(a), y(b), z(c), iso(0)
+{}
+
+Vect::Vect(double a, double b, double c, double d)
+    : x(a), y(b), z(c), iso(d)
 {}
 
 double Vect::magnitude() const {
@@ -112,6 +116,13 @@ Vect& Vect::operator/=(double u) {
     this->y /= u;
     this->z /= u;
     return *this;
+}
+
+bool Vect::operator==(const Vect& u) const {
+    return this->x == u.x && this->y == u.y && this->z == u.z;
+}
+bool Vect::operator!=(const Vect& u) const {
+    return !(*this == u);
 }
 
 static double clamp_value(double value) {
