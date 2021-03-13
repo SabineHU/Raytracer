@@ -152,10 +152,10 @@ Point3 Blob::interpolate_vertex(const Point3& p1, const Point3& p2) {
 }
 
 int Blob::get_isolevel_at(const Point3& p) const {
-    int level = 0;
+    int level = 100;
     for (const auto& obj : this->blob_objects) {
         int obj_level = obj->get_isolevel_at(p);
-        level = obj_level > level ? obj_level : level;
+        level = obj_level < level ? obj_level : level;
     }
     return level;
 }
