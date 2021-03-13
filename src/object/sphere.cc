@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "sphere.hh"
 #include "math.hh"
 #include "vector3_op.hh"
@@ -48,16 +50,13 @@ double Sphere::find_intersection(const Ray& ray) const {
 }
 
 int Sphere::get_isolevel_at(const Point3& point) const {
-    double distance = (point - this->center).magnitude();
-    if (distance > radius)
+    double distance = (point - this->center).square_length();
+    if (distance > radius * radius)
         return 100;
-    if (distance / radius * 100 > 80)
-        return 1;
-    if (distance / radius * 100 > 60)
-        return 2;
-    if (distance / radius * 100 > 40)
-        return 3;
-    if (distance / radius * 100 > 20)
-        return 4;
-    return 5;
+
+    for (int i = 99; i > 0; i-=1) {
+        if (distance > (radius * i / 100) * (radius * i / 100))
+            return i;
+    }
+    return 0;
 }

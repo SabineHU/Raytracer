@@ -14,6 +14,10 @@ Vect::Vect(double a, double b, double c, double d)
     : x(a), y(b), z(c), iso(d)
 {}
 
+double Vect::square_length() const {
+    return x * x + y * y + z * z;
+}
+
 double Vect::magnitude() const {
     return std::sqrt(x * x + y * y + z * z);
 }
@@ -36,6 +40,10 @@ double Vect::dot_y() const {
 
 double Vect::dot_z() const {
     return z * z;
+}
+
+bool Vect::is_zero() const {
+    return x == 0 && y == 0 && z == 0;
 }
 
 double Vect::sum() const {

@@ -39,20 +39,20 @@ void Blob::init_cubes(const Point3& orig, double e, double d) {
     // e is the big cube
     // d pas
 
-    for (double i = orig.x; i < e; i += d) {
-        for (double j = orig.y; j < e; j += d) {
-            for (double k = orig.z; k < e; k +=d) {
+    for (double i = orig.x; i < orig.x + e; i += d) {
+        for (double j = orig.y; j < orig.y + e; j += d) {
+            for (double k = orig.z; k < orig.z + e; k +=d) {
                 Cube cube;
 
-                cube.points[0] = this->init_cube_point(i    , j     , k);
-                cube.points[1] = this->init_cube_point(i + d, j     , k);
-                cube.points[2] = this->init_cube_point(i + d, j     , k + d);
-                cube.points[3] = this->init_cube_point(i    , j     , k + d);
+                cube.points[0] = this->init_cube_point(i    , j + d , k);
+                cube.points[1] = this->init_cube_point(i + d, j + d , k);
+                cube.points[2] = this->init_cube_point(i + d, j + d , k + d);
+                cube.points[3] = this->init_cube_point(i    , j + d , k + d);
 
-                cube.points[4] = this->init_cube_point(i    , j + d , k);
-                cube.points[5] = this->init_cube_point(i + d, j + d , k);
-                cube.points[6] = this->init_cube_point(i + d, j + d , k + d);
-                cube.points[7] = this->init_cube_point(i    , j + d , k + d);
+                cube.points[4] = this->init_cube_point(i    , j     , k);
+                cube.points[5] = this->init_cube_point(i + d, j     , k);
+                cube.points[6] = this->init_cube_point(i + d, j     , k + d);
+                cube.points[7] = this->init_cube_point(i    , j     , k + d);
 
                 this->cubes.push_back(cube);
             }
@@ -83,17 +83,21 @@ void Blob::compute_cube(const Point3 p[8]) {
     if (edgeTable[index] & 2)
         vertlist[1] = interpolate_vertex(p[1], p[2]);
     if (edgeTable[index] & 4)
-        vertlist[2] = interpolate_vertex(p[2], p[3]);
+        vertlist[2] = interpolate_vertex(p[3], p[2]);
+        //vertlist[2] = interpolate_vertex(p[2], p[3]);
     if (edgeTable[index] & 8)
-        vertlist[3] = interpolate_vertex(p[3], p[0]);
+        vertlist[3] = interpolate_vertex(p[0], p[3]);
+        //vertlist[3] = interpolate_vertex(p[3], p[0]);
     if (edgeTable[index] & 16)
         vertlist[4] = interpolate_vertex(p[4], p[5]);
     if (edgeTable[index] & 32)
         vertlist[5] = interpolate_vertex(p[5], p[6]);
     if (edgeTable[index] & 64)
-        vertlist[6] = interpolate_vertex(p[6], p[7]);
+        vertlist[6] = interpolate_vertex(p[7], p[6]);
+        //vertlist[6] = interpolate_vertex(p[6], p[7]);
     if (edgeTable[index] & 128)
-        vertlist[7] = interpolate_vertex(p[7], p[4]);
+        vertlist[7] = interpolate_vertex(p[4], p[7]);
+        //vertlist[7] = interpolate_vertex(p[7], p[4]);
     if (edgeTable[index] & 256)
         vertlist[8] = interpolate_vertex(p[0], p[4]);
     if (edgeTable[index] & 512)

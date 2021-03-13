@@ -14,7 +14,7 @@ Camera init_camera() {
     /* Camera */
     //    point3(-2,2,1), point3(0,0,-1), vec3(0,1,0)
     //Vect look_from(3, 1.5, -4);
-    Vect look_from(0, 1.5, -4);
+    Vect look_from(0, 0, -5);
     Vect look_at(0, 0, 0);
     Vect vup(0,1,0);
     return Camera(look_from, look_at, vup);
@@ -28,6 +28,9 @@ Scene init_scene(Camera& cam) {
 
     /* Lights */
     scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 2.5));
+
+    //scene.add_light(std::make_shared<Light>(Point3(7, 10, -10), green, 1.5));
+    //scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), red, 1.5));
 
     /* Textures */
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);

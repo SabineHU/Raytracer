@@ -58,6 +58,9 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
 
     for (const auto& light: this->lights) {
 
+        if (light->get_intensity() == 0)
+            continue;
+
         Vect light_direction = (light->get_light_position() - ray.origin).normalize();
         float cosine_angle = vector::dot(normal, light_direction);
 
@@ -70,16 +73,15 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
             Ray shadow_ray(ray.origin, (light->get_light_position() - ray.origin).normalize());
 
             if (!this->has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
-                res_color += color * light->get_light_color() * cosine_angle;
+                res_color += color * light->get_light_color() * cosine_angle * light->get_intensity();
 
                 if (obj_specular > 0 && obj_specular <= 1) {
-                    // special [0-1]
                     Ray reflection_ray = ray.get_reflection_ray(normal);
                     double specular = vector::dot(reflection_ray.direction, light_direction);
                     if (specular > 0) {
                         // reduce specular to have less luminosity
-                        // specular = std::pow(specular, 5);
-                        res_color += light->get_light_color() * specular * obj_specular * light->get_intensity();
+                        //specular = std::pow(specular, 5);
+                        res_color += light->get_light_color() * specular * obj_specular;
                     }
                 }
 

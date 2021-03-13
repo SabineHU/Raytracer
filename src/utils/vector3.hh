@@ -8,6 +8,7 @@ public:
     Vect(double, double, double);
     Vect(double, double, double, double);
 
+    double square_length() const;
     double magnitude() const;
 
     Vect normalize() const;
@@ -18,6 +19,7 @@ public:
     double dot_z() const;
 
     double sum() const;
+    bool is_zero() const;
 
     Vect operator+(const Vect& u) const;
     Vect operator-(const Vect& u) const;
