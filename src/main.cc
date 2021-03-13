@@ -66,14 +66,14 @@ void tp2() {
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 1.5, 0), 0.5, light_blue));
 
-    Blob blob(Point3(-1, -1, -1), 4, 0.5, 95, blob_objects);
+    Blob blob(Point3(-2, -2, -2), 6, 0.5, 50, blob_objects);
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
-    scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, orange));
+    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, light_blue));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 1.5, 0), 0.5, light_blue));
 
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
-    scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
+    //scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 
     blob.compute();
 

@@ -51,12 +51,12 @@ double Sphere::find_intersection(const Ray& ray) const {
 
 int Sphere::get_isolevel_at(const Point3& point) const {
     double distance = (point - this->center).square_length();
-    if (distance > radius * radius)
+    if (distance > 4 * radius * radius)
         return 100;
 
-    for (int i = 99; i > 0; i-=1) {
+    for (int i = 199; i > 100; i-=1) {
         if (distance > (radius * i / 100) * (radius * i / 100))
-            return i;
+            return i - 100;
     }
     return 0;
 }
