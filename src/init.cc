@@ -14,7 +14,8 @@ Camera init_camera() {
     /* Camera */
     //    point3(-2,2,1), point3(0,0,-1), vec3(0,1,0)
     //Vect look_from(3, 1.5, -4);
-    Vect look_from(1.5, 2, -4);
+    //Vect look_from(1.5, 2, -4);
+    Vect look_from(0, 0, -4);
     Vect look_at(0, 0, 0);
     Vect vup(0,1,0);
     return Camera(look_from, look_at, vup);
