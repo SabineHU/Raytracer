@@ -39,9 +39,10 @@ void Blob::init_cubes(const Point3& orig, double e, double d) {
     // e is the big cube
     // d pas
 
-    for (double i = orig.x; i < orig.x + e; i += d) {
-        for (double j = orig.y; j < orig.y + e; j += d) {
-            for (double k = orig.z; k < orig.z + e; k +=d) {
+    double e2 = e / 2;
+    for (double i = orig.x - e2; i < orig.x + e2; i += d) {
+        for (double j = orig.y - e2; j < orig.y + e2; j += d) {
+            for (double k = orig.z - e2; k < orig.z + e2; k +=d) {
                 Cube cube;
 
                 cube.points[0] = this->init_cube_point(i    , j + d , k);

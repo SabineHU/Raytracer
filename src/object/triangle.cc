@@ -55,7 +55,7 @@ double Triangle::find_intersection(const Ray& ray) const {
     if (vector::dot(vector::cross(C - A, P - A), normal) >= 0
         && vector::dot(vector::cross(B - C, P - C), normal) >= 0
         && vector::dot(vector::cross(A - B, P - B), normal) >= 0)
-        return distance;
+        return distance - 0.000001;
     return -1;
 }
 

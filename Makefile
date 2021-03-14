@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
-         -g3 -O0 -fno-inline -fsanitize=address \
+         -g3 -O3 -fno-inline -fsanitize=address \
          -I./src \
          -I./src/utils \
          -I./src/light \
