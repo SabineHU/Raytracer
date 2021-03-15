@@ -12,7 +12,7 @@ public:
     Object(shared_texture t) : texture(t) {}
 
     /* Methods */
-    virtual Vect get_normal_at(const Vect& intersection_position) const = 0;
+    virtual Vect get_normal_at(const Vect& point) const = 0;
     virtual double find_intersection(const Ray& ray) const = 0;
 
     virtual int get_isolevel_at(const Point3&) const = 0;

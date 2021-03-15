@@ -1,14 +1,18 @@
 #include <cmath>
+#include <iostream>
 
 #include "blob.hh"
 #include "tools.hh"
 #include "random_color.hh"
+#include "hash.hh"
+#include "vector3_op.hh"
 
 Blob::Blob(std::vector<shared_object> obj)
     : potentiel(3),
-    triangles(std::vector<Triangle>()),
+    triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>())
+    cubes(std::vector<Cube>()),
+    smooth(false)
 {
     const Point3 origin = Point3(0, 0, 0);
     init_cubes(origin, 10, 1);
@@ -16,9 +20,10 @@ Blob::Blob(std::vector<shared_object> obj)
 
 Blob::Blob(double e, double d, double s, std::vector<shared_object> obj)
     : potentiel(s),
-    triangles(std::vector<Triangle>()),
+    triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>())
+    cubes(std::vector<Cube>()),
+    smooth(false)
 {
     const Point3 origin = Point3(0, 0, 0);
     init_cubes(origin, e, d);
@@ -27,11 +32,24 @@ Blob::Blob(double e, double d, double s, std::vector<shared_object> obj)
 Blob::Blob(const Point3& origin, double e, double d, double s,
         std::vector<shared_object> obj)
     : potentiel(s),
-    triangles(std::vector<Triangle>()),
+    triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>())
+    cubes(std::vector<Cube>()),
+    smooth(false)
 {
     init_cubes(origin, e, d);
+}
+
+
+Blob::Blob(const Point3& orig, double e, double d, double s,
+        std::vector<shared_object> obj, bool smooth_)
+    : potentiel(s),
+    triangles(std::vector<SmoothTriangle>()),
+    blob_objects(obj),
+    cubes(std::vector<Cube>()),
+    smooth(smooth_)
+{
+    init_cubes(orig, e, d);
 }
 
 void Blob::init_cubes(const Point3& orig, double e, double d) {
@@ -68,8 +86,22 @@ Point3 Blob::init_cube_point(double i, double j, double k) const {
 }
 
 void Blob::compute() {
-    for (const auto& cube: this->cubes)
+    for (const auto& cube: this->cubes) {
         this->compute_cube(cube.points);
+    }
+
+    if (this->smooth) {
+        for (auto& [key, value] : this->normals) {
+            value = value.normalize();
+            // / value.second;
+        }
+
+        for (auto& triangle: this->triangles) {
+            triangle.normalA = this->normals[hash::get_point_hash(triangle.A)];
+            triangle.normalB = this->normals[hash::get_point_hash(triangle.B)];
+            triangle.normalC = this->normals[hash::get_point_hash(triangle.C)];
+        }
+    }
 }
 
 void Blob::compute_cube(const Point3 p[8]) {
@@ -85,20 +117,16 @@ void Blob::compute_cube(const Point3 p[8]) {
         vertlist[1] = interpolate_vertex(p[1], p[2]);
     if (edgeTable[index] & 4)
         vertlist[2] = interpolate_vertex(p[3], p[2]);
-        //vertlist[2] = interpolate_vertex(p[2], p[3]);
     if (edgeTable[index] & 8)
         vertlist[3] = interpolate_vertex(p[0], p[3]);
-        //vertlist[3] = interpolate_vertex(p[3], p[0]);
     if (edgeTable[index] & 16)
         vertlist[4] = interpolate_vertex(p[4], p[5]);
     if (edgeTable[index] & 32)
         vertlist[5] = interpolate_vertex(p[5], p[6]);
     if (edgeTable[index] & 64)
         vertlist[6] = interpolate_vertex(p[7], p[6]);
-        //vertlist[6] = interpolate_vertex(p[6], p[7]);
     if (edgeTable[index] & 128)
         vertlist[7] = interpolate_vertex(p[4], p[7]);
-        //vertlist[7] = interpolate_vertex(p[7], p[4]);
     if (edgeTable[index] & 256)
         vertlist[8] = interpolate_vertex(p[0], p[4]);
     if (edgeTable[index] & 512)
@@ -108,22 +136,44 @@ void Blob::compute_cube(const Point3 p[8]) {
     if (edgeTable[index] & 2048)
         vertlist[11] = interpolate_vertex(p[3], p[7]);
 
-    for (int i=0; triTable[index][i] != -1; i+=3) {
-      auto a = vertlist[triTable[index][i]];
-      auto b = vertlist[triTable[index][i + 1]];
-      auto c = vertlist[triTable[index][i + 2]];
-      if (a == b || a == c || b == c)
-          continue;
-      // TODO: remove random color
-      this->add_triangle(Triangle(a, b, c, r_random::random_color()));
-   }
+    for (int i = 0; triTable[index][i] != -1; i += 3) {
+        auto a = vertlist[triTable[index][i]];
+        auto b = vertlist[triTable[index][i + 1]];
+        auto c = vertlist[triTable[index][i + 2]];
+        if (a == b || a == c || b == c)
+            continue;
+        // TODO: remove random color
+        auto triangle = SmoothTriangle(a, b, c, r_random::random_color());
+        this->add_triangle(triangle);
+
+        if (this->smooth) {
+
+            size_t sa = hash::get_point_hash(a);
+            size_t sb = hash::get_point_hash(b);
+            size_t sc = hash::get_point_hash(c);
+
+            if (this->normals.find(sa) == this->normals.end())
+                this->normals[sa] = Vect(0, 0, 0);
+            if (this->normals.find(sb) == this->normals.end())
+                this->normals[sb] = Vect(0, 0, 0);
+            if (this->normals.find(sc) == this->normals.end())
+                this->normals[sc] = Vect(0, 0, 0);
+
+            //auto normal = triangle.get_normal_at(Point3());
+            auto normal = vector::cross(c - a, b - a);
+
+            this->normals[sa] += normal;
+            this->normals[sb] += normal;
+            this->normals[sc] += normal;
+        }
+    }
 }
 
-std::vector<Triangle> Blob::get_triangles() const {
+std::vector<SmoothTriangle> Blob::get_triangles() const {
     return triangles;
 }
 
-void Blob::add_triangle(const Triangle& t) {
+void Blob::add_triangle(const SmoothTriangle& t) {
     this->triangles.push_back(t);
 }
 
@@ -153,10 +203,11 @@ Point3 Blob::interpolate_vertex(const Point3& p1, const Point3& p2) {
 }
 
 int Blob::get_isolevel_at(const Point3& p) const {
-    int level = 100;
+    int level = 0;
     for (const auto& obj : this->blob_objects) {
-        int obj_level = obj->get_isolevel_at(p);
-        level = obj_level < level ? obj_level : level;
+        //int obj_level = obj->get_isolevel_at(p);
+        //level = obj_level < level ? obj_level : level;
+        level += obj->get_isolevel_at(p);
     }
     return level;
 }

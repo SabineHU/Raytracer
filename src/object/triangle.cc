@@ -42,7 +42,7 @@ double Triangle::get_distance() const {
 }
 
 double Triangle::find_intersection(const Ray& ray) const {
-    const Vect normal = this->get_normal();
+    const Vect normal = this->get_normal_at(ray.origin);
     double a = vector::dot(ray.direction, normal);
     if (a == 0)
         return -1;
@@ -62,4 +62,7 @@ double Triangle::find_intersection(const Ray& ray) const {
 int Triangle::get_isolevel_at(const Point3&) const {
     // TODO
     return 100;
+}
+
+Vect Triangle::get_barycenter() const {
 }

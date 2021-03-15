@@ -15,10 +15,12 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
-private:
+protected:
     Vect get_normal() const;
     double get_distance() const;
+    Vect get_barycenter() const;
 
+public:
     /* Attributes */
     Point3 A;
     Point3 B;

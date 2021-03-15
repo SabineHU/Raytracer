@@ -15,6 +15,7 @@
 #include "scene.hh"
 #include "init.hh"
 #include "math.hh"
+#include "smooth_triangle.hh"
 
 #include "checkerboard.hh"
 #include "blob.hh"
@@ -67,10 +68,10 @@ void tp2() {
     //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 2, 0), 0.5, light_blue));
 
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0  , 0.75  , 0), 0.5, light_blue));
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(0.5, 0, 0), 0.5, light_blue));
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(-.5, 0, 0), 0.5, light_blue));
+    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0.5, 0, 0), 0.5, light_blue));
+    //blob_objects.push_back(std::make_shared<Sphere>(Point3(-.5, 0, 0), 0.5, light_blue));
 
-    Blob blob(Point3(0, 0, 0), 3, 0.25, 5, blob_objects);
+    Blob blob(Point3(0, 0, 0), 3, 0.34, 15, blob_objects, true);
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, light_blue));
@@ -85,7 +86,7 @@ void tp2() {
     blob.compute();
 
     for (auto& triangle: blob.get_triangles()) {
-        scene.add_object(std::make_shared<Triangle>(triangle));
+        scene.add_object(std::make_shared<SmoothTriangle>(triangle));
     }
 
     img.render(scene, accuracy, samples, depth);

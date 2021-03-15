@@ -9,4 +9,6 @@ public:
     double distance;
     Vect normal;
     Color color;
+
+    Vect barycenter;
 };
