@@ -18,7 +18,6 @@ public:
 protected:
     Vect get_normal() const;
     double get_distance() const;
-    Vect get_barycenter() const;
 
 public:
     /* Attributes */
