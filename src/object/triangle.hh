@@ -10,8 +10,8 @@ public:
     Triangle(const Point3&, const Point3&, const Point3&, const Color&);
 
     /* Methods */
-    virtual Vect get_normal_at(const Vect& point) const override;
-    virtual double find_intersection(const Ray& ray) const override;
+    virtual Vect get_normal_at(const Vect& point, const Point3&) const override;
+    virtual double find_intersection(const Ray& ray) override;
 
     virtual int get_isolevel_at(const Point3&) const override;
 
@@ -24,4 +24,6 @@ public:
     Point3 A;
     Point3 B;
     Point3 C;
+
+    Point3 barycenter;
 };

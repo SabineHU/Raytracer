@@ -15,10 +15,11 @@ SmoothTriangle::SmoothTriangle(const Point3& a, const Point3& b,
     : Triangle(a, b, c), normalA(na), normalB(nb), normalC(nc)
 {}
 
-Vect SmoothTriangle::get_normal_at(const Vect& point) const {
-    auto n = Triangle::get_normal_at(point);
+Vect SmoothTriangle::get_normal_at(const Vect& point,
+        const Point3& center) const {
+    auto n = Triangle::get_normal_at(point, center);
     if (normalA.is_zero() && normalB.is_zero() && normalC.is_zero())
-        return Triangle::get_normal_at(point);
+        return Triangle::get_normal_at(point, center);
 
     auto dist_a = (A - point).magnitude();
     auto dist_b = (B - point).magnitude();
@@ -29,5 +30,12 @@ Vect SmoothTriangle::get_normal_at(const Vect& point) const {
     auto b = this->normalB;
     auto c = this->normalC;
 
-    return (a + b + c).normalize();
+
+    //return (a + b + c).normalize();
+
+    //hitNormal = (1 - uv.x - uv.y) * n0 + uv.x * n1 + uv.y * n2; 
+    auto normal = normalA * (1 - barycenter.x - barycenter.y) 
+        + normalB * barycenter.x
+        + normalC * barycenter.y;
+    return normal.normalize();
 }

@@ -28,20 +28,20 @@ Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
     : Object(std::make_shared<Unique>(col)), A(a), B(b), C(c)
 {}
 
-Vect Triangle::get_normal_at(const Vect&) const {
+Vect Triangle::get_normal_at(const Vect&, const Point3&) const {
     // Normal is the same at any point of the triangle
     return (vector::cross(C - A, B - A)).normalize();
 }
 
 Vect Triangle::get_normal() const {
-    return this->get_normal_at(Vect(0, 0, 0));
+    return this->get_normal_at(Vect(), Vect());
 }
 
 double Triangle::get_distance() const {
     return vector::dot(this->get_normal(), A);
 }
 
-double Triangle::find_intersection(const Ray& ray) const {
+double Triangle::find_intersection(const Ray& ray) {
 
     auto v0v1 = B - A;
     auto v0v2 = C - A;
@@ -64,6 +64,7 @@ double Triangle::find_intersection(const Ray& ray) const {
 
     auto t = vector::dot(v0v2, qvec) * invDet;
 
+    this->barycenter = Vect(u, v, 0);
     return (t > 0) ? t : -1;
 
     //const Vect normal = this->get_normal_at(ray.origin);

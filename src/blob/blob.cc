@@ -209,5 +209,5 @@ int Blob::get_isolevel_at(const Point3& p) const {
         //level = obj_level < level ? obj_level : level;
         level += obj->get_isolevel_at(p);
     }
-    return level;
+    return level / this->blob_objects.size();
 }

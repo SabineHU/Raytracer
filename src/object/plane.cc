@@ -24,11 +24,11 @@ Plane::Plane(const Vect& n, double d, const Color& c)
     : Object(std::make_shared<Unique>(c)), normal(n), distance(d)
 {}
 
-Vect Plane::get_normal_at(const Vect&) const {
+Vect Plane::get_normal_at(const Vect&, const Point3&) const {
     return normal;
 }
 
-double Plane::find_intersection(const Ray& ray) const {
+double Plane::find_intersection(const Ray& ray) {
     double a = vector::dot(ray.direction, normal);
     if (a == 0)
         return -1;

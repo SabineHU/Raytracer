@@ -86,7 +86,8 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
         return Color(0, 0, 0);
 
     // Color
-    Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
+    // TODO barycenter if object is triangle
+    Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin, Vect());
     Color object_color = closest_obj->texture->get_color(intersection_ray, object_normal);
     Color final_color = scene.ambient_light != 0 ? object_color * scene.ambient_light : object_color;
     double specular = closest_obj->texture->specular;

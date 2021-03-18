@@ -26,14 +26,14 @@ Cone::Cone(const Point3& p, double r, double h, const Color& c)
     : Object(std::make_shared<Unique>(c)), position(p), radius(r), height(h)
 {}
 
-Vect Cone::get_normal_at(const Vect& point) const {
+Vect Cone::get_normal_at(const Vect& point, const Point3&) const {
     // center of cone and intersection point vector
     Vect PP = point - this->position;
     double r = std::sqrt(PP.dot_x() + PP.dot_z());
     return Vect(PP.x, r * this->radius / this->height, PP.z).normalize();
 }
 
-double Cone::find_intersection(const Ray& ray) const {
+double Cone::find_intersection(const Ray& ray) {
     const Vect dir = ray.direction;
 
     // Position Origin vector

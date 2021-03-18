@@ -59,7 +59,8 @@ void tp2() {
     Scene scene(cam);
     scene.ambient_light = 0.2;
 
-    scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 1.5));
+    scene.add_light(std::make_shared<Light>(Point3(0, 0, -10), white, 1.5));
+    //scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 1.5));
 
     /* Init blob objects */
     std::vector<shared_object> blob_objects;
@@ -68,10 +69,10 @@ void tp2() {
     //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 2, 0), 0.5, light_blue));
 
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0  , 0.75  , 0), 0.5, light_blue));
-    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0.5, 0, 0), 0.5, light_blue));
-    //blob_objects.push_back(std::make_shared<Sphere>(Point3(-.5, 0, 0), 0.5, light_blue));
+    blob_objects.push_back(std::make_shared<Sphere>(Point3(0.5, 0, 0), 0.5, light_blue));
+    blob_objects.push_back(std::make_shared<Sphere>(Point3(-.5, 0, 0), 0.5, light_blue));
 
-    Blob blob(Point3(0, 0, 0), 3, 0.34, 15, blob_objects, true);
+    Blob blob(Point3(0, 0, 0), 6, 0.125, 90, blob_objects, true);
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, light_blue));

@@ -27,11 +27,11 @@ Sphere::Sphere(const Vect& cent, double rad, const Color& c)
     : Object(std::make_shared<Unique>(c)), center(cent), radius(rad)
 {}
 
-Vect Sphere::get_normal_at(const Vect& point) const {
+Vect Sphere::get_normal_at(const Vect& point, const Point3&) const {
     return (point - center).normalize();
 }
 
-double Sphere::find_intersection(const Ray& ray) const {
+double Sphere::find_intersection(const Ray& ray) {
     auto oc = ray.origin - this->center;
 
     double a = 1; // normalized
