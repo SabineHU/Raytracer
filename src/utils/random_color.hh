@@ -18,7 +18,6 @@ inline double random_0_1() {
 
 inline Color random_color() {
     return Color(random_0_1(), random_0_1(), random_0_1()) / 2;
-    //return Color(random_0_1(), random_0_1(), random_0_1());
 }
 
 }

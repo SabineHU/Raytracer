@@ -44,8 +44,6 @@ void tp1() {
 }
 
 void tp2() {
-    std::srand(std::time(nullptr));
-
     double alpha = math::degree_to_radian(20);
     double beta = alpha * 16.0 / 9.0; // Get ratio 16:9
     double zmin = 1000;
@@ -62,17 +60,20 @@ void tp2() {
     scene.add_light(std::make_shared<Light>(Point3(0, 0, -10), white, 1.5));
     //scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 1.5));
 
-    /* Init blob objects */
+    /* Add blob objects */
     std::vector<shared_object> blob_objects;
-    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0, 0), 0.5, orange));
-    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, orange));
-    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 2, 0), 0.5, light_blue));
-
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0  , 0.75  , 0), 0.5, light_blue));
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0.5, 0, 0), 0.5, light_blue));
     blob_objects.push_back(std::make_shared<Sphere>(Point3(-.5, 0, 0), 0.5, light_blue));
-
     Blob blob(Point3(0, 0, 0), 6, 0.125, 90, blob_objects, true);
+
+    blob.compute();
+
+    for (auto& triangle: blob.get_triangles()) {
+        scene.add_object(std::make_shared<SmoothTriangle>(triangle));
+    }
+
+    /* Add scene objects */
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, orange));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, light_blue));
@@ -84,18 +85,16 @@ void tp2() {
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 
-    blob.compute();
-
-    for (auto& triangle: blob.get_triangles()) {
-        scene.add_object(std::make_shared<SmoothTriangle>(triangle));
-    }
 
     img.render(scene, accuracy, samples, depth);
     img.save();
 }
 
 int main () {
-    //tp1();
-    tp2();
+
+    std::srand(std::time(nullptr));
+
+    tp1();
+    //tp2();
     return 0;
 }
