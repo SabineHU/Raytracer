@@ -56,27 +56,27 @@ void Image::set_pixel_color(int i, int j, const Color& color) {
 
 }
 
-void Image::set_index_x_y(double& x, double& y, int samples, int i, int j, int k) {
+void Image::set_index_x_y(double& x, double& y, double samples, int i, int j, double k) {
     auto ratio = this->get_ratio();
-    if (samples == 1) {
-        x = (i + 0.5)/width;
-        y = ((height - j) + 0.5)/height;
-        if (width > height) {
-            x = ((i+0.5)/width)*ratio - (((width-height)/(double)height)/2);
-        }
-        else if (height > width) {
-            y = (((height - j) + 0.5)/height)/ratio - (((height - width)/(double)width)/2);
-        }
+
+    double dheight = height * 2;
+    double dwidth = width * 2;
+
+    double value = 0.5;
+    if (samples != 1) {
+        // anti aliasing
+        value = k / (samples - 1);
+    }
+
+    if (width > height) {
+        x = (i + value) / width * ratio - (width - height) / dheight;
+        y = ((height - j) + value)/height;
+    } else if (height > width) {
+        x = (i + value)/width;
+        y = (height - j + value) / height / ratio - (height - width) / dwidth;
     } else {
-        // anti-aliasing
-        x = (i + (double)k/((double)samples - 1))/width;
-        y = ((height - j) + (double)k/((double)samples - 1))/height;
-        if (width > height) {
-            x = ((i + (double)k/((double)samples - 1))/width)*ratio - (((width-height)/(double)height)/2);
-        }
-        else if (height > width) {
-            y = (((height - j) + (double)k/((double)samples - 1))/height)/ratio - (((height - width)/(double)width)/2);
-        }
+        x = (i + value)/width;
+        y = ((height - j) + value)/height;
     }
 }
 

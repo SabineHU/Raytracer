@@ -38,4 +38,7 @@ raytracing: ${OBJ}
 clean:
 	${RM} ${OBJ} raytracing
 
+check:
+	diff original.ppm test.ppm
+
 .PHONY: clean raytracing
