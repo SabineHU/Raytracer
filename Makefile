@@ -39,6 +39,7 @@ clean:
 	${RM} ${OBJ} raytracing
 
 check:
+	time ./raytracing > test.ppm
 	diff original.ppm test.ppm
 
 .PHONY: clean raytracing

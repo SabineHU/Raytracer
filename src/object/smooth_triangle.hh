@@ -10,7 +10,7 @@ public:
     SmoothTriangle(const Point3&, const Point3&, const Point3&,
             const Vect&, const Vect&, const Vect&);
 
-    virtual Vect get_normal_at(const Vect&, const Point3&) const override;
+    virtual Vect get_normal_at(const Vect&) const override;
 
     /* Attributes */
     Vect normalA;

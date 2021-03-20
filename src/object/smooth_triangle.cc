@@ -15,10 +15,9 @@ SmoothTriangle::SmoothTriangle(const Point3& a, const Point3& b,
     : Triangle(a, b, c), normalA(na), normalB(nb), normalC(nc)
 {}
 
-Vect SmoothTriangle::get_normal_at(const Vect& point,
-        const Point3& center) const {
+Vect SmoothTriangle::get_normal_at(const Vect& point) const {
     if (normalA.is_zero() && normalB.is_zero() && normalC.is_zero())
-        return Triangle::get_normal_at(point, center);
+        return Triangle::get_normal_at(point);
 
     auto normal = normalA * (1 - barycenter.x - barycenter.y)
         + normalB * barycenter.x

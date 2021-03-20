@@ -32,10 +32,8 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     if (index == -1 || intersections[index] < accuracy)
         return false;
 
-    Point3 barycenter;
-
     info.object = this->objects[index];
-    info.normal = this->objects[index]->get_normal_at(ray.origin, barycenter);
+    info.normal = this->objects[index]->get_normal_at(ray.origin);
     info.color = this->objects[index]->texture->get_color(ray, info.normal);
     info.distance = intersections[index];
     return true;
@@ -55,8 +53,7 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
         const Color& color, double accuracy) const {
 
     Color res_color(0, 0, 0);
-    // TODO get normal if triangle need barycenter
-    auto normal = obj->get_normal_at(ray.origin, Vect());
+    auto normal = obj->get_normal_at(ray.origin);
     double obj_specular = obj->texture->specular;
 
     for (const auto& light: this->lights) {
