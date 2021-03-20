@@ -56,6 +56,8 @@ void Blob::init_cubes(const Point3& orig, double e, double d) {
     // origin is the point lower left behind
     // e is the big cube
     // d pas
+    if (this->blob_objects.size() == 0)
+        return;
 
     double e2 = e / 2;
     for (double i = orig.x - e2; i < orig.x + e2; i += d) {

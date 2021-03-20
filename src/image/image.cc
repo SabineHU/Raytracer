@@ -99,9 +99,9 @@ static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const s
 
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy)) {
             Vect reflection_pos = reflection_ray.origin + reflection_ray.direction * reflection_info.distance;
-            Ray reflection_ray(reflection_pos, reflection_ray.direction);
+            Ray reflection_ray2(reflection_pos, reflection_ray.direction);
 
-            final_color += getColorAt(scene, reflection_ray, reflection_info.object, accuracy, depth - 1) * specular;
+            final_color += getColorAt(scene, reflection_ray2, reflection_info.object, accuracy, depth - 1) * specular;
         }
     }
 

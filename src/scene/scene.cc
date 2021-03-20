@@ -70,10 +70,10 @@ Color Scene::get_color_with_light(const Ray& ray, const shared_object& obj,
         if (cosine_angle > 0) {
             // test for shadows
 
-            Vect distance_to_light = (light->get_light_position() - ray.origin).normalize();
+            Vect distance_to_light = light->get_light_position() - ray.origin;
             float distance_to_light_magnitude = distance_to_light.magnitude();
 
-            Ray shadow_ray(ray.origin, (light->get_light_position() - ray.origin).normalize());
+            Ray shadow_ray(ray.origin, distance_to_light.normalize());
 
             if (!this->has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
                 res_color += color * light->get_light_color() * cosine_angle * light->get_intensity();
