@@ -39,6 +39,7 @@ clean:
 	${RM} ${OBJ} raytracing
 
 check:
+	make clean && make -j
 	time ./raytracing > test.ppm
 	diff original.ppm test.ppm
 

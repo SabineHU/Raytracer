@@ -21,8 +21,7 @@ public:
 
     bool has_intersection(const Ray&, IntersectionInfo&, double) const;
     bool has_shadow(const Ray&, double, double) const;
-    Color get_color_with_light(const Ray&, const shared_object&, const Color&,
-            double) const;
+    Color get_color_with_light(const IntersectionInfo&, double) const;
 
 private:
     std::vector<double> get_intersections_distance(const Ray&) const;

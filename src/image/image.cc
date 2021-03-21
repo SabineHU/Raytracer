@@ -80,31 +80,26 @@ void Image::set_index_x_y(double& x, double& y, double samples, int i, int j, do
     }
 }
 
-static Color getColorAt(const Scene& scene, const Ray& intersection_ray, const shared_object closest_obj, double accuracy, int depth) {
+static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double accuracy, int depth) {
 
     if (depth == 0)
         return Color(0, 0, 0);
 
     // Color
-    Vect object_normal = closest_obj->get_normal_at(intersection_ray.origin);
-    Color object_color = closest_obj->texture->get_color(intersection_ray, object_normal);
-    Color final_color = scene.ambient_light != 0 ? object_color * scene.ambient_light : object_color;
-    double specular = closest_obj->texture->specular;
+    Color final_color = scene.ambient_light != 0 ? info.color * scene.ambient_light : info.color;
+    double specular = info.texture->specular;
 
     if (specular > 0 && specular <= 1) {
         // reflection from objects with specular intensity
         IntersectionInfo reflection_info;
-        Ray reflection_ray = intersection_ray.get_reflection_ray(object_normal);
+        Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
 
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy)) {
-            Vect reflection_pos = reflection_ray.origin + reflection_ray.direction * reflection_info.distance;
-            Ray reflection_ray2(reflection_pos, reflection_ray.direction);
-
-            final_color += getColorAt(scene, reflection_ray2, reflection_info.object, accuracy, depth - 1) * specular;
+            final_color += getColorAt(scene, reflection_info, accuracy, depth - 1) * specular;
         }
     }
 
-    auto light_color = scene.get_color_with_light(intersection_ray, closest_obj, object_color, accuracy);
+    auto light_color = scene.get_color_with_light(info, accuracy);
 
     return (final_color + light_color).clamp();
 }
@@ -125,10 +120,7 @@ void Image::render(const Scene& scene, double accuracy, int samples, int depth) 
                 Ray cam_ray = scene.camera.get_ray(x, y);
 
                 if (scene.has_intersection(cam_ray, info, accuracy)) {
-                    Vect intersection_pos = cam_ray.origin + cam_ray.direction * info.distance;
-                    Ray intersection_ray(intersection_pos, cam_ray.direction);
-
-                    pixel_color += getColorAt(scene, intersection_ray, info.object, accuracy, depth);
+                    pixel_color += getColorAt(scene, info, accuracy, depth);
                 } else {
                     pixel_color += Color(0, 0, 0.3);
                 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "object.hh"
+#include "ray.hh"
 
 class IntersectionInfo {
 public:
@@ -17,7 +18,6 @@ public:
         barycenter = Point3();
 
         //
-        object = nullptr;
         distance = 0;
     }
 
@@ -47,6 +47,5 @@ public:
     Point3 barycenter;
 
     // TODO: old to remove
-    shared_object object;
     double distance;
 };

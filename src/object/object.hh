@@ -15,6 +15,9 @@ public:
     virtual Vect get_normal_at(const Vect& point) const = 0;
     virtual double find_intersection(const Ray& ray) = 0;
 
+    //virtual bool find_intersection2(const Ray& ray, double& t_max) = 0;
+    //virtual bool find_intersection2(const Ray& ray, double& t_max) = 0;
+
     virtual int get_isolevel_at(const Point3&) const = 0;
 
     /* Attributes */
