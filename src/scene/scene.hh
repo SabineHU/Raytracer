@@ -11,6 +11,7 @@ class Scene {
 public:
     Scene() = default;
     Scene(const Camera&);
+    Scene(const Camera&, double);
 
     /* Methods */
     void add_object(shared_object);
