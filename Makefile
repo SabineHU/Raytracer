@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
-         -g3 -O3 -fno-inline \
+         -g3 -O0 -fno-inline \
          -I./src \
          -I./src/utils \
          -I./src/light \
@@ -15,6 +15,7 @@ SRC= src/main.cc \
      src/light/light.cc \
      src/light/ray.cc \
      src/object/cone.cc \
+     src/object/cube.cc \
      src/object/cylinder.cc \
      src/object/plane.cc \
      src/object/sphere.cc \
@@ -36,12 +37,12 @@ all: raytracing
 raytracing: ${OBJ}
 	${CXX} ${CXXFLAGS} -o raytracing ${OBJ}
 
-clean:
-	${RM} ${OBJ} raytracing
-
 check:
 	make clean && make -j
 	time ./raytracing > test.ppm
 	diff original.ppm test.ppm
+
+clean:
+	${RM} ${OBJ} raytracing
 
 .PHONY: clean raytracing

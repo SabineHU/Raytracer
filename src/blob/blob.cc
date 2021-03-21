@@ -11,7 +11,7 @@ Blob::Blob(std::vector<shared_object> obj)
     : potentiel(3),
     triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>()),
+    cubes(std::vector<BlobCube>()),
     smooth(false)
 {
     const Point3 origin = Point3(0, 0, 0);
@@ -22,7 +22,7 @@ Blob::Blob(double e, double d, double s, std::vector<shared_object> obj)
     : potentiel(s),
     triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>()),
+    cubes(std::vector<BlobCube>()),
     smooth(false)
 {
     const Point3 origin = Point3(0, 0, 0);
@@ -34,7 +34,7 @@ Blob::Blob(const Point3& origin, double e, double d, double s,
     : potentiel(s),
     triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>()),
+    cubes(std::vector<BlobCube>()),
     smooth(false)
 {
     init_cubes(origin, e, d);
@@ -46,7 +46,7 @@ Blob::Blob(const Point3& orig, double e, double d, double s,
     : potentiel(s),
     triangles(std::vector<SmoothTriangle>()),
     blob_objects(obj),
-    cubes(std::vector<Cube>()),
+    cubes(std::vector<BlobCube>()),
     smooth(smooth_)
 {
     init_cubes(orig, e, d);
@@ -63,7 +63,7 @@ void Blob::init_cubes(const Point3& orig, double e, double d) {
     for (double i = orig.x - e2; i < orig.x + e2; i += d) {
         for (double j = orig.y - e2; j < orig.y + e2; j += d) {
             for (double k = orig.z - e2; k < orig.z + e2; k +=d) {
-                Cube cube;
+                BlobCube cube;
 
                 cube.points[0] = this->init_cube_point(i    , j + d , k);
                 cube.points[1] = this->init_cube_point(i + d, j + d , k);

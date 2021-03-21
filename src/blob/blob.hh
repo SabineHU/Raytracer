@@ -5,7 +5,7 @@
 #include "triangle.hh"
 #include "smooth_triangle.hh"
 
-struct Cube {
+struct BlobCube {
     Point3 points[8] = { Point3() };
 };
 
@@ -37,7 +37,7 @@ private:
     double potentiel;
     std::vector<SmoothTriangle> triangles;
     std::vector<shared_object> blob_objects;
-    std::vector<Cube> cubes;
+    std::vector<BlobCube> cubes;
 
     std::map<size_t, Vect> normals;
 

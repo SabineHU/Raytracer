@@ -18,11 +18,11 @@ int main () {
     init_lights(scene);
 
     /* TP1 */
-    //init_objects(scene);
+    init_objects(scene);
 
     /* TP2 */
-    init_objects2(scene);
-    init_blob(scene);
+    //init_objects2(scene);
+    //init_blob(scene);
 
     img.render(scene, accuracy, samples, depth);
     img.save();
