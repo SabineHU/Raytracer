@@ -37,6 +37,19 @@ double Plane::find_intersection(const Ray& ray) {
     return - b / a;
 }
 
+bool Plane::find_intersection2(const Ray& ray, double& t_min, double& t_max) {
+    double a = vector::dot(ray.direction, normal);
+    if (a == 0)
+        return -1;
+
+    double b = vector::dot(normal, ray.origin + normal * -distance);
+    double x = - b / a;
+    if (x <= t_min || x >= t_max)
+        return false;
+    t_max = x;
+    return true;
+}
+
 int Plane::get_isolevel_at(const Point3&) const {
     // TODO
     return 100;

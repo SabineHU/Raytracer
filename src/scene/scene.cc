@@ -48,12 +48,9 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
 }
 
 bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
-    std::vector<double> intersections = this->get_intersections_distance(ray);
-
-    for (auto inters: intersections) {
-        if (inters > accuracy && inters <= distance)
+    for (const auto& obj : this->objects)
+        if (obj->find_intersection2(ray, accuracy, distance))
             return true;
-    }
     return false;
 }
 

@@ -12,6 +12,7 @@ public:
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;
     virtual double find_intersection(const Ray& ray) override;
+    virtual bool find_intersection2(const Ray& ray, double& t_min, double& t_max) override;
 
     virtual int get_isolevel_at(const Point3&) const override;
 
