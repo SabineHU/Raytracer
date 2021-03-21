@@ -18,7 +18,7 @@ int main () {
     init_lights(scene);
 
     /* TP1 */
-    //init_objects();
+    //init_objects(scene);
 
     /* TP2 */
     init_objects2(scene);

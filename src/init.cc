@@ -1,21 +1,23 @@
 #include "init.hh"
+
 #include "unique.hh"
 #include "metal.hh"
 #include "checkerboard.hh"
 
 #include "object.hh"
-#include "sphere.hh"
 #include "cone.hh"
+#include "cylinder.hh"
 #include "plane.hh"
-#include "triangle.hh"
 #include "smooth_triangle.hh"
+#include "sphere.hh"
+#include "triangle.hh"
 
 #include "light.hh"
-#include "color.hh"
 
 #include "blob.hh"
 
 #include "math.hh"
+#include "color.hh"
 
 image::Image init_image(double angle, double zmin) {
     double alpha = math::degree_to_radian(angle);
@@ -26,9 +28,9 @@ image::Image init_image(double angle, double zmin) {
 
 Camera init_camera() {
     /* Camera */
+    // used for make check
     Vect look_from(1.5, 3, -8);
-    //Vect look_from(3, 1.5, -4);
-    //Vect look_from(1.5, 2, -4);
+    //Vect look_from(1.5, 1.5, -4);
     Vect look_at(0, 0, 0);
     Vect vup(0,1,0);
     return Camera(look_from, look_at, vup);
@@ -49,8 +51,10 @@ void init_objects(Scene& scene) {
     scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
     //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
-    scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
+    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
     scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));
+    scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), 1, 2, unique_green));
+    //scene.add_object(std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green));
 
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 }

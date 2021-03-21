@@ -4,7 +4,6 @@
 #include "image.hh"
 
 image::Image init_image(double angle, double zmin);
-
 Camera init_camera();
 
 void init_lights(Scene& scene);
@@ -13,6 +12,3 @@ void init_objects(Scene& scene);
 void init_objects2(Scene& scene);
 
 void init_blob(Scene& scene);
-
-Scene init_scene(Camera& cam);
-Scene init_scene2(Camera& cam);
