@@ -1,7 +1,7 @@
 #include "scene.hh"
 #include "array.hh"
 #include "vector3_op.hh"
-
+#include "math.hh"
 
 Scene::Scene(const Camera& cam)
     : camera(cam), ambient_light(0),
@@ -14,9 +14,7 @@ void Scene::add_object(shared_object obj) {
 }
 
 void Scene::add_light(shared_light src) {
-    if (src->get_intensity() == 0)
-        return;
-
+    if (src->get_intensity() == 0) return;
     this->lights.push_back(src);
 }
 
@@ -29,27 +27,29 @@ void Scene::clear_lights() {
 
 bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
         double accuracy) const {
-    std::vector<double> intersections = this->get_intersections_distance(ray);
-    int index = array::get_min_index(intersections);
 
-    if (index == -1 || intersections[index] < accuracy)
-        return false;
+    double distance = math::inf;
+    shared_object closest_obj = nullptr;
+    for (const auto& obj : this->objects) {
+        if (obj->find_intersection(ray, accuracy, distance))
+            closest_obj = obj;
+    }
 
-    info.distance = intersections[index];
+    if (closest_obj == nullptr) return false;
 
     info.ray_in = ray;
-    info.compute_ray_out(intersections[index]);
+    info.compute_ray_out(distance);
 
-    info.texture = this->objects[index]->texture;
-    info.normal = this->objects[index]->get_normal_at(info.ray_out.origin);
-    info.color = this->objects[index]->texture->get_color(info.ray_out, info.normal);
+    info.texture = closest_obj->texture;
+    info.normal = closest_obj->get_normal_at(info.ray_out.origin);
+    info.color = closest_obj->texture->get_color(info.ray_out, info.normal);
 
     return true;
 }
 
 bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
     for (const auto& obj : this->objects)
-        if (obj->find_intersection2(ray, accuracy, distance))
+        if (obj->find_intersection(ray, accuracy, distance))
             return true;
     return false;
 }
@@ -89,11 +89,4 @@ Color Scene::get_color_with_light(const IntersectionInfo& info, double accuracy)
         }
     }
     return res_color;
-}
-
-std::vector<double> Scene::get_intersections_distance(const Ray& ray) const {
-    std::vector<double> intersections = std::vector<double>();
-    for (const auto& obj : this->objects)
-        intersections.push_back(obj->find_intersection(ray));
-    return intersections;
 }

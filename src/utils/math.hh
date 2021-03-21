@@ -1,10 +1,13 @@
 #pragma once
 
 #include <cmath>
+#include <limits>
 
 namespace math {
 
 constexpr double pi = 3.14159265358979323846;
+
+constexpr double inf = std::numeric_limits<double>::infinity();
 
 inline double quadratic_equation_root_1(double a, double b, double delta) {
     return (-b - std::sqrt(delta)) / (2 * a);

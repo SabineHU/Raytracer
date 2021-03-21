@@ -41,34 +41,7 @@ double Triangle::get_distance() const {
     return vector::dot(this->get_normal(), A);
 }
 
-double Triangle::find_intersection(const Ray& ray) {
-
-    auto v0v1 = B - A;
-    auto v0v2 = C - A;
-
-    auto pvec = vector::cross(ray.direction, v0v2);
-    double det = vector::dot(v0v1, pvec);
-
-    // ray and triangle are parallel if det is close to 0
-    if (std::fabs(det) < 0.000001) return -1;
-
-    double invDet = 1 / det;
-
-    auto tvec = ray.origin - A;
-    auto u = vector::dot(tvec, pvec) * invDet;
-    if (u < 0 || u > 1) return -1;
-
-    auto qvec = vector::cross(tvec, v0v1);
-    auto v = vector::dot(ray.direction, qvec) * invDet;
-    if (v < 0 || u + v > 1) return -1;
-
-    auto t = vector::dot(v0v2, qvec) * invDet;
-
-    this->barycenter = Vect(u, v, 0);
-    return (t > 0) ? t : -1;
-}
-
-bool Triangle::find_intersection2(const Ray& ray, double& t_min, double& t_max) {
+bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max) {
 
     auto v0v1 = B - A;
     auto v0v2 = C - A;
@@ -91,10 +64,10 @@ bool Triangle::find_intersection2(const Ray& ray, double& t_min, double& t_max) 
 
     auto t = vector::dot(v0v2, qvec) * invDet;
 
-    this->barycenter = Vect(u, v, 0);
     if (t <= 0 || t <= t_min || t >= t_max)
         return false;
 
+    this->barycenter = Vect(u, v, 0);
     t_max = t;
     return true;
 }

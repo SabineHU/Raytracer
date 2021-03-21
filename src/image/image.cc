@@ -81,7 +81,6 @@ void Image::set_index_x_y(double& x, double& y, double samples, int i, int j, do
 }
 
 static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double accuracy, int depth) {
-
     if (depth == 0)
         return Color(0, 0, 0);
 
@@ -93,14 +92,11 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
         // reflection from objects with specular intensity
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
-
-        if (scene.has_intersection(reflection_ray, reflection_info, accuracy)) {
+        if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
             final_color += getColorAt(scene, reflection_info, accuracy, depth - 1) * specular;
-        }
     }
 
     auto light_color = scene.get_color_with_light(info, accuracy);
-
     return (final_color + light_color).clamp();
 }
 

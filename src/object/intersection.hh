@@ -16,19 +16,11 @@ public:
         color = Color();
         texture = nullptr;
         barycenter = Point3();
-
-        //
-        distance = 0;
     }
 
     void compute_ray_out(double distance) {
         this->point = ray_in.origin + ray_in.direction * distance;
         this->ray_out = Ray(this->point, ray_in.direction);
-    }
-
-    void change_rays() {
-        this->ray_in = this->ray_out;
-        this->ray_out = Ray();
     }
 
     /* Intersection point */
@@ -45,7 +37,4 @@ public:
 
     /* Triangle */
     Point3 barycenter;
-
-    // TODO: old to remove
-    double distance;
 };
