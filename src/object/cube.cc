@@ -1,5 +1,6 @@
 #include "cube.hh"
 #include "unique.hh"
+#include "tools.hh"
 
 Cube::Cube()
     : position(Point3(0, 0, 0)), side(1), normal(Vect())
@@ -20,101 +21,52 @@ Vect Cube::get_normal_at(const Vect&) const {
     return normal;
 }
 
+static bool compute_axis(double& max, double& min, double& max_v, double& min_v,
+        Vect& nmax, Vect& nmin, int axis) {
+    Vect nmin_v = Vect(0, -1, 0);
+    Vect nmax_v = Vect(0, 1, 0);
+
+    if (axis == 2) {
+        nmin_v = Vect(0, 0, -1);
+        nmax_v = Vect(0, 0, 1);
+    }
+
+    tools::swap_min(max_v, min_v, nmin_v, nmax_v);
+    if (max < min_v || max_v < min) return false;
+
+    tools::get_max(min_v, min, nmin_v, nmin);
+    tools::get_min(max_v, max, nmax_v, nmax);
+    return true;
+}
+
 bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+    const Vect r_dir = Vect(1, 1, 1) / ray.direction;
 
-    Vect r_dir = Vect(1, 1, 1) / ray.direction;
-    Point3 bmax = position + Vect(side, side, side);
+    Vect min_v = (this->position - ray.origin) * r_dir;
+    Vect max_v = (position + Vect(side, side, side) - ray.origin) * r_dir;
 
-    // Get the intersection interval for the near and far x planes
-    double tmin = (this->position.x - ray.origin.x) * r_dir.x;
-    double tmax = (bmax.x - ray.origin.x) * r_dir.x;
-    Vect nmin(-1.0, 0.0, 0.0);
-    Vect nmax(1.0, 0.0, 0.0);
+    double min = min_v.x;
+    double max = max_v.x;
 
-    // Swap if txmax is closer than txmin
-    if(tmax < tmin)
-    {
-        std::swap<double>(tmin, tmax);
-        nmin = Vect(1.0, 0.0, 0.0);
-        nmax = Vect(-1.0, 0.0, 0.0);
-    }
+    /* Normal x axis */
+    Vect nmin(-1, 0, 0);
+    Vect nmax(1, 0, 0);
+    tools::swap_min(max, min, nmin, nmax);
 
-    // Get the intersection interval for the near and far y planes
-    double tymin = (this->position.y - ray.origin.y) * r_dir.y;
-    double tymax = (bmax.y - ray.origin.y) * r_dir.y;
-    Vect nymin(0.0, -1.0, 0.0);
-    Vect nymax(0.0, 1.0, 0.0);
+    /* Normal y axis */
+    if (!compute_axis(max, min, max_v.y, min_v.y, nmax, nmin, 1))
+        return false;
 
-    // Swap if tymax is closer than tymin
-    if(tymax < tymin)
-    {
-        std::swap<double>(tymin, tymax);
-        nymin = Vect(0.0, 1.0, 0.0);
-        nymax = Vect(0.0, -1.0, 0.0);
-    }
+    /* Normal z axis */
+    if (!compute_axis(max, min, max_v.z, min_v.z, nmax, nmin, 2))
+        return false;
 
-    // Now if the intervals don't overlap then the ray does not intersect at all
-    if(tmax < tymin || tymax < tmin) return false;
+    /* Get the second solution if first one is negative */
+    tools::modify_if_negative(min, max, nmin, nmax);
+    if (min < 0 || min < t_min || min >= t_max) return false;
 
-    // Now tmin is the max of tmin and tymin (i.e. the interval is closer to the true intersection point)
-    if(tymin > tmin)
-    {
-        tmin = tymin;
-        nmin = nymin;
-    }
-
-    // tmax is the min of tmax and tymax
-    if(tymax < tmax)
-    {
-        tmax = tymax;
-        nmax = nymax;
-    }
-
-    // Get the intersection interval for the near and far z planes
-    double tzmin = (this->position.z - ray.origin.z) * r_dir.z;
-    double tzmax = (bmax.z - ray.origin.z) * r_dir.z;
-    Vect nzmin(0.0, 0.0, -1.0);
-    Vect nzmax(0.0, 0.0, 1.0);
-
-    // Swap if tzmax is closer than tzmin
-    if(tzmax < tzmin)
-    {
-        std::swap<double>(tzmin, tzmax);
-        nzmin = Vect(0.0, 0.0, 1.0);
-        nzmax = Vect(0.0, 0.0, -1.0);
-    }
-
-    // If the intervals don't overlap, well the ray doesn't intersect at all
-    if(tmax < tzmin || tzmax < tmin) return false;
-
-    // Take the max of the two min intersection intervals
-    if(tzmin > tmin)
-    {
-        tmin = tzmin;
-        nmin = nzmin;
-    }
-
-    // Take the min of the two max intersection intervals
-    if(tzmax < tmax)
-    {
-        tmax = tzmax;
-        nmax = nzmax;
-    }
-
-    // Check if both intersection distances are less than 0. The intersection point is then behind the ray's origin
-    // If only tmin is less than 0, then the ray originates from within the box and we take tmax as the intersection interval
-    double t = tmin;
-    Vect n = nmin;
-    if(tmin < 0)
-    {
-        t = tmax;
-        n = nmax;
-    }
-
-    if (t < 0 || t < t_min || t >= t_max) return false;
-
-    this->normal = n;
-    t_max = t;
+    t_max = min;
+    this->normal = nmin;
     return true;
 }
 

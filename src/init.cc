@@ -30,9 +30,9 @@ image::Image init_image(double angle, double zmin) {
 Camera init_camera() {
     /* Camera */
     // used for make check
-    //Vect look_from(1.5, 3, -8);
+    Vect look_from(4, 4, -8);
     //Vect look_from(1.5, 1.5, -4);
-    Vect look_from(0, 0, -4); // Vu horizon
+    //Vect look_from(0, 0, -4); // Vu horizon
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0,1,0);
@@ -53,7 +53,7 @@ void init_objects(Scene& scene) {
 
     /* Scene objects */
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
-    scene.add_object(std::make_shared<Cube>(Point3(0, -1, -1), 2, unique_orange));
+    scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, unique_orange));
 
     //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
