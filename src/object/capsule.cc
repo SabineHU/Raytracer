@@ -39,7 +39,7 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max) {
 
     // Equation of the axis of the capsule: y = dir * x + offs
     double dir = vector::dot(axis,ray.direction);
-    double offs = vector::dot(axis,oc);
+    double offs = vector::dot(axis, oc);
 
     double a = dist - dir * dir;
     double b = dist * vector::dot(oc, ray.direction) - offs * dir;

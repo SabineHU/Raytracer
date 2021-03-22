@@ -4,25 +4,25 @@
 #include "vector3_op.hh"
 
 Cylinder::Cylinder()
-    : bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1)
+    : bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1), normal(Vect())
 {
     auto color = Color(0.5, 0.5, 0.5);
     texture = std::make_shared<Unique>(color);
 }
 
 Cylinder::Cylinder(const Point3& b, const Point3& t, double r)
-    : bottom(b), top(t), radius(r)
+    : bottom(b), top(t), radius(r), normal(Vect())
 {
     auto color = Color(0.5, 0.5, 0.5);
     texture = std::make_shared<Unique>(color);
 }
 
 Cylinder::Cylinder(const Point3& b, const Point3& t, double r, shared_texture s)
-    : Object(s), bottom(b), top(t), radius(r)
+    : Object(s), bottom(b), top(t), radius(r), normal(Vect())
 {}
 
 Cylinder::Cylinder(const Point3& b, const Point3& t, double r, const Color& c)
-    : Object(std::make_shared<Unique>(c)), bottom(b), top(t), radius(r)
+    : Object(std::make_shared<Unique>(c)), bottom(b), top(t), radius(r), normal(Vect())
 {}
 
 Vect Cylinder::get_normal_at(const Vect&) const {
@@ -31,7 +31,7 @@ Vect Cylinder::get_normal_at(const Vect&) const {
 
 bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max) {
     Vect axis = this->bottom - this->top;
-    Vect oc = ray.origin - top;
+    Vect oc = ray.origin - this->top;
     double dist = axis.square_length(); // distance between top and bottom
 
     // Equation of the axis of the cylinder: y = dir * x + offs
