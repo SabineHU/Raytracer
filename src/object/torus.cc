@@ -1,6 +1,7 @@
 #include "torus.hh"
 #include "unique.hh"
 #include "vector3_op.hh"
+#include "math.hh"
 
 Torus::Torus()
     : position(Vect())
@@ -30,79 +31,88 @@ Vect Torus::get_normal_at(const Vect& point) const {
     return (point * (x * -1 + y)).normalize();
 }
 
-bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max) {
-    double po = 1.0;
-    double Ra2 = position.x*position.x;
-    double ra2 = position.y*position.y;
-    double m = vector::dot(ray.origin,ray.origin);
-    double n = vector::dot(ray.origin,ray.direction);
-    double k = (m + Ra2 - ra2)/2.0;
-    double k3 = n;
-    double k2 = n*n - Ra2*(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y) + k;
-    double k1 = n*k - Ra2*(ray.direction.x * ray.origin.x + ray.direction.y * ray.origin.y);
-    double k0 = k*k - Ra2*(ray.origin.x * ray.origin.x + ray.origin.y * ray.origin.y);
+static double get_double_inv_condition(double x, double r, double k, bool sgn) {
+    double t = x - r - k;
+    if (sgn)
+        return t;
+    return 2 / t;
+}
 
-    if( std::abs(k3*(k3*k3-k2)+k1) < 0.01 )
+static double get_min_quadratic_roots(double d1, double h1, double h2,
+        double k3, double t_min, bool positive) {
+    double t1 = get_double_inv_condition(-d1,  h1, k3, positive);
+    double t2 = get_double_inv_condition(-d1, -h1, k3, positive);
+    double t3 = get_double_inv_condition( d1,  h2, k3, positive);
+    double t4 = get_double_inv_condition( d1, -h2, k3, positive);
+
+    double t = t1 > t_min ? t_min : t1;
+    t = t2 > t ? t : t2;
+    t = t3 > t ? t : t3;
+    return t4 > t ? t : t4;
+}
+
+bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+    bool positive = true;
+    double Ra2 = position.dot_x();
+    double n = vector::dot(ray.origin,ray.direction);
+    double k = (ray.origin.square_length() + Ra2 - position.dot_y()) / 2.0;
+    double k3 = n;
+    double k2 = n*n - Ra2*(vector::dot_xy(ray.direction, ray.direction)) + k;
+    double k1 = n*k - Ra2*(vector::dot_xy(ray.direction, ray.origin));
+    double k0 = k*k - Ra2*(vector::dot_xy(ray.origin, ray.origin));
+
+    if (std::abs(k3 * (k3 * k3 - k2) + k1) < 0.01)
     {
-        po = -1.0;
-        double tmp=k1; k1=k3; k3=tmp;
-        k0 = 1.0/k0;
-        k1 = k1*k0;
-        k2 = k2*k0;
-        k3 = k3*k0;
+        positive = false;
+        std::swap(k1, k3);
+        k0 = 1 / k0;
+        k1 = k1 * k0;
+        k2 = k2 * k0;
+        k3 = k3 * k0;
     }
 
-    double c2 = k2*2.0 - 3.0*k3*k3;
-    double c1 = k3*(k3*k3-k2)+k1;
-    double c0 = k3*(k3*(c2+2.0*k2)-8.0*k1)+4.0*k0;
+    double c2 = k2 * 2.0 - 3.0 * k3 * k3;
+    double c1 = k3 * (k3 * k3 - k2) + k1;
+    double c0 = k3 * (k3 * (c2 + 2.0 * k2) - 8.0 * k1) + 4.0 * k0;
     c2 /= 3.0;
     c1 *= 2.0;
     c0 /= 3.0;
-    double Q = c2*c2 + c0;
-    double R = c2*c2*c2 - 3.0*c2*c0 + c1*c1;
-    double h = R*R - Q*Q*Q;
+    double Q = c2 * c2 + c0;
+    double R = c2 * c2 * c2 - 3.0 * c2 * c0 + c1 * c1;
+    double delta = R * R - Q * Q * Q;
 
-    if( h>=0.0 )  
+    if (delta >= 0)
     {
-        h = sqrt(h);
-        double v = (R + h > 0 ? 1 : -1) *pow(abs(R+h),1.0/3.0); // cube root
-        double u = (R - h > 0 ? 1 : -1) *pow(abs(R-h),1.0/3.0); // cube root
-        Vect s;
-        s.x = (v+u)+4.0*c2;
-        s.y = (v-u)*sqrt(3.0);
-        double y = sqrt(0.5*(s.magnitude() +s.x));
-        double x = 0.5*s.y/y;
-        double r = 2.0*c1/(x*x+y*y);
-        double t1 =  x - r - k3; t1 = (po<0.0)?2.0/t1:t1;
-        double t2 = -x - r - k3; t2 = (po<0.0)?2.0/t2:t2;
-        double t = 1e20;
-        if( t1> t_min) t=t1;
-        if( t2> t_min) t=std::min(t,t2);
+        delta = sqrt(delta);
+        double v = math::cube_root(R + delta);
+        double u = math::cube_root(R - delta);
+        Vect s(v + u + c2 * 4, (v - u) * std::sqrt(3), 0);
+        double y = std::sqrt((s.magnitude() + s.x) / 2);
+        double x = s.y / (2 * y);
+        double r = 2 * c1 / (x * x + y * y);
 
+        double t1 = get_double_inv_condition(x, r, k3, positive);
+        double t2 = get_double_inv_condition(-x, r, k3, positive);
+
+        double t = t1 > t2 ? t2 : t1;
         if (t <= t_min ||  t >= t_max)
             return false;
         t_max = t;
         return true;
     }
 
-    double sQ = sqrt(Q);
-    double w = sQ*cos( acos(-R/(sQ*Q)) / 3.0 );
-    double d2 = -(w+c2); if( d2<0.0 ) return false;
+    double sQ = std::sqrt(Q);
+    double w = sQ * cos(acos(-R / (sQ * Q)) / 3.0);
+    double d2 = -(w + c2);
+    if (d2 < 0) return false;
     double d1 = sqrt(d2);
-    double h1 = sqrt(w - 2.0*c2 + c1/d1);
-    double h2 = sqrt(w - 2.0*c2 - c1/d1);
-    double t1 = -d1 - h1 - k3; t1 = (po<0.0)?2.0/t1:t1;
-    double t2 = -d1 + h1 - k3; t2 = (po<0.0)?2.0/t2:t2;
-    double t3 =  d1 - h2 - k3; t3 = (po<0.0)?2.0/t3:t3;
-    double t4 =  d1 + h2 - k3; t4 = (po<0.0)?2.0/t4:t4;
-    double t = 1e20;
-    if( t1>t_min ) t=t1;
-    if( t2>t_min ) t=std::min(t,t2);
-    if( t3>t_min ) t=std::min(t,t3);
-    if( t4>t_min ) t=std::min(t,t4);
+    double h1 = sqrt(w - 2 * c2 + c1 / d1);
+    double h2 = sqrt(w - 2 * c2 - c1 / d1);
 
+    double t = get_min_quadratic_roots(d1, h1, h2, k3, t_min, positive);
     if (t <= t_min || t >= t_max)
         return false;
+
     t_max = t;
     return true;
 }

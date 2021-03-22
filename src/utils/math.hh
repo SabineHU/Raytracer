@@ -31,4 +31,10 @@ inline double degree_to_radian(double degree) {
     return degree * pi / 180;
 }
 
+inline double cube_root(double v) {
+    if (v < 0)
+        return -std::cbrt(-v);
+    return std::cbrt(v);
+}
+
 }
