@@ -44,10 +44,12 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     if (closest_obj == nullptr) return false;
 
     info.ray_in = ray;
-    info.compute_ray_out(distance);
 
+    info.point = ray.origin + ray.direction * distance;
+    info.normal = closest_obj->get_normal_at(info.point);
+
+    info.ray_out = Ray(info.point, ray.direction);
     info.texture = closest_obj->texture;
-    info.normal = closest_obj->get_normal_at(info.ray_out.origin);
     info.color = closest_obj->texture->get_color(info.ray_out, info.normal);
 
     return true;

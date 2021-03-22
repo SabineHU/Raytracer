@@ -7,7 +7,7 @@
 #include "init.hh"
 
 int main () {
-    int samples = 5;
+    int samples = 15;
     int depth = 50;
     double accuracy = 0.00000001;
 

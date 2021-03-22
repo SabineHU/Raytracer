@@ -2,13 +2,13 @@
 
 #include "object.hh"
 
-class Cone : public Object {
+class Torus : public Object {
 public:
 
-    Cone();
-    Cone(const Point3&, double, double);
-    Cone(const Point3&, double, double, shared_texture);
-    Cone(const Point3&, double, double, const Color&);
+    Torus();
+    Torus(const Point3&);
+    Torus(const Point3&, shared_texture);
+    Torus(const Point3&, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;
@@ -19,6 +19,4 @@ public:
 private:
     /* Attributes */
     Point3 position;
-    double radius;
-    double height;
 };

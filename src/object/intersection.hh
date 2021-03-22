@@ -18,11 +18,6 @@ public:
         barycenter = Point3();
     }
 
-    void compute_ray_out(double distance) {
-        this->point = ray_in.origin + ray_in.direction * distance;
-        this->ray_out = Ray(this->point, ray_in.direction);
-    }
-
     /* Intersection point */
     Point3 point;
 

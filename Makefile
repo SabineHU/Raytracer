@@ -23,6 +23,7 @@ SRC= src/main.cc \
      src/object/plane.cc \
      src/object/sphere.cc \
      src/object/triangle.cc \
+     src/object/torus.cc \
      src/object/smooth_triangle.cc \
      src/scene/camera.cc \
      src/scene/scene.cc \
