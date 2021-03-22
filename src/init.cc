@@ -7,6 +7,7 @@
 #include "object.hh"
 #include "cone.hh"
 #include "cube.hh"
+#include "capsule.hh"
 #include "cylinder.hh"
 #include "plane.hh"
 #include "smooth_triangle.hh"
@@ -59,7 +60,8 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
     scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));
-    scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
+    scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
+    //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green));
 

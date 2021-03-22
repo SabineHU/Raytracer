@@ -50,7 +50,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max) {
 
     // Tube
     double y = dir * t + offs;
-    if( y > 0 && y < dist && t > t_min && t < t_max) {
+    if (y > 0 && y < dist && t > t_min && t < t_max) {
         normal = (oc + ray.direction * t - axis * y / dist) / radius;
         t_max = t;
         return true;

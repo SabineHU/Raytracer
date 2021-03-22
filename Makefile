@@ -15,6 +15,7 @@ SRC= src/main.cc \
      src/light/light.cc \
      src/light/ray.cc \
      src/object/cone.cc \
+     src/object/capsule.cc \
      src/object/cube.cc \
      src/object/cylinder.cc \
      src/object/plane.cc \
