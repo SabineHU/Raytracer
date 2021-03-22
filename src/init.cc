@@ -9,6 +9,7 @@
 #include "cube.hh"
 #include "capsule.hh"
 #include "cylinder.hh"
+#include "ellipsoid.hh"
 #include "plane.hh"
 #include "smooth_triangle.hh"
 #include "sphere.hh"
@@ -56,11 +57,12 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
     //scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, unique_orange));
 
-    //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
+    scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
     scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));
-    scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
+    //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
+    scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green));

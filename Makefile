@@ -18,6 +18,7 @@ SRC= src/main.cc \
      src/object/capsule.cc \
      src/object/cube.cc \
      src/object/cylinder.cc \
+     src/object/ellipsoid.cc \
      src/object/plane.cc \
      src/object/sphere.cc \
      src/object/triangle.cc \
