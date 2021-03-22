@@ -25,62 +25,53 @@ Cylinder::Cylinder(const Point3& b, const Point3& t, double r, const Color& c)
     : Object(std::make_shared<Unique>(c)), bottom(b), top(t), radius(r)
 {}
 
-Vect Cylinder::get_normal_at(const Vect& point) const {
+Vect Cylinder::get_normal_at(const Vect&) const {
     return normal;
-    //return Vect(point.x - center.x, 0, point.z - center.z).normalize();
 }
 
 bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max) {
-    Vect m = (this->bottom + this->top) / 2;
-    Vect pos = ray.origin - m;
+    Vect axis = this->bottom - this->top;
+    Vect oc = ray.origin - top;
+    double dist = axis.square_length(); // distance between top and bottom
 
-    Vect n = (bottom - top)/2;
-    float l = n.magnitude();
-    n = n / l;
+    // Equation of the axis of the cylinder: y = dir * x + offs
+    double dir = vector::dot(axis, ray.direction);
+    double offs = vector::dot(axis, oc);
 
+    double a = dist - dir * dir;
+    double b = dist * vector::dot(oc, ray.direction) - offs * dir;
+    double c = dist * oc.square_length() - radius * radius * dist - offs * offs;
 
-    // intersect infinite cylinder
-    // flatten everything along the axis
-    Vect r = (ray.direction - n * vector::dot(ray.direction, n));
-    float rl = r.magnitude();
-    r = r / rl;
-    Vect p = pos - n * vector::dot(pos, n);
-    float rdp = vector::dot(r,p);
-    float pp = p.square_length();
-    float q = pp - rdp*rdp;
-    if ( q >= radius*radius ) return false;
+    double discriminant = b * b - a * c;
+    if (discriminant <= 0) return false;
 
-    float d = sqrt(radius*radius-q);
-    float front = (-rdp - d)/rl;
-    float back = (-rdp + d)/rl;
-    normal = (p+r * front * rl).normalize();
+    discriminant = std::sqrt(discriminant);
+    double t = (-b - discriminant) / a;
 
-    // intersect facing plane
-    float rdn = vector::dot(ray.direction,n);
-    float pdn = vector::dot(pos,n);
-
-    if( rdn < 0 ) { n = n * -1; rdn = rdn * -1; pdn = pdn * -1; }
-
-    float front2 = (-l-pdn)/rdn;
-
-    if ( front2 > front )
-    {
-        front = front2;
-        normal = n * -1;
+    // Tube
+    double y = dir * t + offs;
+    if( y > 0 && y < dist && t > t_min && t < t_max) {
+        normal = (oc + ray.direction * t - axis * y / dist) / radius;
+        t_max = t;
+        return true;
     }
 
+    // Bottom
+    t = - offs / dir;
+    if (std::abs(a * t + b) < discriminant && t > t_min && t < t_max) {
+        t_max = t;
+        normal = axis / -dist;
+        return true;
+    }
 
-    // clip the back sides
-    if (
-            front > back || // clip to back of cylinder
-            pdn+rdn*front > l // clip to back plane
-       )
-        return false;
-
-    if (front <= t_min || front >= t_max) return false;
-
-    t_max = front;
-    return true;
+    // Top
+    t = (dist - offs) / dir;
+    if (std::abs(a * t + b) < discriminant && t > t_min && t < t_max) {
+        t_max = t;
+        normal = axis / dist;
+        return true;
+    }
+    return false;
 }
 
 int Cylinder::get_isolevel_at(const Point3&) const {

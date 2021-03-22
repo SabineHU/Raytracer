@@ -34,22 +34,22 @@ Vect Sphere::get_normal_at(const Vect& point) const {
 bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max) {
     auto oc = ray.origin - this->center;
 
-    double a = 1; // normalized
+    //double a = 1; // normalized
     double b = 2 * vector::dot(oc, ray.direction);
     double c = vector::dot(oc, oc) - this->radius * this->radius;
 
-    double discriminant = b * b - 4 * a * c;
+    double discriminant = b * b - 4 * c;
 
     if (discriminant <= 0) return false;
 
-    double x1 = math::quadratic_equation_root_1(a, b, discriminant) - 0.000001;
+    double x1 = math::quadratic_equation_root_1(1, b, discriminant) - 0.000001;
     if (x1 > 0) {
         if (x1 <= t_min || x1 >= t_max) return false;
         t_max = x1;
         return true;
     }
 
-    x1 = math::quadratic_equation_root_2(a, b, discriminant) - 0.000001;
+    x1 = math::quadratic_equation_root_2(1, b, discriminant) - 0.000001;
     if (x1 <= t_min || x1 >= t_max) return false;
     t_max = x1;
     return true;
