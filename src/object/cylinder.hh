@@ -5,9 +5,9 @@
 class Cylinder : public Object {
 public:
     Cylinder();
-    Cylinder(const Point3&, double, double);
-    Cylinder(const Point3&, double, double, shared_texture);
-    Cylinder(const Point3&, double, double, const Color&);
+    Cylinder(const Point3&, const Point3&, double);
+    Cylinder(const Point3&, const Point3&, double, shared_texture);
+    Cylinder(const Point3&, const Point3&, double, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;
@@ -15,8 +15,11 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
+private:
     /* Attributes */
-    Point3 center;
+    Point3 bottom;
+    Point3 top;
     double radius;
-    double height;
+
+    Vect normal;
 };
