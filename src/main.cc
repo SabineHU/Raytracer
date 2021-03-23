@@ -6,7 +6,9 @@
 
 #include "init.hh"
 
-int main () {
+int main() {
+    std::srand(std::time(nullptr));
+
     int samples = 15;
     int depth = 50;
     double accuracy = 0.00000001;

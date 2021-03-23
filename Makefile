@@ -12,8 +12,11 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
 
 SRC= src/main.cc \
      src/init.cc \
+     src/blob/blob.cc \
+     src/image/image.cc \
      src/light/light.cc \
      src/light/ray.cc \
+     \
      src/object/cone.cc \
      src/object/capped_cone.cc \
      src/object/capsule.cc \
@@ -25,14 +28,13 @@ SRC= src/main.cc \
      src/object/triangle.cc \
      src/object/torus.cc \
      src/object/smooth_triangle.cc \
+     \
      src/scene/camera.cc \
      src/scene/scene.cc \
-     src/image/image.cc \
-     src/utils/vector3.cc \
      src/texture/metal.cc \
      src/texture/unique.cc \
      src/texture/checkerboard.cc \
-     src/blob/blob.cc
+     src/utils/vector3.cc
 
 OBJ=${SRC:.cc=.o}
 
@@ -40,11 +42,6 @@ all: raytracing
 
 raytracing: ${OBJ}
 	${CXX} ${CXXFLAGS} -o raytracing ${OBJ}
-
-check:
-	make clean && make -j
-	time ./raytracing > test.ppm
-	diff original.ppm test.ppm
 
 clean:
 	${RM} ${OBJ} raytracing

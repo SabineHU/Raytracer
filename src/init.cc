@@ -22,6 +22,7 @@
 #include "blob.hh"
 
 #include "math.hh"
+#include "random_color.hh"
 #include "color.hh"
 
 image::Image init_image(double angle, double zmin) {
@@ -34,8 +35,8 @@ image::Image init_image(double angle, double zmin) {
 Camera init_camera() {
     /* Camera */
     // used for make check
-    Vect look_from(4, 4, -8);
-    //Vect look_from(1.5, 1.5, -4);
+    //Vect look_from(6, 4, -8);
+    Vect look_from(1, 2, -5);
     //Vect look_from(0, 0, -4); // Vu horizon
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
@@ -44,7 +45,8 @@ Camera init_camera() {
 }
 
 void init_lights(Scene& scene) {
-    scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), white, 2.5));
+    scene.add_light(std::make_shared<Light>(Point3(-7, 10, -10), red, 2.5));
+    scene.add_light(std::make_shared<Light>(Point3(7, 10, -10), blue, 1));
 }
 
 void init_objects(Scene& scene) {
@@ -55,6 +57,9 @@ void init_objects(Scene& scene) {
     auto unique_orange = std::make_shared<Unique>(orange, 0);
     auto unique_red = std::make_shared<Metal>(dark_red);
 
+    auto metal_random = std::make_shared<Metal>(r_random::random_color());
+    auto unique_random = std::make_shared<Unique>(r_random::random_color());
+
     /* Scene objects */
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
     //scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, unique_orange));
@@ -64,7 +69,14 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Torus>(Point3(3, 1, 0), board_black_blue));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
-    scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));
+
+    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));
+    //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
+    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_orange));
+
+    scene.add_object(std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random));
+    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, unique_random));
+
     //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, unique_orange));

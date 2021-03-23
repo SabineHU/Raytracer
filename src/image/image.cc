@@ -97,6 +97,7 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
     }
 
     if (info.texture->type == DIFFUSE) { // DIFFUSE_GLOSSY CASE
+        //https://www.scratchapixel.com/code.php?id=8&origin=/lessons/3d-basic-rendering/ray-tracing-overview
         return (final_color + scene.get_color_with_light(info, accuracy)).clamp();
     }
 
