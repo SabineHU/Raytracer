@@ -61,7 +61,7 @@ void init_objects(Scene& scene) {
 
     //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
     //scene.add_object(std::make_shared<CappedCone>(Point3(2, 0, 0), Point3(0, 1, 0), 1, 0.5, unique_green));
-    scene.add_object(std::make_shared<Torus>(Point3(3, 1, 0), board_black_blue));
+    //scene.add_object(std::make_shared<Torus>(Point3(3, 1, 0), board_black_blue));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
     scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));

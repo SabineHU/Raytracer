@@ -64,19 +64,24 @@ bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
 
 static Color get_color_shadow(const IntersectionInfo& info, const shared_light light,
         const Vect& light_direction, double cos) {
-    Color res = info.color * light->get_light_color() * cos * light->get_intensity();
+    Color light_amt = light->get_light_color() * cos * light->get_intensity();
+    Color specular_color;
     double obj_specular = info.texture->specular;
+    obj_specular = 20;
 
-    if (obj_specular > 0 && obj_specular <= 1) {
+    if (obj_specular > 0) {
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         double specular = vector::dot(reflection_ray.direction, light_direction);
         if (specular > 0) {
-            // reduce specular to have less luminosity
-            //specular = std::pow(specular, 5);
-            res += light->get_light_color() * specular * obj_specular;
+            specular_color += powf(specular, obj_specular) * light->get_intensity();
         }
     }
-    return res;
+    // TODO set kd and ks in objects properties
+    // TODO sest obj specular
+    //info.kd = 1;
+    //info.ks = 1;
+    //return light_amt * info.color * info.kd + specular_color * info.ks;
+    return light_amt * info.color * 1 + specular_color * 1;
 }
 
 Color Scene::get_color_with_light(const IntersectionInfo& info, double accuracy) const {

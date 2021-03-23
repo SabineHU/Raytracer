@@ -21,3 +21,7 @@ Ray Ray::get_reflection_ray(const Vect& normal) const {
 Point3 Ray::at(double i) const {
     return this->origin + this->direction * i;
 }
+
+Vect get_reflection_dir(const Vect& dir, const Vect& normal) {
+    return dir - normal * vector::dot(dir, normal) * 2;
+}

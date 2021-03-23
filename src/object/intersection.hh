@@ -32,4 +32,11 @@ public:
 
     /* Triangle */
     Point3 barycenter;
+
+    /* Textures coordinates */
+    Point3 uv;
+
+    /* Properties */
+    double ks;
+    double kd;
 };

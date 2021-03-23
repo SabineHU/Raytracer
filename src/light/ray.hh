@@ -15,3 +15,4 @@ public:
     Vect direction;
 };
 
+Vect get_reflection_dir(const Vect& dir, const Vect& normal);
