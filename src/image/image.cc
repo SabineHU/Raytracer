@@ -88,74 +88,19 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
     Color final_color = scene.ambient_light != 0 ? info.color * scene.ambient_light : info.color;
     double specular = info.texture->specular;
 
-    if (info.texture->type == DIFFUSE) {
-    //    for (const auto& light: scene.get_lights()) {
-    //        Vect lightDir = (light->get_light_position() - info.point);
-    //        float lightDistance2 = vector::dot(lightDir, lightDir);
-    //        lightDir = lightDir.normalize();
-    //        bool vis = !scene.has_shadow(Ray(shadowPointOrig, lightDir), lightDistance2, accuracy);
-
-    //        // compute the pattern
-    //        float angle = math::degree_to_radian(45);
-    //        float s = hitTexCoordinates.x * cos(angle) - hitTexCoordinates.y * sin(angle);
-    //        float t = hitTexCoordinates.y * cos(angle) + hitTexCoordinates.x * sin(angle);
-    //        float scaleS = 20, scaleT = 20;
-    //        float pattern = (modulo(s * scaleS) < 0.5);
-    //        final_color += vis * pattern * light->get_intensity() * std::max(0.f, vector::dot(hitNormal, lightDir * -1));
-    //    }
-    //    return final_color.clamp();
-    //}
-
-    //if (info.texture->type == DIFFUSE_GLOSSY) {
-
-        Vect lightAmt, specularColor;
-        Vect shadowPointOrig = info.point;
-
-        for (const auto& light: scene.get_lights()) {
-            Vect lightDir = (light->get_light_position() - info.point);
-            float lightDistance2 = vector::dot(lightDir, lightDir);
-            lightDir = lightDir.normalize();
-            double LdotN = vector::dot(lightDir, info.normal);
-            if (LdotN > 0) {
-                // is the point in shadow, and is the nearest occluding object closer to the object than the light itself?
-
-                if (!scene.has_shadow(Ray(shadowPointOrig, lightDir), lightDistance2, accuracy)) {
-
-                    lightAmt += light->get_light_color() * light->get_intensity() * LdotN;
-                    Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
-                    Vect reflectionDirection = get_reflection_dir(info.ray_out.direction, info.normal);
-                    // OBJ SPECULAR NOT TEXTURE SPECULAR
-
-                    auto sp = vector::dot(reflection_ray.direction, lightDir);
-                    if (sp > 0 && specular > 0 && specular <= 1) {
-                        //Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
-                        //double specular = vector::dot(reflection_ray.direction, light_direction);
-
-                        specularColor += powf(sp, specular) * light->get_intensity();
-                    }
-                }
-            }
-            //specularColor += powf(std::max(0.0, -vector::dot(reflectionDirection, info.ray_out.direction)), specular) * light->get_intensity();
-            // Good value for specular is 50
-        }
-
-        final_color = lightAmt * info.color * 1 + specularColor * 1;
-    //    //final_color = lightAmt * info.kd + specularColor * info.ks;
-
+    if (specular > 0 && specular <= 1) {
+        // reflection from objects with specular intensity
+        IntersectionInfo reflection_info;
+        Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
+        if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
+            final_color += getColorAt(scene, reflection_info, accuracy, depth - 1) * specular;
     }
 
-    //if (specular > 0 && specular <= 1) {
-    //    // reflection from objects with specular intensity
-    //    IntersectionInfo reflection_info;
-    //    Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
-    //    if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
-    //        final_color += getColorAt(scene, reflection_info, accuracy, depth - 1) * specular;
-    //}
+    if (info.texture->type == DIFFUSE) { // DIFFUSE_GLOSSY CASE
+        return (final_color + scene.get_color_with_light(info, accuracy)).clamp();
+    }
 
-    final_color = Vect(0, 0, 0);
-    auto light_color = scene.get_color_with_light(info, accuracy);
-
-    return (final_color + light_color).clamp();
+    return final_color;
 }
 
 

@@ -19,7 +19,7 @@ public:
     virtual Color get_color(const Ray&, const Vect&) const = 0;
 
     double specular; //ks
-    MaterialType type;
+    MaterialType type = DIFFUSE;
 };
 
 using shared_texture = std::shared_ptr<TextureMaterial>;

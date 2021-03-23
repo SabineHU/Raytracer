@@ -67,6 +67,8 @@ static Color get_color_shadow(const IntersectionInfo& info, const shared_light l
     Color light_amt = light->get_light_color() * cos * light->get_intensity();
     Color specular_color;
     double obj_specular = info.texture->specular;
+    // TODO set obj specular, not on texture
+    // ideal value is 50
     obj_specular = 20;
 
     if (obj_specular > 0) {
@@ -77,7 +79,6 @@ static Color get_color_shadow(const IntersectionInfo& info, const shared_light l
         }
     }
     // TODO set kd and ks in objects properties
-    // TODO sest obj specular
     //info.kd = 1;
     //info.ks = 1;
     //return light_amt * info.color * info.kd + specular_color * info.ks;
