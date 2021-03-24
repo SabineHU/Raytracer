@@ -16,6 +16,9 @@ public:
         color = Color();
         texture = nullptr;
         barycenter = Point3();
+        ka = 1;
+        kd = 1;
+        ks = 1;
     }
 
     /* Intersection point */
@@ -37,6 +40,7 @@ public:
     Point3 uv;
 
     /* Properties */
-    double ks;
+    double ka;
     double kd;
+    double ks;
 };

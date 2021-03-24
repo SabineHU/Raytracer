@@ -9,7 +9,7 @@
 class Object {
 public:
     Object() = default;
-    Object(shared_texture t) : texture(t) {}
+    Object(shared_texture t) : texture(t), ka(0.5), kd(0.5), ks(0.5) {}
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const = 0;
@@ -20,6 +20,10 @@ public:
 
     /* Attributes */
     shared_texture texture;
+
+    double ka;
+    double kd;
+    double ks;
 };
 
 

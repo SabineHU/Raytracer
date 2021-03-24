@@ -52,6 +52,10 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     info.texture = closest_obj->texture;
     info.color = closest_obj->texture->get_color(info.ray_out, info.normal);
 
+    info.ka = closest_obj->ka;
+    info.kd = closest_obj->kd;
+    info.ks = closest_obj->ks;
+
     return true;
 }
 
@@ -78,11 +82,7 @@ static Color get_color_shadow(const IntersectionInfo& info, const shared_light l
             specular_color += powf(specular, obj_specular) * light->get_intensity();
         }
     }
-    // TODO set kd and ks in objects properties
-    //info.kd = 1;
-    //info.ks = 1;
-    //return light_amt * info.color * info.kd + specular_color * info.ks;
-    return light_amt * info.color * 1 + specular_color * 1;
+    return light_amt * info.color * info.kd + specular_color * info.ks;
 }
 
 Color Scene::get_color_with_light(const IntersectionInfo& info, double accuracy) const {
