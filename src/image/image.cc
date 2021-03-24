@@ -85,7 +85,7 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
         return Color(0, 0, 0);
 
     // Color
-    Color final_color = scene.ambient_light != 0 ? info.color * scene.ambient_light : info.color;
+    Color final_color = info.color * scene.ambient_light * info.ka;
     double specular = info.texture->specular;
 
     if (specular > 0 && specular <= 1) {
@@ -98,10 +98,10 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
 
     if (info.texture->type == DIFFUSE) { // DIFFUSE_GLOSSY CASE
         //https://www.scratchapixel.com/code.php?id=8&origin=/lessons/3d-basic-rendering/ray-tracing-overview
-        return (final_color + scene.get_color_with_light(info, accuracy)).clamp();
+        final_color += scene.get_color_with_light(info, accuracy);
     }
 
-    return final_color;
+    return final_color.clamp();
 }
 
 

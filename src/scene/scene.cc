@@ -4,12 +4,12 @@
 #include "math.hh"
 
 Scene::Scene(const Camera& cam)
-    : camera(cam), ambient_light(0),
+    : camera(cam), ambient_light(Color(1, 1, 1)),
     objects(std::vector<shared_object>()),
     lights(std::vector<shared_light>())
 {}
 
-Scene::Scene(const Camera& cam, double light)
+Scene::Scene(const Camera& cam, const Color& light)
     : camera(cam), ambient_light(light),
     objects(std::vector<shared_object>()),
     lights(std::vector<shared_light>())

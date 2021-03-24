@@ -16,7 +16,7 @@ int main() {
     image::Image img = init_image(20, 1000);
     Camera cam = init_camera();
 
-    Scene scene(cam, 0.2);
+    Scene scene(cam, Color(0.5, 0.5, 0.5));
     init_lights(scene);
 
     /* TP1 */

@@ -11,7 +11,7 @@ class Scene {
 public:
     Scene() = default;
     Scene(const Camera&);
-    Scene(const Camera&, double);
+    Scene(const Camera&, const Color&);
 
     /* Methods */
     void add_object(shared_object);
@@ -32,7 +32,7 @@ private:
 public:
     /* Attributes */
     Camera camera;
-    double ambient_light;
+    Color ambient_light;
     std::vector<shared_object> objects;
     std::vector<shared_light> lights;
 };
