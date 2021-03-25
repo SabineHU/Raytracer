@@ -36,11 +36,11 @@ Camera init_camera() {
     /* Camera */
     // used for make check
     //Vect look_from(6, 4, -8);
-    Vect look_from(1, 2, -5);
+    Vect look_from(0, 2, -8);
     //Vect look_from(0, 0, -4); // Vu horizon
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
-    Vect look_at(0, 0, 0);
-    Vect vup(0,1,0);
+    Vect look_at(0, -1, 0);
+    Vect vup(0, 1, 0);
     return Camera(look_from, look_at, vup);
 }
 
@@ -97,19 +97,25 @@ void init_objects2(Scene& scene) {
 
     //scene.add_object(std::make_shared<Sphere>(Point3(0.5, 0, 0), 1, light_blue));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
-    scene.add_object(std::make_shared<Cone>(Point3(-7, -1, 1), 1, 2.5, unique_green));
-    scene.add_object(std::make_shared<Sphere>(Point3(-5, 0, 2), 1, board_black_blue));
-    scene.add_object(std::make_shared<Sphere>(Point3(5, 0, 0), 1, unique_green));
-    scene.add_object(std::make_shared<Sphere>(Point3(-2, 0.5, -5), 1, unique_red));
+    //scene.add_object(std::make_shared<Cone>(Point3(-7, -1, 1), 1, 2.5, unique_green));
+    //scene.add_object(std::make_shared<Sphere>(Point3(-5, 0, 2), 1, board_black_blue));
+    //scene.add_object(std::make_shared<Sphere>(Point3(5, 0, 0), 1, unique_green));
+    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0.5, -5), 1, unique_red));
+
+    //scene.add_object(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, red));
+    //scene.add_object(std::make_shared<Sphere>(Point3(3, 0.5, 0), 1, blue));
 }
 
 void init_blob(Scene& scene) {
     /* Create blob objects */
     std::vector<shared_object> blob_objects;
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, light_blue));
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 2, 0), 0.5, light_blue));
+    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, red));
+    //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 2, 0), 0.5, blue));
+    blob_objects.push_back(std::make_shared<Sphere>(Point3(-3, 0.5, 0), 1, red));
+    blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, green));
+    blob_objects.push_back(std::make_shared<Sphere>(Point3(3, 0.5, 0), 1, blue));
 
-    Blob blob(Point3(0, 0, 0), 6, 0.5, 80, blob_objects, true);
+    Blob blob(Point3(0, 0, 0), 11, 0.25, 75, blob_objects, true);
     blob.compute();
 
     /* Add triangles to scene */

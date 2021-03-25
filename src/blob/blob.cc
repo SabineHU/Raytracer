@@ -65,20 +65,32 @@ void Blob::init_cubes(const Point3& orig, double e, double d) {
             for (double k = orig.z - e2; k < orig.z + e2; k +=d) {
                 BlobCube cube;
 
-                cube.points[0] = this->init_cube_point(i    , j + d , k);
-                cube.points[1] = this->init_cube_point(i + d, j + d , k);
-                cube.points[2] = this->init_cube_point(i + d, j + d , k + d);
-                cube.points[3] = this->init_cube_point(i    , j + d , k + d);
+                init_cube(cube, 0, i    , j + d , k);
+                init_cube(cube, 1, i + d, j + d , k);
+                init_cube(cube, 2, i + d, j + d , k + d);
+                init_cube(cube, 3, i    , j + d , k + d);
 
-                cube.points[4] = this->init_cube_point(i    , j     , k);
-                cube.points[5] = this->init_cube_point(i + d, j     , k);
-                cube.points[6] = this->init_cube_point(i + d, j     , k + d);
-                cube.points[7] = this->init_cube_point(i    , j     , k + d);
+                init_cube(cube, 4, i    , j     , k);
+                init_cube(cube, 5, i + d, j     , k);
+                init_cube(cube, 6, i + d, j     , k + d);
+                init_cube(cube, 7, i    , j     , k + d);
 
                 this->cubes.push_back(cube);
             }
         }
     }
+}
+
+void Blob::init_cube(BlobCube& blob, int n, double i, double j, double k) {
+    /* Initialize point, get color and iso */
+    Point3 p(i, j, k);
+    Color color = this->get_iso_and_color_at(p);
+
+    p.iso = color.iso;
+    color.iso = 0;
+
+    blob.points[n] = p;
+    blob.colors[n] = color;
 }
 
 Point3 Blob::init_cube_point(double i, double j, double k) const {
@@ -89,7 +101,7 @@ Point3 Blob::init_cube_point(double i, double j, double k) const {
 
 void Blob::compute() {
     for (const auto& cube: this->cubes) {
-        this->compute_cube(cube.points);
+        this->compute_cube(cube.points, cube.colors);
     }
 
     if (this->smooth) {
@@ -106,37 +118,62 @@ void Blob::compute() {
     }
 }
 
-void Blob::compute_cube(const Point3 p[8]) {
+void Blob::compute_cube(const Point3 p[8], const Color colors[8]) {
     Point3 vertlist[12] = { Point3() };
+    Color vertcolor[12] = { Color() };
 
     int index = this->get_potentiel_index(p);
     if (edgeTable[index] == 0)
         return;
 
-    if (edgeTable[index] & 1)
+    if (edgeTable[index] & 1) {
         vertlist[0] = interpolate_vertex(p[0], p[1]);
-    if (edgeTable[index] & 2)
+        vertcolor[0] = (colors[0] + colors[1]) / 2;
+    }
+    if (edgeTable[index] & 2) {
         vertlist[1] = interpolate_vertex(p[1], p[2]);
-    if (edgeTable[index] & 4)
+        vertcolor[1] = (colors[1] + colors[2]) / 2;
+    }
+    if (edgeTable[index] & 4) {
         vertlist[2] = interpolate_vertex(p[3], p[2]);
-    if (edgeTable[index] & 8)
+        vertcolor[2] = (colors[3] + colors[2]) / 2;
+    }
+    if (edgeTable[index] & 8) {
         vertlist[3] = interpolate_vertex(p[0], p[3]);
-    if (edgeTable[index] & 16)
+        vertcolor[3] = (colors[0] + colors[3]) / 2;
+    }
+    if (edgeTable[index] & 16) {
         vertlist[4] = interpolate_vertex(p[4], p[5]);
-    if (edgeTable[index] & 32)
+        vertcolor[4] = (colors[4] + colors[5]) / 2;
+    }
+    if (edgeTable[index] & 32) {
         vertlist[5] = interpolate_vertex(p[5], p[6]);
-    if (edgeTable[index] & 64)
+        vertcolor[5] = (colors[5] + colors[6]) / 2;
+    }
+    if (edgeTable[index] & 64) {
         vertlist[6] = interpolate_vertex(p[7], p[6]);
-    if (edgeTable[index] & 128)
+        vertcolor[6] = (colors[7] + colors[6]) / 2;
+    }
+    if (edgeTable[index] & 128) {
         vertlist[7] = interpolate_vertex(p[4], p[7]);
-    if (edgeTable[index] & 256)
+        vertcolor[7] = (colors[4] + colors[7]) / 2;
+    }
+    if (edgeTable[index] & 256) {
         vertlist[8] = interpolate_vertex(p[0], p[4]);
-    if (edgeTable[index] & 512)
+        vertcolor[8] = (colors[0] + colors[4]) / 2;
+    }
+    if (edgeTable[index] & 512) {
         vertlist[9] = interpolate_vertex(p[1], p[5]);
-    if (edgeTable[index] & 1024)
+        vertcolor[9] = (colors[1] + colors[5]) / 2;
+    }
+    if (edgeTable[index] & 1024) {
         vertlist[10] = interpolate_vertex(p[2], p[6]);
-    if (edgeTable[index] & 2048)
+        vertcolor[10] = (colors[2] + colors[6]) / 2;
+    }
+    if (edgeTable[index] & 2048) {
         vertlist[11] = interpolate_vertex(p[3], p[7]);
+        vertcolor[11] = (colors[3] + colors[7]) / 2;
+    }
 
     for (int i = 0; triTable[index][i] != -1; i += 3) {
         auto a = vertlist[triTable[index][i]];
@@ -145,7 +182,12 @@ void Blob::compute_cube(const Point3 p[8]) {
         if (a == b || a == c || b == c)
             continue;
         // TODO: remove random color
-        auto triangle = SmoothTriangle(a, b, c, r_random::random_color());
+
+        auto color = (vertcolor[triTable[index][i]]
+            + vertcolor[triTable[index][i + 1]]
+            + vertcolor[triTable[index][i + 2]]) / 3;
+
+        auto triangle = SmoothTriangle(a, b, c, color);
         this->add_triangle(triangle);
 
         if (this->smooth) {
@@ -212,4 +254,18 @@ int Blob::get_isolevel_at(const Point3& p) const {
         level += obj->get_isolevel_at(p);
     }
     return level / this->blob_objects.size();
+}
+
+Color Blob::get_iso_and_color_at(const Point3& p) const {
+    Color color;
+    int level = 0;
+    for (const auto& obj : this->blob_objects) {
+        auto iso = obj->get_isolevel_at(p);
+        level += iso;
+        color += obj->texture->get_color(Ray(), Point3()) * (1 - iso / 100);
+    }
+    color /= this->blob_objects.size();
+    level /= this->blob_objects.size();
+    color.iso = level;
+    return color;
 }
