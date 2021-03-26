@@ -1,11 +1,22 @@
 #pragma once
 
+#include <vector>
+
 #include "texture_material.hh"
 
 class ImageTexture : public TextureMaterial {
 public:
-    ImageTexture() = delete;
+    ImageTexture() = default;
     ImageTexture(const char* filename);
 
     virtual Color get_color(const Point3&, double, double) const override;
+
+private:
+    void parse_file(const char* filename);
+
+    /* Attributes */
+    double width;
+    double height;
+
+    std::vector<double> pixels;
 };

@@ -13,6 +13,7 @@ enum MaterialType {
 
 class TextureMaterial {
 public:
+    TextureMaterial() : specular(0), type(DIFFUSE) {}
     TextureMaterial(double s) : specular(s), type(DIFFUSE) {}
 
     virtual Color get_color(const Point3&, double, double) const = 0;

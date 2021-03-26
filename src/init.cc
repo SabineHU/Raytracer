@@ -3,6 +3,7 @@
 #include "unique.hh"
 #include "metal.hh"
 #include "checkerboard.hh"
+#include "image_texture.hh"
 
 #include "object.hh"
 #include "cone.hh"
@@ -55,6 +56,7 @@ void init_objects(Scene& scene) {
     auto unique_green = std::make_shared<Unique>(light_green, 0.2);
     auto unique_orange = std::make_shared<Unique>(orange, 0);
     auto unique_red = std::make_shared<Metal>(dark_red);
+    auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
 
     auto metal_random = std::make_shared<Metal>(r_random::random_color());
     auto unique_random = std::make_shared<Unique>(r_random::random_color());
@@ -74,7 +76,7 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_orange));
 
     scene.add_object(std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random));
-    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, unique_random));
+    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_texture));
 
     //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));

@@ -38,4 +38,11 @@ inline double cube_root(double v) {
     return std::cbrt(v);
 }
 
+inline int round_multiple(int nb, int multiple) {
+    if (multiple == 0) return nb;
+
+    auto m = nb % multiple;
+    return m == 0 ? nb : nb - m;
+}
+
 }

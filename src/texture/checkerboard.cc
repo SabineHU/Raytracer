@@ -14,10 +14,7 @@ CheckerBoard::CheckerBoard(const Color& c1, const Color& c2, double s)
     : TextureMaterial(s), color1(c1), color2(c2)
 {}
 
-Color CheckerBoard::get_color(const Point3& p, double, double) const {
-    auto x = p.x;
-    auto z = p.z;
-
-    int square = (int) std::floor(x) + (int) std::floor(z);
+Color CheckerBoard::get_color(const Point3&, double u, double v) const {
+    int square = (int) std::floor(u) + (int) std::floor(v);
     return ((square % 2) == 0) ? color1 : color2;
 }

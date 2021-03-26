@@ -29,7 +29,15 @@ Vect Cylinder::get_normal_at(const Vect&) const {
     return normal;
 }
 
-bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
+static void compute_uv(IntersectionInfo& info) {
+    auto theta = atan2(info.point.x, info.point.z);
+    auto r = theta / (2 * math::pi);
+    info.u = 1 - r + 0.5;
+    double tmp;
+    info.v = modf(info.point.y, &tmp);
+}
+
+bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
     double dist = axis.square_length(); // distance between top and bottom
@@ -53,6 +61,8 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     if (y > 0 && y < dist && t > t_min && t < t_max) {
         normal = (oc + ray.direction * t - axis * y / dist) / radius;
         t_max = t;
+        info.point = ray.origin + ray.direction * t;
+        compute_uv(info);
         return true;
     }
 
@@ -61,6 +71,8 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     if (std::abs(a * t + b) < discriminant && t > t_min && t < t_max) {
         t_max = t;
         normal = axis / -dist;
+        info.point = ray.origin + ray.direction * t;
+        compute_uv(info);
         return true;
     }
 
@@ -69,6 +81,8 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     if (std::abs(a * t + b) < discriminant && t > t_min && t < t_max) {
         t_max = t;
         normal = axis / dist;
+        info.point = ray.origin + ray.direction * t;
+        compute_uv(info);
         return true;
     }
     return false;

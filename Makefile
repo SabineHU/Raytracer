@@ -34,6 +34,7 @@ SRC= src/main.cc \
      src/texture/metal.cc \
      src/texture/unique.cc \
      src/texture/checkerboard.cc \
+     src/texture/image_texture.cc \
      src/utils/vector3.cc
 
 OBJ=${SRC:.cc=.o}
