@@ -28,7 +28,7 @@ Vect Ellipsoid::get_normal_at(const Vect& point) const {
     return ((point - center) / radius).normalize();
 }
 
-bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
     auto oc = ray.origin - this->center;
 
     Vect ocn = oc / this->radius;

@@ -39,7 +39,7 @@ static bool compute_axis(double& max, double& min, double& max_v, double& min_v,
     return true;
 }
 
-bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
     const Vect r_dir = Vect(1, 1, 1) / ray.direction;
 
     Vect min_v = (this->position - ray.origin) * r_dir;

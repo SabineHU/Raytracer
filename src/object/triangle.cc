@@ -41,7 +41,7 @@ double Triangle::get_distance() const {
     return vector::dot(this->get_normal(), A);
 }
 
-bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
 
     auto v0v1 = B - A;
     auto v0v2 = C - A;

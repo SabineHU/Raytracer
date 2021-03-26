@@ -28,7 +28,7 @@ Vect Plane::get_normal_at(const Vect&) const {
     return normal;
 }
 
-bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
     double a = vector::dot(ray.direction, normal);
     if (a == 0)
         return -1;

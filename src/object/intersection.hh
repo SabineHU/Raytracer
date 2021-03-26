@@ -1,11 +1,10 @@
 #pragma once
 
-#include "object.hh"
 #include "ray.hh"
+#include "texture_material.hh"
 
 class IntersectionInfo {
 public:
-
     IntersectionInfo() = default;
 
     IntersectionInfo(const Ray& in) {

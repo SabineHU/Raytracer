@@ -29,7 +29,7 @@ Vect Cylinder::get_normal_at(const Vect&) const {
     return normal;
 }
 
-bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
     Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
     double dist = axis.square_length(); // distance between top and bottom

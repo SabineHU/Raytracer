@@ -41,7 +41,7 @@ static bool intersection_top_bot(const Vect& ot, const Vect& raydir,
 
 }
 
-bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max) {
+bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
     Vect axis = this->bottom - this->top;
     Vect ot = ray.origin - this->top;
     Vect ob = ray.origin - this->bottom;

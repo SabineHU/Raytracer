@@ -37,7 +37,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     double distance = math::inf;
     shared_object closest_obj = nullptr;
     for (const auto& obj : this->objects) {
-        if (obj->find_intersection(ray, accuracy, distance))
+        if (obj->find_intersection(ray, accuracy, distance, info))
             closest_obj = obj;
     }
 
@@ -60,8 +60,9 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
 }
 
 bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
+    IntersectionInfo info;
     for (const auto& obj : this->objects)
-        if (obj->find_intersection(ray, accuracy, distance))
+        if (obj->find_intersection(ray, accuracy, distance, info))
             return true;
     return false;
 }
