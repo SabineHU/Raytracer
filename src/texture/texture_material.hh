@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "vector3.hh"
-#include "ray.hh"
 
 enum MaterialType {
     DIFFUSE,
@@ -16,7 +15,7 @@ class TextureMaterial {
 public:
     TextureMaterial(double s) : specular(s), type(DIFFUSE) {}
 
-    virtual Color get_color(const Ray&, const Vect&) const = 0;
+    virtual Color get_color(const Point3&, double, double) const = 0;
 
     double specular; //ks
     MaterialType type = DIFFUSE;

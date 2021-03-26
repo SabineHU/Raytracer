@@ -50,7 +50,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
 
     info.ray_out = Ray(info.point, ray.direction);
     info.texture = closest_obj->texture;
-    info.color = closest_obj->texture->get_color(info.ray_out, info.normal);
+    info.color = closest_obj->texture->get_color(info.point, info.u, info.v);
 
     info.ka = closest_obj->ka;
     info.kd = closest_obj->kd;

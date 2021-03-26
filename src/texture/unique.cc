@@ -8,6 +8,6 @@ Unique::Unique(const Color& c, double s)
     : TextureMaterial(s), color(c)
 {}
 
-Color Unique::get_color(const Ray&, const Vect&) const {
+Color Unique::get_color(const Point3&, double, double) const {
     return color;
 }

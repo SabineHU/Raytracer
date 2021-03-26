@@ -31,7 +31,7 @@ Vect Sphere::get_normal_at(const Vect& point) const {
     return (point - center).normalize();
 }
 
-bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
+bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     auto oc = ray.origin - this->center;
 
     //double a = 1; // normalized
@@ -42,16 +42,16 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
 
     if (discriminant <= 0) return false;
 
-    double x1 = math::quadratic_equation_root_1(1, b, discriminant) - 0.000001;
-    if (x1 > 0) {
-        if (x1 <= t_min || x1 >= t_max) return false;
-        t_max = x1;
-        return true;
-    }
+    double x = math::quadratic_equation_min_root(1, b, discriminant);
+    if (x <= t_min || x >= t_max) return false;
 
-    x1 = math::quadratic_equation_root_2(1, b, discriminant) - 0.000001;
-    if (x1 <= t_min || x1 >= t_max) return false;
-    t_max = x1;
+    t_max = x;
+    info.point = ray.origin + ray.direction * x;
+    info.normal = this->get_normal_at(info.point);
+
+    info.u = 0.5 + atan2(-info.normal.z, info.normal.x) / (2 * math::pi);
+    info.v = 0.5 - asin(info.normal.y) / math::pi;
+
     return true;
 }
 

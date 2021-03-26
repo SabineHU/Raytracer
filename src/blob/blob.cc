@@ -262,7 +262,7 @@ Color Blob::get_iso_and_color_at(const Point3& p) const {
     for (const auto& obj : this->blob_objects) {
         auto iso = obj->get_isolevel_at(p);
         level += iso;
-        color += obj->texture->get_color(Ray(), Point3()) * (1 - iso / 100);
+        color += obj->texture->get_color(p, 0, 0) * (1 - iso / 100);
     }
     color /= this->blob_objects.size();
     level /= this->blob_objects.size();

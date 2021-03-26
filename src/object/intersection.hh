@@ -18,6 +18,8 @@ public:
         ka = 1;
         kd = 1;
         ks = 1;
+        u = 0;
+        v = 0;
     }
 
     /* Intersection point */
@@ -36,7 +38,7 @@ public:
     Point3 barycenter;
 
     /* Textures coordinates */
-    Point3 uv;
+    double u, v;
 
     /* Properties */
     double ka;

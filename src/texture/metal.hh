@@ -8,7 +8,7 @@ public:
     Metal(const Color&);
     Metal(const Color&, double);
 
-    virtual Color get_color(const Ray&, const Vect&) const override;
+    virtual Color get_color(const Point3&, double, double) const override;
 
 private:
     Color color;
