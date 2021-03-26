@@ -1,21 +1,18 @@
 #pragma once
 
-#include "source.hh"
+#include <memory>
+
 #include "vector3.hh"
 
-class Light : public Source {
+class Light {
 public:
 
-    Light();
-    Light(const Vect&, const Color&);
-    Light(const Vect&, const Color&, double);
+    Light() = default;
 
-    virtual Vect get_light_position() const override;
-    virtual Color get_light_color() const override;
-    virtual double get_intensity() const override;
-
-    Vect position;
-    Color color;
-    double intensity;
+    virtual Vect get_light_position() const = 0;
+    virtual Color get_light_color() const = 0;
+    virtual double get_intensity() const = 0;
 
 };
+
+using shared_light = std::shared_ptr<Light>;

@@ -4,7 +4,7 @@
 
 #include "camera.hh"
 #include "object.hh"
-#include "source.hh"
+#include "light.hh"
 #include "intersection.hh"
 
 class Scene {

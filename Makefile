@@ -14,7 +14,7 @@ SRC= src/main.cc \
      src/init.cc \
      src/blob/blob.cc \
      src/image/image.cc \
-     src/light/light.cc \
+     src/light/point_light.cc \
      src/light/ray.cc \
      \
      src/object/cone.cc \
