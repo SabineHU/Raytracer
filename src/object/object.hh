@@ -11,6 +11,7 @@ class Object {
 public:
     Object() = default;
     Object(shared_texture t) : texture(t), specular(0) {}
+    Object(shared_texture t, double s) : texture(t), specular(s) {}
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const = 0;

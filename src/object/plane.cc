@@ -39,7 +39,7 @@ bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, Inte
         return false;
     t_max = x;
 
-    info.point = ray.origin + ray.direction * x;
+    info.point = ray.origin + ray.direction * t_max;
     info.u = info.point.x;
     info.v = info.point.z;
 

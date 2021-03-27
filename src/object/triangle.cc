@@ -42,7 +42,6 @@ double Triangle::get_distance() const {
 }
 
 bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
-
     auto v0v1 = B - A;
     auto v0v2 = C - A;
 
@@ -69,6 +68,7 @@ bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, I
 
     this->barycenter = Vect(u, v, 0);
     t_max = t;
+    info.point = ray.origin + ray.direction * t_max;
     return true;
 }
 

@@ -63,7 +63,7 @@ bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     if (x <= t_min || x >= t_max) return false;
 
     t_max = x;
-    info.point = ray.origin + ray.direction * x;
+    info.point = ray.origin + ray.direction * t_max;
     compute_uv(info, this->height);
     return true;
 }

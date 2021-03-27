@@ -1,6 +1,7 @@
 #include "capped_cone.hh"
 #include "unique.hh"
 #include "vector3_op.hh"
+#include "math.hh"
 
 CappedCone::CappedCone()
     : bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)),
@@ -29,6 +30,11 @@ Vect CappedCone::get_normal_at(const Vect&) const {
     return normal;
 }
 
+static void compute_uv(IntersectionInfo& info, double dist) {
+    info.u = 0.5 + atan2(info.point.x, info.point.y) / (2 * math::pi);
+    info.v = -info.point.z / dist;
+}
+
 static bool intersection_top_bot(const Vect& ot, const Vect& raydir,
         double radius, double off, double dir, double& t_min, double& t_max) {
     auto t = -off / dir;
@@ -41,7 +47,7 @@ static bool intersection_top_bot(const Vect& ot, const Vect& raydir,
 
 }
 
-bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
+bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     Vect axis = this->bottom - this->top;
     Vect ot = ray.origin - this->top;
     Vect ob = ray.origin - this->bottom;
@@ -56,12 +62,20 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
         if (intersection_top_bot(ot, ray.direction, radius_top, offtop, dir,
                     t_min, t_max)) {
             this->normal = axis * - 1 / std::sqrt(dist);
+
+            info.point = ray.origin + ray.direction * t_max;
+            info.normal = axis * -1 / std::sqrt(dist);
+            compute_uv(info, dist);
             return true;
         }
     } else if (offbot > 0) {
         if (intersection_top_bot(ot, ray.direction, radius_bottom, offbot, dir,
                     t_min, t_max)) {
             this->normal = axis / std::sqrt(dist);
+
+            info.point = ray.origin + ray.direction * t_max;
+            info.normal = axis * -1 / std::sqrt(dist);
+            compute_uv(info, dist);
             return true;
         }
     }
@@ -88,6 +102,10 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
         t_max = t;
         auto n = (ot + ray.direction * t) * dist + axis * r * radius_top;
         this->normal = (n * dist - axis * h * y).normalize();
+
+        info.point = ray.origin + ray.direction * t_max;
+        info.normal = (n * dist - axis * h * y).normalize();
+        compute_uv(info, dist);
         return true;
     }
 

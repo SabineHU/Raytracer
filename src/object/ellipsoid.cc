@@ -45,6 +45,7 @@ bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, 
     if (t <= t_min || t >= t_max) return false;
 
     t_max = t;
+    info.point = ray.origin + ray.direction * t_max;
     return true;
 }
 

@@ -52,26 +52,24 @@ void init_lights(Scene& scene) {
 void init_objects(Scene& scene) {
     /* Textures */
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
-    //board_black_white->type = REFLECTION;
     auto board_black_blue = std::make_shared<CheckerBoard>(black, blue, 1, 0.5);
     auto unique_green = std::make_shared<Unique>(light_green, 0.6);
     auto metal_green = std::make_shared<Metal>(light_green, 0.5);
     auto unique_orange = std::make_shared<Unique>(orange, 0.5);
     auto unique_red = std::make_shared<Metal>(dark_red);
     auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
-    //image_carte_texture->type = REFLECTION;
-    auto image_texture = std::make_shared<ImageTexture>("textures/spirale.ppm");
+    auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
 
     auto metal_random = std::make_shared<Metal>(r_random::random_color());
-    metal_random->type = REFLECTION | REFRACTION;
+
     auto unique_random = std::make_shared<Unique>(r_random::random_color());
 
     /* Scene objects */
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
     //scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, unique_orange));
 
-    //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, unique_green));
-    //scene.add_object(std::make_shared<CappedCone>(Point3(2, 0, 0), Point3(0, 1, 0), 1, 0.5, unique_green));
+    scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, image_texture));
+    //scene.add_object(std::make_shared<CappedCone>(Point3(2, -1, 0), Point3(2, 1, 0), 1, 0.5, image_texture));
     //scene.add_object(std::make_shared<Torus>(Point3(3, 1, 0), board_black_blue));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
@@ -88,7 +86,7 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, image_texture));
-    scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
+    //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
 
     auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, metal_green);
     cone1->set_specular(30);

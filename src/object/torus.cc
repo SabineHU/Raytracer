@@ -131,6 +131,7 @@ bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max, Inte
 
     if (c0 <= t_min || c0 >= t_max) return false;
     t_max = c0;
+    info.point = ray.origin + ray.direction * t_max;
     return true;
 }
 
