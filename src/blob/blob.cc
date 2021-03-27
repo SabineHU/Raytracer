@@ -181,7 +181,6 @@ void Blob::compute_cube(const Point3 p[8], const Color colors[8]) {
         auto c = vertlist[triTable[index][i + 2]];
         if (a == b || a == c || b == c)
             continue;
-        // TODO: remove random color
 
         auto color = (vertcolor[triTable[index][i]]
             + vertcolor[triTable[index][i + 1]]
@@ -203,7 +202,6 @@ void Blob::compute_cube(const Point3 p[8], const Color colors[8]) {
             if (this->normals.find(sc) == this->normals.end())
                 this->normals[sc] = Vect(0, 0, 0);
 
-            //auto normal = triangle.get_normal_at(Point3());
             auto normal = vector::cross(c - a, b - a);
 
             this->normals[sa] += normal;
