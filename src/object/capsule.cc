@@ -32,7 +32,7 @@ Vect Capsule::get_normal_at(const Vect& point) const {
     return (pa + ba * -h) / radius;
 }
 
-bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
+bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
     double dist = axis.square_length();
