@@ -8,12 +8,16 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/scene \
          -I./src/image \
          -I./src/texture \
-         -I./src/blob
+         -I./src/blob \
+         -I./src/raytracer
 
 SRC= src/main.cc \
      src/init.cc \
+     \
      src/blob/blob.cc \
+     \
      src/image/image.cc \
+     \
      src/light/point_light.cc \
      src/light/ray.cc \
      \
@@ -29,12 +33,16 @@ SRC= src/main.cc \
      src/object/torus.cc \
      src/object/smooth_triangle.cc \
      \
+     src/raytracer/raytracer.cc \
+     \
      src/scene/camera.cc \
      src/scene/scene.cc \
+     \
      src/texture/metal.cc \
      src/texture/unique.cc \
      src/texture/checkerboard.cc \
      src/texture/image_texture.cc \
+     \
      src/utils/vector3.cc
 
 OBJ=${SRC:.cc=.o}

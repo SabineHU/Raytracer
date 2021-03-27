@@ -14,20 +14,17 @@ public:
     ~Image();
 
     /* Methods */
+    void set_pixel_color(int, int, const Color&);
     void save() const;
-    void render(const Scene&, double, int, int);
+
+    /* Getters */
+    int get_width() const { return width; }
+    int get_height() const { return height; }
 
 private:
-    double get_ratio() const;
-    void set_pixel_color(int, int, const Color&);
-    void set_index_x_y(double& x, double& y, double, int i, int j, double);
-
     /* Attributes */
-public:
     int width;
     int height;
-
-private:
     Vect **pixels;
 };
 

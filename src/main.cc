@@ -5,6 +5,7 @@
 #include <ctime>
 
 #include "init.hh"
+#include "raytracer.hh"
 
 int main() {
     std::srand(std::time(nullptr));
@@ -25,8 +26,7 @@ int main() {
     /* TP2 */
     //init_objects2(scene);
     //init_blob(scene);
-
-    img.render(scene, accuracy, samples, depth);
+    render(img, scene, accuracy, samples, depth);
     img.save();
 
     return 0;
