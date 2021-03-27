@@ -12,8 +12,13 @@ enum MaterialType: int {
 
 class TextureMaterial {
 public:
-    TextureMaterial() : specular(0), type(DIFFUSE) {}
-    TextureMaterial(double s) : specular(s), type(DIFFUSE) {}
+    TextureMaterial() : ka(0.5), kd(0.5), ks(0.5), type(DIFFUSE) {}
+
+    TextureMaterial(double d, double s)
+        : ka(0.5), kd(d), ks(s), type(DIFFUSE) {}
+
+    TextureMaterial(double a, double d, double s)
+        : ka(a), kd(d), ks(s), type(DIFFUSE) {}
 
     virtual Color get_color(const Point3&, double, double) const = 0;
 
@@ -26,7 +31,8 @@ public:
     void set_refraction_type() { type = REFRACTION; }
     void add_refraction_type() { type |= REFRACTION; }
 
-    double specular;
+    /* Attributes */
+    double ka, kd, ks;
     int type = DIFFUSE;
 };
 

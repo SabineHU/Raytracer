@@ -52,9 +52,9 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     info.texture = closest_obj->texture;
     info.color = closest_obj->texture->get_color(info.point, info.u, info.v);
 
-    info.ka = closest_obj->ka;
-    info.kd = closest_obj->kd;
-    info.ks = closest_obj->ks;
+    info.ka = closest_obj->texture->ka;
+    info.kd = closest_obj->texture->kd;
+    info.ks = closest_obj->texture->ks;
 
     info.specular = closest_obj->specular;
 
@@ -73,12 +73,11 @@ static Color get_color_shadow(const IntersectionInfo& info, const shared_light l
         const Vect& light_direction, double cos) {
     Color light_amt = light->get_light_color() * cos * light->get_intensity();
     Color specular_color;
-    double obj_specular = info.specular;
-    if (obj_specular > 0) {
+    if (info.specular > 0) {
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         double specular = vector::dot(reflection_ray.direction, light_direction);
         if (specular > 0) {
-            specular_color += powf(specular, obj_specular) * light->get_intensity();
+            specular_color += powf(specular, info.specular) * light->get_intensity();
         }
     }
     return light_amt * info.color * info.kd + specular_color * info.ks;

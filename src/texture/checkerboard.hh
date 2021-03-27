@@ -6,7 +6,7 @@ class CheckerBoard : public TextureMaterial {
 public:
     CheckerBoard();
     CheckerBoard(const Color&, const Color&);
-    CheckerBoard(const Color&, const Color&, double);
+    CheckerBoard(const Color&, const Color&, double, double);
 
     virtual Color get_color(const Point3&, double, double) const override;
 
