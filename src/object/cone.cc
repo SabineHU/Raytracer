@@ -2,20 +2,20 @@
 
 #include "cone.hh"
 #include "math.hh"
-#include "unique.hh"
+#include "lambertian.hh"
 
 Cone::Cone()
     : position(Point3(0, 0, 0)), radius(1), height(5)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Cone::Cone(const Point3& p, double r, double h)
     : position(p), radius(r), height(h)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Cone::Cone(const Point3& p, double r, double h, shared_texture t)
@@ -23,7 +23,7 @@ Cone::Cone(const Point3& p, double r, double h, shared_texture t)
 {}
 
 Cone::Cone(const Point3& p, double r, double h, const Color& c)
-    : Object(std::make_shared<Unique>(c)), position(p), radius(r), height(h)
+    : Object(std::make_shared<Lambertian>(c)), position(p), radius(r), height(h)
 {}
 
 Vect Cone::get_normal_at(const Vect& point) const {

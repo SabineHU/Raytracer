@@ -1,20 +1,20 @@
 #include "capsule.hh"
 #include "math.hh"
-#include "unique.hh"
+#include "lambertian.hh"
 #include "vector3_op.hh"
 
 Capsule::Capsule()
     : bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Capsule::Capsule(const Point3& b, const Point3& t, double r)
     : bottom(b), top(t), radius(r)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Capsule::Capsule(const Point3& b, const Point3& t, double r, shared_texture s)
@@ -22,7 +22,7 @@ Capsule::Capsule(const Point3& b, const Point3& t, double r, shared_texture s)
 {}
 
 Capsule::Capsule(const Point3& b, const Point3& t, double r, const Color& c)
-    : Object(std::make_shared<Unique>(c)), bottom(b), top(t), radius(r)
+    : Object(std::make_shared<Lambertian>(c)), bottom(b), top(t), radius(r)
 {}
 
 Vect Capsule::get_normal_at(const Vect& point) const {

@@ -1,6 +1,6 @@
 #include "init.hh"
 
-#include "unique.hh"
+#include "lambertian.hh"
 #include "metal.hh"
 #include "checkerboard.hh"
 #include "image_texture.hh"
@@ -54,43 +54,43 @@ void init_objects(Scene& scene) {
     /* Textures */
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     auto board_black_blue = std::make_shared<CheckerBoard>(black, blue, 1, 0.5);
-    auto unique_green = std::make_shared<Unique>(light_green, 0.6);
+    auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.6);
     auto metal_green = std::make_shared<Metal>(light_green, 0.5);
-    auto unique_orange = std::make_shared<Unique>(orange, 0.5);
-    auto unique_red = std::make_shared<Metal>(dark_red);
+    auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
+    auto lambertian_red = std::make_shared<Metal>(dark_red);
     auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
     auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
     auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
 
     auto metal_random = std::make_shared<Metal>(r_random::random_color());
 
-    auto unique_random = std::make_shared<Unique>(r_random::random_color());
+    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
 
     /* Scene objects */
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
-    //scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, unique_orange));
+    //scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, lambertian_orange));
 
     //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, image_texture));
     //scene.add_object(std::make_shared<CappedCone>(Point3(2, -1, 0), Point3(2, 1, 0), 1, 0.5, image_texture));
     //scene.add_object(std::make_shared<Torus>(Point3(3, 1, 0), board_black_blue));
     //scene.add_object(std::make_shared<Triangle>(Point3(3, 0, 0), Point3(0, 3, 0), Point3(0, 0, 3), purple));
-    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_green));
+    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, lambertian_green));
 
-    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, unique_red));
+    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, lambertian_red));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
-    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_orange));
+    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, lambertian_orange));
 
-    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, strip);
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random);
     sphere1->set_specular(25);
     scene.add_object(sphere1);
     scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
 
-    //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
-    //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));
+    //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, lambertian_orange));
+    //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), lambertian_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, image_texture));
-    //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
+    //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, lambertian_orange));
 
-    auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, unique_orange);
+    auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, lambertian_orange);
     cone1->set_specular(30);
     scene.add_object(cone1);
 
@@ -100,8 +100,8 @@ void init_objects(Scene& scene) {
 void init_objects2(Scene& scene) {
     /* Textures */
     auto board_black_blue = std::make_shared<CheckerBoard>(black, blue, 1, 0.5);
-    auto unique_green = std::make_shared<Unique>(light_green, 0.05);
-    auto unique_red = std::make_shared<Metal>(dark_red);
+    auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.05);
+    auto lambertian_red = std::make_shared<Metal>(dark_red);
 
     /* Scene objects */
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
@@ -109,10 +109,10 @@ void init_objects2(Scene& scene) {
 
     //scene.add_object(std::make_shared<Sphere>(Point3(0.5, 0, 0), 1, light_blue));
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, orange));
-    //scene.add_object(std::make_shared<Cone>(Point3(-7, -1, 1), 1, 2.5, unique_green));
+    //scene.add_object(std::make_shared<Cone>(Point3(-7, -1, 1), 1, 2.5, lambertian_green));
     //scene.add_object(std::make_shared<Sphere>(Point3(-5, 0, 2), 1, board_black_blue));
-    //scene.add_object(std::make_shared<Sphere>(Point3(5, 0, 0), 1, unique_green));
-    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0.5, -5), 1, unique_red));
+    //scene.add_object(std::make_shared<Sphere>(Point3(5, 0, 0), 1, lambertian_green));
+    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0.5, -5), 1, lambertian_red));
 
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, red));
     //scene.add_object(std::make_shared<Sphere>(Point3(3, 0.5, 0), 1, blue));

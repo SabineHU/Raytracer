@@ -1,5 +1,5 @@
 #include "torus.hh"
-#include "unique.hh"
+#include "lambertian.hh"
 #include "vector3_op.hh"
 #include "math.hh"
 
@@ -7,14 +7,14 @@ Torus::Torus()
     : position(Vect())
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Torus::Torus(const Point3& p)
     : position(p)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Torus::Torus(const Point3& p, shared_texture t)
@@ -22,7 +22,7 @@ Torus::Torus(const Point3& p, shared_texture t)
 {}
 
 Torus::Torus(const Point3& p, const Color& c)
-    : Object(std::make_shared<Unique>(c)), position(p)
+    : Object(std::make_shared<Lambertian>(c)), position(p)
 {}
 
 Vect Torus::get_normal_at(const Vect& point) const {

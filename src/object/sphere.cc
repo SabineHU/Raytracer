@@ -3,20 +3,20 @@
 #include "sphere.hh"
 #include "math.hh"
 #include "vector3_op.hh"
-#include "unique.hh"
+#include "lambertian.hh"
 
 Sphere::Sphere()
     : center(Vect(0, 0, 0)), radius(1)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Sphere::Sphere(const Vect& cent, double rad)
     : center(cent), radius(rad)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Sphere::Sphere(const Vect& cent, double rad, shared_texture t)
@@ -24,7 +24,7 @@ Sphere::Sphere(const Vect& cent, double rad, shared_texture t)
 {}
 
 Sphere::Sphere(const Vect& cent, double rad, const Color& c)
-    : Object(std::make_shared<Unique>(c)), center(cent), radius(rad)
+    : Object(std::make_shared<Lambertian>(c)), center(cent), radius(rad)
 {}
 
 Vect Sphere::get_normal_at(const Vect& point) const {

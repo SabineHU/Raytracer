@@ -1,6 +1,6 @@
 #include "triangle.hh"
 #include "vector3_op.hh"
-#include "unique.hh"
+#include "lambertian.hh"
 
 Triangle::Triangle()
 {
@@ -8,14 +8,14 @@ Triangle::Triangle()
     B = Point3(0, 1, 0);
     C = Point3(0, 0, 1);
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c)
     : A(a), B(b), C(c)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
@@ -25,7 +25,7 @@ Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
 
 Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
         const Color& col)
-    : Object(std::make_shared<Unique>(col)), A(a), B(b), C(c)
+    : Object(std::make_shared<Lambertian>(col)), A(a), B(b), C(c)
 {}
 
 Vect Triangle::get_normal_at(const Vect&) const {

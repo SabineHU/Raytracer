@@ -1,19 +1,19 @@
 #include "plane.hh"
 #include "vector3_op.hh"
-#include "unique.hh"
+#include "lambertian.hh"
 
 Plane::Plane()
     : normal(Vect(1, 0, 0)), distance(0)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Plane::Plane(const Vect& n, double d)
     : normal(n), distance(d)
 {
     auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Unique>(color);
+    texture = std::make_shared<Lambertian>(color);
 }
 
 Plane::Plane(const Vect& n, double d, shared_texture t)
@@ -21,7 +21,7 @@ Plane::Plane(const Vect& n, double d, shared_texture t)
 {}
 
 Plane::Plane(const Vect& n, double d, const Color& c)
-    : Object(std::make_shared<Unique>(c)), normal(n), distance(d)
+    : Object(std::make_shared<Lambertian>(c)), normal(n), distance(d)
 {}
 
 Vect Plane::get_normal_at(const Vect&) const {
