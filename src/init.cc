@@ -62,7 +62,7 @@ void init_objects(Scene& scene) {
     auto image_texture = std::make_shared<ImageTexture>("textures/spirale.ppm");
 
     auto metal_random = std::make_shared<Metal>(r_random::random_color());
-    metal_random->type = REFLECTION;
+    metal_random->type = REFLECTION | REFRACTION;
     auto unique_random = std::make_shared<Unique>(r_random::random_color());
 
     /* Scene objects */
