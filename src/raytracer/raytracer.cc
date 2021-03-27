@@ -27,7 +27,7 @@ static void set_index_x_y(double& x, double& y, double samples, int i, int j, do
     }
 }
 
-static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double accuracy, int depth) {
+static Color get_color(const Scene& scene, const IntersectionInfo& info, double accuracy, int depth) {
     if (depth == 0)
         return Color(0, 0, 0);
 
@@ -39,7 +39,7 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
-            final_color += getColorAt(scene, reflection_info, accuracy, depth - 1);
+            final_color += get_color(scene, reflection_info, accuracy, depth - 1);
     }
     //if (info.texture->type & REFRACTION) {
     //    std::cerr << "Refraction" << std::endl;
@@ -63,7 +63,7 @@ void render(image::Image& img, const Scene& scene, double accuracy, int samples,
                 Ray cam_ray = scene.camera.get_ray(x, y);
 
                 if (scene.has_intersection(cam_ray, info, accuracy)) {
-                    pixel_color += getColorAt(scene, info, accuracy, depth);
+                    pixel_color += get_color(scene, info, accuracy, depth);
                 } else {
                     pixel_color += Color(0, 0, 0.3);
                 }

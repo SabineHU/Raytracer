@@ -2,7 +2,8 @@
 #include <iostream>
 
 #include "blob.hh"
-#include "tools.hh"
+#include "blob_tools.hh"
+
 #include "random_color.hh"
 #include "hash.hh"
 #include "vector3_op.hh"
@@ -53,9 +54,6 @@ Blob::Blob(const Point3& orig, double e, double d, double s,
 }
 
 void Blob::init_cubes(const Point3& orig, double e, double d) {
-    // origin is the point lower left behind
-    // e is the big cube
-    // d pas
     if (this->blob_objects.size() == 0)
         return;
 
@@ -93,12 +91,6 @@ void Blob::init_cube(BlobCube& blob, int n, double i, double j, double k) {
     blob.colors[n] = color;
 }
 
-Point3 Blob::init_cube_point(double i, double j, double k) const {
-    Point3 p(i, j, k);
-    p.iso = this->get_isolevel_at(p);
-    return p;
-}
-
 void Blob::compute() {
     for (const auto& cube: this->cubes) {
         this->compute_cube(cube.points, cube.colors);
@@ -107,7 +99,6 @@ void Blob::compute() {
     if (this->smooth) {
         for (auto& [key, value] : this->normals) {
             value = value.normalize();
-            // / value.second;
         }
 
         for (auto& triangle: this->triangles) {
@@ -123,68 +114,68 @@ void Blob::compute_cube(const Point3 p[8], const Color colors[8]) {
     Color vertcolor[12] = { Color() };
 
     int index = this->get_potentiel_index(p);
-    if (edgeTable[index] == 0)
+    if (edges[index] == 0)
         return;
 
-    if (edgeTable[index] & 1) {
+    if (edges[index] & 1) {
         vertlist[0] = interpolate_vertex(p[0], p[1]);
         vertcolor[0] = (colors[0] + colors[1]) / 2;
     }
-    if (edgeTable[index] & 2) {
+    if (edges[index] & 2) {
         vertlist[1] = interpolate_vertex(p[1], p[2]);
         vertcolor[1] = (colors[1] + colors[2]) / 2;
     }
-    if (edgeTable[index] & 4) {
+    if (edges[index] & 4) {
         vertlist[2] = interpolate_vertex(p[3], p[2]);
         vertcolor[2] = (colors[3] + colors[2]) / 2;
     }
-    if (edgeTable[index] & 8) {
+    if (edges[index] & 8) {
         vertlist[3] = interpolate_vertex(p[0], p[3]);
         vertcolor[3] = (colors[0] + colors[3]) / 2;
     }
-    if (edgeTable[index] & 16) {
+    if (edges[index] & 16) {
         vertlist[4] = interpolate_vertex(p[4], p[5]);
         vertcolor[4] = (colors[4] + colors[5]) / 2;
     }
-    if (edgeTable[index] & 32) {
+    if (edges[index] & 32) {
         vertlist[5] = interpolate_vertex(p[5], p[6]);
         vertcolor[5] = (colors[5] + colors[6]) / 2;
     }
-    if (edgeTable[index] & 64) {
+    if (edges[index] & 64) {
         vertlist[6] = interpolate_vertex(p[7], p[6]);
         vertcolor[6] = (colors[7] + colors[6]) / 2;
     }
-    if (edgeTable[index] & 128) {
+    if (edges[index] & 128) {
         vertlist[7] = interpolate_vertex(p[4], p[7]);
         vertcolor[7] = (colors[4] + colors[7]) / 2;
     }
-    if (edgeTable[index] & 256) {
+    if (edges[index] & 256) {
         vertlist[8] = interpolate_vertex(p[0], p[4]);
         vertcolor[8] = (colors[0] + colors[4]) / 2;
     }
-    if (edgeTable[index] & 512) {
+    if (edges[index] & 512) {
         vertlist[9] = interpolate_vertex(p[1], p[5]);
         vertcolor[9] = (colors[1] + colors[5]) / 2;
     }
-    if (edgeTable[index] & 1024) {
+    if (edges[index] & 1024) {
         vertlist[10] = interpolate_vertex(p[2], p[6]);
         vertcolor[10] = (colors[2] + colors[6]) / 2;
     }
-    if (edgeTable[index] & 2048) {
+    if (edges[index] & 2048) {
         vertlist[11] = interpolate_vertex(p[3], p[7]);
         vertcolor[11] = (colors[3] + colors[7]) / 2;
     }
 
-    for (int i = 0; triTable[index][i] != -1; i += 3) {
-        auto a = vertlist[triTable[index][i]];
-        auto b = vertlist[triTable[index][i + 1]];
-        auto c = vertlist[triTable[index][i + 2]];
+    for (int i = 0; blob_table[index][i] != -1; i += 3) {
+        auto a = vertlist[blob_table[index][i]];
+        auto b = vertlist[blob_table[index][i + 1]];
+        auto c = vertlist[blob_table[index][i + 2]];
         if (a == b || a == c || b == c)
             continue;
 
-        auto color = (vertcolor[triTable[index][i]]
-            + vertcolor[triTable[index][i + 1]]
-            + vertcolor[triTable[index][i + 2]]) / 3;
+        auto color = (vertcolor[blob_table[index][i]]
+            + vertcolor[blob_table[index][i + 1]]
+            + vertcolor[blob_table[index][i + 2]]) / 3;
 
         auto triangle = SmoothTriangle(a, b, c, color);
         this->add_triangle(triangle);
@@ -242,16 +233,6 @@ Point3 Blob::interpolate_vertex(const Point3& p1, const Point3& p2) {
       return p1;
    double mu = (this->potentiel - p1.iso) / (p2.iso - p1.iso);
    return p1 + (p2 - p1) * mu;
-}
-
-int Blob::get_isolevel_at(const Point3& p) const {
-    int level = 0;
-    for (const auto& obj : this->blob_objects) {
-        //int obj_level = obj->get_isolevel_at(p);
-        //level = obj_level < level ? obj_level : level;
-        level += obj->get_isolevel_at(p);
-    }
-    return level / this->blob_objects.size();
 }
 
 Color Blob::get_iso_and_color_at(const Point3& p) const {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "vector3.hh"
-#include "scene.hh"
 
 namespace image {
 

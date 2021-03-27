@@ -1,9 +1,6 @@
 #include <iostream>
-#include <cmath>
 
 #include "image.hh"
-#include "array.hh"
-#include "vector3_op.hh"
 
 namespace image {
 

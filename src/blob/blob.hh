@@ -26,16 +26,13 @@ public:
     std::vector<SmoothTriangle> get_triangles() const;
 
 private:
-    void init_cubes(const Point3& orig, double e, double d);
-
     void init_cube(BlobCube& blob, int n, double i, double j, double k);
-    Point3 init_cube_point(double i, double j, double k) const;
+    void init_cubes(const Point3& orig, double e, double d);
 
     void add_triangle(const SmoothTriangle&);
     int get_potentiel_index(const Point3* p) const;
     Point3 interpolate_vertex(const Point3& p1, const Point3& p2);
 
-    int get_isolevel_at(const Point3&) const;
     Color get_iso_and_color_at(const Point3& p) const;
 
     /* Attributes */

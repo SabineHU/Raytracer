@@ -22,6 +22,7 @@ public:
 
     virtual Color get_color(const Point3&, double, double) const = 0;
 
+    /* Setters / Add */
     void set_diffuse_type() { type = DIFFUSE; }
     void add_diffuse_type() { type |= DIFFUSE; }
 
