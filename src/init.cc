@@ -86,7 +86,7 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, image_texture));
     //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
-    //scene.add_object(std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green));
+    scene.add_object(std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green));
 
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 }
@@ -121,7 +121,7 @@ void init_blob(Scene& scene) {
     blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, green));
     blob_objects.push_back(std::make_shared<Sphere>(Point3(3, 0.5, 0), 1, blue));
 
-    Blob blob(Point3(0, 0, 0), 11, 0.25, 75, blob_objects, true);
+    Blob blob(Point3(0, 0, 0), 11, 1, 75, blob_objects, true);
     blob.compute();
 
     /* Add triangles to scene */

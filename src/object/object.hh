@@ -10,7 +10,7 @@
 class Object {
 public:
     Object() = default;
-    Object(shared_texture t) : texture(t), ka(0.5), kd(0.5), ks(0.5) {}
+    Object(shared_texture t) : texture(t), ka(0.5), kd(0.5), ks(0.5), specular(0) {}
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const = 0;
@@ -25,6 +25,8 @@ public:
     double ka;
     double kd;
     double ks;
+
+    double specular;
 };
 
 

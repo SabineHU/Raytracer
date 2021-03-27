@@ -26,7 +26,7 @@ public:
     void set_refraction_type() { type = REFRACTION; }
     void add_refraction_type() { type |= REFRACTION; }
 
-    double specular; //ks
+    double specular;
     int type = DIFFUSE;
 };
 

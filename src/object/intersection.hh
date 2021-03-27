@@ -44,4 +44,5 @@ public:
     double ka;
     double kd;
     double ks;
+    double specular;
 };
