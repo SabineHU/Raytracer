@@ -1,6 +1,4 @@
 #include "scene.hh"
-#include "array.hh"
-#include "vector3_op.hh"
 #include "math.hh"
 
 Scene::Scene(const Camera& cam)

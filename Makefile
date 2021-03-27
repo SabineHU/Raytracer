@@ -19,7 +19,6 @@ SRC= src/main.cc \
      src/image/image.cc \
      \
      src/light/point_light.cc \
-     src/light/ray.cc \
      \
      src/object/cone.cc \
      src/object/capped_cone.cc \
@@ -34,6 +33,7 @@ SRC= src/main.cc \
      src/object/smooth_triangle.cc \
      \
      src/raytracer/raytracer.cc \
+     src/raytracer/ray.cc \
      \
      src/scene/camera.cc \
      src/scene/scene.cc \
