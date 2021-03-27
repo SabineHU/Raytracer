@@ -20,6 +20,7 @@ public:
         ks = 1;
         u = 0;
         v = 0;
+        specular = 0;
     }
 
     /* Intersection point */

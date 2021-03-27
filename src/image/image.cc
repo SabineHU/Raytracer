@@ -89,7 +89,6 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
     final_color += scene.get_color_with_light(info, accuracy);
 
     if (info.texture->type & REFLECTION) {
-        // reflection from objects with specular intensity
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
@@ -101,7 +100,6 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
 
     return final_color.clamp();
 }
-
 
 void Image::render(const Scene& scene, double accuracy, int samples, int depth) {
     for (int i = 0; i < width; ++i) {

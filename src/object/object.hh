@@ -19,6 +19,8 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const = 0;
 
+    void set_specular(double s) { specular = s; }
+
     /* Attributes */
     shared_texture texture;
 

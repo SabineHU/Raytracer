@@ -79,14 +79,18 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, unique_orange));
 
-    scene.add_object(std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random));
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random);
+    sphere1->set_specular(25);
+    scene.add_object(sphere1);
     scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
 
     //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, unique_orange));
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), unique_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, image_texture));
     //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, unique_orange));
-    scene.add_object(std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green));
+    auto cone1 = std::make_shared<Cone>(Point3(2, -1, 0), 1, 2, unique_green);
+    cone1->set_specular(30);
+    scene.add_object(cone1);
 
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 }
