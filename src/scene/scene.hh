@@ -22,12 +22,9 @@ public:
 
     bool has_intersection(const Ray&, IntersectionInfo&, double) const;
     bool has_shadow(const Ray&, double, double) const;
-    Color get_color_with_light(const IntersectionInfo&, double) const;
 
+    /* Getters */
     std::vector<shared_light> get_lights() const { return lights; }
-
-private:
-    std::vector<double> get_intersections_distance(const Ray&) const;
 
 public:
     /* Attributes */

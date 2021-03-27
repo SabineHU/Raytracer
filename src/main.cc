@@ -27,6 +27,7 @@ int main() {
     //init_objects2(scene);
     //init_blob(scene);
     render(img, scene, accuracy, samples, depth);
+
     img.save();
 
     return 0;
