@@ -88,17 +88,14 @@ static Color getColorAt(const Scene& scene, const IntersectionInfo& info, double
     Color final_color = info.color * scene.ambient_light * info.ka;
     double specular = info.texture->specular;
 
-    if (specular > 0 && specular <= 1) {
+    final_color += scene.get_color_with_light(info, accuracy);
+
+    if (info.texture->type == REFLECTION) { // DIFFUSE_GLOSSY CASE
         // reflection from objects with specular intensity
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
-            final_color += getColorAt(scene, reflection_info, accuracy, depth - 1) * specular;
-    }
-
-    if (info.texture->type == DIFFUSE) { // DIFFUSE_GLOSSY CASE
-        //https://www.scratchapixel.com/code.php?id=8&origin=/lessons/3d-basic-rendering/ray-tracing-overview
-        final_color += scene.get_color_with_light(info, accuracy);
+            final_color += getColorAt(scene, reflection_info, accuracy, depth - 1);
     }
 
     return final_color.clamp();
