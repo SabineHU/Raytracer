@@ -25,8 +25,8 @@ void ImageTexture::parse_file(const char* filename) {
     getline(file, line); // size
 
     size_t dist;
-    this->width = std::stod(line, &dist);
-    this->height = std::stod(line.substr(dist));
+    this->width = std::stoi(line, &dist);
+    this->height = std::stoi(line.substr(dist));
 
     getline(file, line); // max value
 
@@ -50,6 +50,10 @@ Color ImageTexture::get_color(const Point3&, double u, double v) const {
 //  return pixel_at(uv_image.canvas, round(x), round(y))
     int x = std::round(u * (width - 1));
     int y = std::round(v * (height - 1));
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x >= width) x %= width - 1;
+    if (y >= height) y %= height - 1;
 
     int index = math::round_multiple(y * width + x, 3);
 

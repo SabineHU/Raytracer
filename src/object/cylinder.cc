@@ -29,12 +29,9 @@ Vect Cylinder::get_normal_at(const Vect&) const {
     return normal;
 }
 
-static void compute_uv(IntersectionInfo& info) {
-    auto theta = atan2(info.point.x, info.point.z);
-    auto r = theta / (2 * math::pi);
-    info.u = 1 - r + 0.5;
-    double tmp;
-    info.v = modf(info.point.y, &tmp);
+static void compute_uv(IntersectionInfo& info, double dist) {
+    info.u = 0.5 + atan2(info.point.x, info.point.y) / (2 * math::pi);
+    info.v = 0.5 + info.point.z / dist;
 }
 
 bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
@@ -62,7 +59,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
         normal = (oc + ray.direction * t - axis * y / dist) / radius;
         t_max = t;
         info.point = ray.origin + ray.direction * t;
-        compute_uv(info);
+        compute_uv(info, dist);
         return true;
     }
 
@@ -72,7 +69,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
         t_max = t;
         normal = axis / -dist;
         info.point = ray.origin + ray.direction * t;
-        compute_uv(info);
+        compute_uv(info, dist);
         return true;
     }
 
@@ -82,7 +79,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
         t_max = t;
         normal = axis / dist;
         info.point = ray.origin + ray.direction * t;
-        compute_uv(info);
+        compute_uv(info, dist);
         return true;
     }
     return false;

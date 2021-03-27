@@ -15,8 +15,8 @@ private:
     void parse_file(const char* filename);
 
     /* Attributes */
-    double width;
-    double height;
+    int width;
+    int height;
 
     std::vector<double> pixels;
 };

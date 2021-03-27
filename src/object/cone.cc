@@ -33,7 +33,12 @@ Vect Cone::get_normal_at(const Vect& point) const {
     return Vect(PP.x, r * this->radius / this->height, PP.z).normalize();
 }
 
-bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo&) {
+static void compute_uv(IntersectionInfo& info, double dist) {
+    info.u = 0.5 + atan2(info.point.x, info.point.y) / (2 * math::pi);
+    info.v = -info.point.z / dist;
+}
+
+bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     const Vect dir = ray.direction;
 
     // Position Origin vector
@@ -58,6 +63,8 @@ bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     if (x <= t_min || x >= t_max) return false;
 
     t_max = x;
+    info.point = ray.origin + ray.direction * x;
+    compute_uv(info, this->height);
     return true;
 }
 
