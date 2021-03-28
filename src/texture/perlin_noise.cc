@@ -1,26 +1,49 @@
 #include "perlin_noise.hh"
 
 PerlinNoise::PerlinNoise()
-    : TextureMaterial(), scale(1), type(NOISE)
+    : TextureMaterial(), scale(1), type(NOISE),
+    color1(Color(0, 0, 0)), color2(Color(1, 1, 1))
 {}
 
 PerlinNoise::PerlinNoise(double s)
-    : TextureMaterial(), scale(s), type(WOOD)
+    : TextureMaterial(), scale(s), type(NOISE),
+    color1(Color(0, 0, 0)), color2(Color(1, 1, 1))
+{}
+
+PerlinNoise::PerlinNoise(double s, PerlinNoiseType t)
+    : TextureMaterial(), scale(s), type(t),
+    color1(Color(0, 0, 0)), color2(Color(1, 1, 1))
+{
+    if (t == WOOD) {
+        color1 = Color(0.3, 0.15, 0);
+        color2 = Color(0.6, 0.3, 0);
+    } else {
+        color1 = Color(0, 0, 0);
+        color2 = Color(1, 1, 1);
+    }
+}
+
+PerlinNoise::PerlinNoise(double s, PerlinNoiseType t,
+        const Color& c1, const Color& c2)
+    : TextureMaterial(), scale(s), type(t), color1(c1), color2(c2)
 {}
 
 Color PerlinNoise::get_color(const Point3& p, double, double) const {
-    if (type == NOISE)
-        return Color(1, 1, 1) * 0.5 * (1 + this->noise.noise(p * scale));
+    double t;
+    switch (type) {
+    case NOISE:
+        t = 0.5 + this->noise.noise(p * scale) * 0.5;
+        break;
+    case TURBULENCE:
+        t = 0.5 + sin(scale * p.z + noise.turb(p) * 10) * 0.5;
+        break;
+    case MARBLE:
+        t = sqrt(abs(sin(scale * p.z + noise.marble(p) * 2 * M_PI)));
+        break;
+    default: // WOOD
+        t = sin(scale * p.z + noise.wood(p) * 10);
+        break;
+    }
 
-    if (type == TURBULENCE)
-        return Color(1, 1, 1) * 0.5 * (1 + sin(scale*p.z + noise.turb(p) * 10));
-
-    if (type == MARBLE)
-        return Color(1, 1, 1) * 0.5 * (1 + sin(scale*p.z + noise.marble(p) * 10));
-
-    auto t = sin(scale*p.z + noise.wood(p) * 10);
-    return Color(0.3, 0.15, 0) * t + Color(0.6, 0.3, 0) * (1 - t);
-    //return Color(1, 1, 1) * noise.turb(p * scale);
-    //return Color(1, 1, 1) * noise.turb(p * scale);
-    //return Color(1, 1, 1) * 0.5 * (1 + this->noise.noise(p * scale));
+    return color1 * t + color2 * (1 - t);
 }

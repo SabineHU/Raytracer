@@ -36,4 +36,11 @@ inline Vect random_vector(double a, double b) {
     return Vect(random_double(a, b), random_double(a, b), random_double(a, b));
 }
 
+inline void shuffle(int* p, int n) {
+    for (int i = n-1; i > 0; --i) {
+        int target = random_int(0, i);
+        std::swap(p[i], p[target]);
+    }
+}
+
 }

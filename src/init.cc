@@ -66,7 +66,7 @@ void init_objects(Scene& scene) {
     auto metal_random = std::make_shared<Metal>(r_random::random_color());
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
 
-    auto perlin = std::make_shared<PerlinNoise>(3);
+    auto perlin = std::make_shared<PerlinNoise>(2, WOOD);
 
     /* Scene objects */
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
@@ -82,20 +82,20 @@ void init_objects(Scene& scene) {
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, lambertian_orange));
 
-    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random);
-    //sphere1->set_specular(25);
-    //scene.add_object(sphere1);
-    //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
-    scene.add_object(std::make_shared<Sphere>(Point3(0, 1, 0), 2, perlin));
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random);
+    sphere1->set_specular(25);
+    scene.add_object(sphere1);
+    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
+    //scene.add_object(std::make_shared<Sphere>(Point3(0, 1, 0), 2, perlin));
 
     //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, lambertian_orange));
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), lambertian_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(2, 1, 0), 1, image_texture));
     //scene.add_object(std::make_shared<Cylinder>(Point3(2, -1, 0), Point3(2, 1, 0), 1, lambertian_orange));
 
-    //auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, lambertian_orange);
-    //cone1->set_specular(30);
-    //scene.add_object(cone1);
+    auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, lambertian_orange);
+    cone1->set_specular(30);
+    scene.add_object(cone1);
 
     scene.add_object(std::make_shared<Plane>(Point3(0, 1, 0), -1, board_black_white));
 }
