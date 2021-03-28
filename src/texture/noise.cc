@@ -79,3 +79,21 @@ double Noise::turb(const Point3& p, int depth) const {
 
     return fabs(accum);
 }
+
+double Noise::marble(const Point3& p, int depth) const {
+    auto accum = 0.0;
+    auto temp_p = p;
+    auto weight = 1.0;
+
+    for (int i = 0; i < depth; i++) {
+        accum += std::fabs(2 * noise(temp_p) - 1) * weight;
+        weight *= 0.5;
+        temp_p *= 2;
+    }
+
+    return fabs(accum);
+}
+
+double Noise::wood(const Point3& p, int depth) const {
+    return fabs(noise(p)) * 10;
+}

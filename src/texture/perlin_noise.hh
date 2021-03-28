@@ -5,7 +5,9 @@
 
 enum PerlinNoiseType : int {
     NOISE,
-    TURBULENCE
+    TURBULENCE,
+    MARBLE,
+    WOOD
 };
 
 class PerlinNoise : public TextureMaterial {

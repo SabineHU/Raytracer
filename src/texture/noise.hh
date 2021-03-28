@@ -10,6 +10,8 @@ public:
 
     double noise(const Point3&) const;
     double turb(const Point3&, int depth=7) const;
+    double marble(const Point3&, int depth=7) const;
+    double wood(const Point3&, int depth=10) const;
 
 private:
     /* Attributes */
