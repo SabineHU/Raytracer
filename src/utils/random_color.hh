@@ -20,4 +20,20 @@ inline Color random_color() {
     return Color(random_0_1(), random_0_1(), random_0_1()) / 2;
 }
 
+inline double random_double() {
+    return std::rand() / (RAND_MAX + 1.0);
+}
+
+inline double random_double(double min, double max) {
+    return min + random_double() * (max - min);
+}
+
+inline Vect random_vector() {
+    return Vect(random_double(), random_double(), random_double());
+}
+
+inline Vect random_vector(double a, double b) {
+    return Vect(random_double(a, b), random_double(a, b), random_double(a, b));
+}
+
 }

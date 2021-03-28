@@ -43,6 +43,8 @@ SRC= src/main.cc \
      src/texture/lambertian.cc \
      src/texture/metal.cc \
      src/texture/strip.cc \
+     src/texture/noise.cc \
+     src/texture/perlin_noise.cc \
      \
      src/utils/vector3.cc
 
