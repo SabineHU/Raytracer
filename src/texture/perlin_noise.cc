@@ -11,8 +11,7 @@ PerlinNoise::PerlinNoise(double s)
 {}
 
 PerlinNoise::PerlinNoise(double s, PerlinNoiseType t)
-    : TextureMaterial(), scale(s), type(t),
-    color1(Color(0, 0, 0)), color2(Color(1, 1, 1))
+    : TextureMaterial(), scale(s), type(t)
 {
     if (t == WOOD) {
         color1 = Color(0.3, 0.15, 0);
@@ -38,7 +37,7 @@ Color PerlinNoise::get_color(const Point3& p, double, double) const {
         t = 0.5 + sin(scale * p.z + noise.turb(p) * 10) * 0.5;
         break;
     case MARBLE:
-        t = sqrt(abs(sin(scale * p.z + noise.marble(p) * 2 * M_PI)));
+        t = 1 - sqrt(abs(sin(scale * p.z + noise.marble(p) * 2 * M_PI)));
         break;
     default: // WOOD
         t = sin(scale * p.z + noise.wood(p) * 10);
