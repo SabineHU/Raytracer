@@ -22,6 +22,22 @@ Point3 Ray::at(double i) const {
     return this->origin + this->direction * i;
 }
 
-Vect get_reflection_dir(const Vect& dir, const Vect& normal) {
-    return dir - normal * vector::dot(dir, normal) * 2;
+Vect Ray::get_reflection_dir(const Vect& normal) const {
+    return (direction - normal * vector::dot(direction, normal) * 2).normalize();
+}
+
+Vect Ray::get_refraction_dir(const Vect& normal, double ior) const {
+    double cosi = std::max(-1.0, std::min(1.0, vector::dot(direction, normal)));
+    double etai = 1, etat = ior;
+    Vect n;
+    if (cosi < 0) {
+        cosi *= -1;
+        n = normal;
+    } else {
+        std::swap(etai, etat);
+        n = normal.negative();
+    }
+    double eta = etai / etat;
+    double k = 1 - eta * eta * (1 - cosi * cosi);
+    return k < 0 ? Vect(0, 0, 0) : (direction * eta + n * (eta * cosi - sqrtf(k))).normalize();
 }

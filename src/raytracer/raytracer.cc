@@ -31,19 +31,18 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
     if (depth == 0)
         return Color(0, 0, 0);
 
-    // Color
+    if (info.texture->type & REFRACTION && info.texture->type & REFLECTION) {
+        return compute_refraction_reflection(scene, info, accuracy, depth);
+    }
+
     Color final_color = info.color * scene.ambient_light * info.ka;
     final_color += compute_diffuse_specular(scene, info, accuracy);
-
     if (info.texture->type & REFLECTION) {
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
             final_color += get_color(scene, reflection_info, accuracy, depth - 1);
     }
-    //if (info.texture->type & REFRACTION) {
-    //    std::cerr << "Refraction" << std::endl;
-    //}
 
     return final_color.clamp();
 }
@@ -75,7 +74,6 @@ void render(image::Image& img, const Scene& scene, double accuracy, int samples,
 
             }
 
-            // average the pixel color
             pixel_color = pixel_color / (double) (samples);
             img.set_pixel_color(i, j, pixel_color);
         }
@@ -113,4 +111,54 @@ Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info,
         }
     }
     return res_color;
+}
+
+static double fresnel(const Vect& dir, const Vect& normal, const double &ior=1.3) {
+    double cos1 = std::max(-1.0, std::min(1.0, vector::dot(dir, normal)));
+
+    double n2 = 1; // air
+    double n1 = ior;
+
+    if (cos1 > 0) {
+        std::swap(n2, n1);
+    }
+
+    double sint = n2 / n1 * sqrtf(std::max(0.0, 1 - cos1 * cos1));
+    if (sint >= 1) return 1;
+
+    double cos2 = std::max(0.0, 1 - sint * sint);
+    if (cos2 == 0) return 1;
+
+    cos1 = fabsf(cos1);
+    cos2 = sqrtf(cos2);
+
+    double Rs = ((n1 * cos1) - (n2 * cos2)) / ((n1 * cos1) + (n2 * cos2));
+    double Rp = ((n2 * cos1) - (n1 * cos2)) / ((n2 * cos1) + (n1 * cos2));
+    return (Rs * Rs + Rp * Rp) / 2.0;
+}
+
+Color compute_refraction_reflection(const Scene& scene, const IntersectionInfo& info, double accuracy, int depth) {
+    Color refract, reflect;
+    bool outside = vector::dot(info.ray_out.direction, info.normal) < 0;
+
+    double kr = fresnel(info.ray_out.direction, info.normal);
+    if (kr < 1) {
+        Vect refract_dir = info.ray_out.get_refraction_dir(info.normal);
+        Vect refract_orig = outside ? info.point - info.normal : info.point + info.normal;
+
+        IntersectionInfo refraction_info;
+        Ray refraction_ray(refract_orig, refract_dir);
+        if (scene.has_intersection(refraction_ray, refraction_info, accuracy))
+            refract += get_color(scene, refraction_info, accuracy, depth - 1);
+    }
+
+    Vect reflect_dir = info.ray_out.get_reflection_dir(info.normal);
+    Vect reflect_orig = outside ? info.point + info.normal : info.point - info.normal;
+
+    IntersectionInfo reflection_info;
+    Ray reflection_ray(reflect_orig, reflect_dir);
+    if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
+        reflect += get_color(scene, reflection_info, accuracy, depth - 1);
+
+    return (reflect * kr + refract * (1 - kr)).clamp();
 }
