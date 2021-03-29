@@ -22,20 +22,11 @@ Strip::Strip(const Color& c1, const Color& c2, bool h, double s,
 {}
 
 Color Strip::get_color(const Point3& p, double u, double v) const {
+    double value;
     if (!planar) {
-        if (horizontal) {
-            int x = (int) std::floor(u * scale);
-            return x % 2 == 0 ? color1 : color2;
-        }
-
-        int y = (int) std::floor(v * scale);
-        return y % 2 == 0 ? color1 : color2;
+        value = horizontal ? u : v;
+    } else {
+        value = horizontal ? p.x : p.y;
     }
-
-    if (horizontal) {
-        int x = (int) std::floor(p.x * scale);
-        return x % 2 == 0 ? color1 : color2;
-    }
-    int y = (int) std::floor(p.y * scale);
-    return y % 2 == 0 ? color1 : color2;
+    return ((int) std::floor(value * scale)) % 2 == 0 ? color1 : color2;
 }
