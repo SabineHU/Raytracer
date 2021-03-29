@@ -41,9 +41,10 @@ void Image::save() const {
 
     for (int j = this->height - 1; j >= 0; --j) {
         for (int i = 0; i < this->width; ++i) {
-            std::cout << (int) (pixels[i][j].x * 255) << ' ';
-            std::cout << (int) (pixels[i][j].y * 255) << ' ';
-            std::cout << (int) (pixels[i][j].z * 255) << std::endl;
+            auto pixel = pixels[i][j].clamp();
+            std::cout << (int) (pixel.x * 255) << ' ';
+            std::cout << (int) (pixel.y * 255) << ' ';
+            std::cout << (int) (pixel.z * 255) << std::endl;
         }
     }
 }

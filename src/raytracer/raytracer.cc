@@ -31,20 +31,19 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
     if (depth == 0)
         return Color(0, 0, 0);
 
-    if (info.texture->type & REFRACTION && info.texture->type & REFLECTION) {
-        return compute_refraction_reflection(scene, info, accuracy, depth);
-    }
-
-    Color final_color = info.color * scene.ambient_light * info.ka;
+    Color final_color;
+    final_color += info.color * scene.ambient_light * info.ka;
     final_color += compute_diffuse_specular(scene, info, accuracy);
-    if (info.texture->type & REFLECTION) {
+    if (info.texture->type & REFRACTION && info.texture->type & REFLECTION) {
+        final_color += compute_refraction_reflection(scene, info, accuracy, depth);
+    } else if (info.texture->type & REFLECTION) {
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
             final_color += get_color(scene, reflection_info, accuracy, depth - 1);
     }
 
-    return final_color.clamp();
+    return final_color;
 }
 
 static Color get_background_color(const Ray& ray) {
@@ -113,7 +112,7 @@ Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info,
     return res_color;
 }
 
-static double fresnel(const Vect& dir, const Vect& normal, const double &ior=1.3) {
+static double fresnel(const Vect& dir, const Vect& normal, const double ior=1) {
     double cos1 = std::max(-1.0, std::min(1.0, vector::dot(dir, normal)));
 
     double n2 = 1; // air
@@ -160,5 +159,9 @@ Color compute_refraction_reflection(const Scene& scene, const IntersectionInfo& 
     if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
         reflect += get_color(scene, reflection_info, accuracy, depth - 1);
 
-    return (reflect * kr + refract * (1 - kr)).clamp();
+    if (info.texture->type & TRANSPARENT) {
+        return (reflect * kr + refract * (1 - kr) * info.kt) * info.color;
+    }
+
+    return reflect * kr + refract * (1 - kr);
 }

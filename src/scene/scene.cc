@@ -53,6 +53,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     info.ka = closest_obj->texture->ka;
     info.kd = closest_obj->texture->kd;
     info.ks = closest_obj->texture->ks;
+    info.kt = closest_obj->texture->kt;
 
     info.specular = closest_obj->specular;
 

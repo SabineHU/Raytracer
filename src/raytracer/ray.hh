@@ -11,7 +11,7 @@ public:
     Point3 at(double i) const;
 
     Vect get_reflection_dir(const Vect& normal) const;
-    Vect get_refraction_dir(const Vect& normal, double ior=1.3) const;
+    Vect get_refraction_dir(const Vect& normal, double ior=1) const;
 
     /* Attributes */
     Vect origin;

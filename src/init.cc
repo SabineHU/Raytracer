@@ -59,7 +59,10 @@ void init_objects(Scene& scene) {
     auto metal_green = std::make_shared<Metal>(light_green, 0.5);
     auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
     auto lambertian_red = std::make_shared<Metal>(dark_red);
-    lambertian_red->add_refraction_type();
+    lambertian_red->set_transparent_type();
+    lambertian_red->kd = 0.1;
+    lambertian_red->kt = 0.25;
+
     auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
     auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
     auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
