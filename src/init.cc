@@ -40,7 +40,7 @@ Camera init_camera() {
     //Vect look_from(6, 4, -8);
     //Vect look_from(0, 1.5, -8);
     //Vect look_from(0, 2, -4); // Vu horizon
-    Vect look_from(0, 1.5, -5);
+    Vect look_from(0, 4, -5);
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
@@ -55,6 +55,8 @@ void init_objects(Scene& scene) {
     /* Textures */
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     auto board_black_blue = std::make_shared<CheckerBoard>(black, blue, 1, 0.5);
+    board_black_blue->set_scale(15);
+
     auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.6);
     auto metal_green = std::make_shared<Metal>(light_green, 0.5);
     auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
@@ -66,6 +68,8 @@ void init_objects(Scene& scene) {
     auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
     auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
     auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
+    auto strip2 = std::make_shared<Strip>(red, white, true, 5);
+    strip2->set_planar(true);
 
     auto metal_random = std::make_shared<Metal>(r_random::random_color());
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
@@ -88,15 +92,20 @@ void init_objects(Scene& scene) {
 
     //scene.add_object(std::make_shared<Sphere>(Point3(-4, 0, 2), 1, lambertian_green));
 
-    auto sphere_red = std::make_shared<Sphere>(Point3(-2, 0, 0), 1, lambertian_red);
-    sphere_red->set_specular(30);
-    scene.add_object(sphere_red);
-    //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, board_black_blue));
+    //auto sphere_red = std::make_shared<Sphere>(Point3(-2, 0, 0), 1, lambertian_red);
+    //sphere_red->set_specular(30);
+    //scene.add_object(sphere_red);
+    scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, strip2));
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, lambertian_orange));
 
-    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, metal_random);
+    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, strip);
+    //sphere1->set_specular(25);
+    //scene.add_object(sphere1);
+
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, board_black_blue);
     sphere1->set_specular(25);
     scene.add_object(sphere1);
+
     scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
 
     //scene.add_object(std::make_shared<Sphere>(Point3(0, 1, 1), 2, perlin));

@@ -10,7 +10,11 @@ public:
 
     virtual Color get_color(const Point3&, double, double) const override;
 
+    void set_scale(double d) { scale = d; }
+
 private:
     Color color1;
     Color color2;
+
+    double scale;
 };
