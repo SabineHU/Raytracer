@@ -55,7 +55,10 @@ bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     double discriminant = b * b - 4 * a * c;
     if (discriminant <= 0) return false;
 
-    double x = math::quadratic_equation_min_root(a, b, discriminant) - 0.000001;
+    double roots[2] = { -1 };
+    math::quadratic_equation_roots(a, b, discriminant, roots);
+
+    double x = roots[0];
     double r = ray.origin.y + ray.direction.y * x;
     if (r <= position.y || r >= position.y + height)
         return false;
@@ -65,6 +68,9 @@ bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     t_max = x;
     info.point = ray.origin + ray.direction * t_max;
     compute_uv(info, this->height);
+
+    info.t_min = roots[0];
+    info.t_max = roots[1];
     return true;
 }
 

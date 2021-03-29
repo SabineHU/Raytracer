@@ -24,6 +24,16 @@ inline double quadratic_equation_min_root(double a, double b, double delta) {
     return std::min(x1, x2);
 }
 
+inline void quadratic_equation_roots(double a, double b, double delta,
+        double roots[2]) {
+    double sqrt_delta = std::sqrt(delta);
+    roots[0] = quadratic_equation_root_1(a, b, sqrt_delta);
+    roots[1] = quadratic_equation_root_2(a, b, sqrt_delta);
+
+    if (roots[1] < roots[0])
+        std::swap(roots[0], roots[1]);
+}
+
 inline double randian_to_degree(double radian) {
     return radian * 180 / pi;
 }

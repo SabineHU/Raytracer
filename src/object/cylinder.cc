@@ -51,7 +51,8 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     if (discriminant <= 0) return false;
 
     discriminant = std::sqrt(discriminant);
-    double t = (-b - discriminant) / a;
+    double roots[2] = { (-b - discriminant) / a, (-b + discriminant) / a };
+    double t = roots[0];
 
     // Tube
     double y = dir * t + offs;
@@ -60,6 +61,9 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
         t_max = t;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
+
+        info.t_min = roots[0];
+        info.t_max = roots[1];
         return true;
     }
 
@@ -70,6 +74,9 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
         normal = axis / -dist;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
+
+        info.t_min = t;
+        info.t_max = t;
         return true;
     }
 
@@ -80,6 +87,9 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
         normal = axis / dist;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
+
+        info.t_min = t;
+        info.t_max = t;
         return true;
     }
     return false;

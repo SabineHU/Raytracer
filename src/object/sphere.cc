@@ -42,7 +42,10 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
 
     if (discriminant <= 0) return false;
 
-    double x = math::quadratic_equation_min_root(1, b, discriminant);
+    double roots[2] = { -1 };
+    math::quadratic_equation_roots(1, b, discriminant, roots);
+
+    double x = roots[0];
     if (x <= t_min || x >= t_max) return false;
 
     t_max = x;
@@ -52,6 +55,8 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
     info.u = 0.5 + atan2(info.point.z, info.point.x) / (2 * math::pi);
     info.v = 0.5 - asin(info.point.y) / math::pi;
 
+    info.t_min = roots[0];
+    info.t_max = roots[1];
     return true;
 }
 

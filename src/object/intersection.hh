@@ -47,4 +47,8 @@ public:
     double ks;
     double kt;
     double specular;
+
+    /* Object operators */
+    double t_min;
+    double t_max;
 };
