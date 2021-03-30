@@ -38,10 +38,9 @@ image::Image init_image(double angle, double zmin) {
 
 Camera init_camera() {
     /* Camera */
-    //Vect look_from(6, 4, -8);
-    //Vect look_from(0, 1.5, -8);
-    Vect look_from(0, 1.5, -9); // Vu horizon
-    //Vect look_from(0, 2, -5);
+    Vect look_from(6, 4, -8);
+    //Vect look_from(0, 2, -9);
+    //Vect look_from(0, 0, -5);
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
@@ -50,6 +49,31 @@ Camera init_camera() {
 
 void init_lights(Scene& scene) {
     scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -10), white, 2.5));
+}
+
+static void add_ice_cream(Scene& scene) {
+    auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
+    auto lambertian_light_blue = std::make_shared<Lambertian>(light_blue, 0.5);
+    auto lambertian_light_green = std::make_shared<Lambertian>(light_green, 0.5);
+    auto lambertian_yellow = std::make_shared<Lambertian>(yellow, 0.5);
+
+    auto capped_cone = std::make_shared<CappedCone>(Point3(-3, -1, 0), Point3(1, 0, 0), 0.0001, 1);
+    capped_cone->set_texture(lambertian_orange);
+
+    auto sphere1 = std::make_shared<Sphere>(Point3(1, 0, 0), 1);
+    sphere1->set_texture(lambertian_light_blue);
+
+    auto sphere2 = std::make_shared<Sphere>(Point3(2, .25, 0), 1);
+    sphere2->set_texture(lambertian_light_green);
+
+    auto sphere3 = std::make_shared<Sphere>(Point3(3, .5, 0), 1);
+    sphere3->set_texture(lambertian_yellow);
+
+    auto CSG_1 = std::make_shared<CSG>(UNION, sphere3, sphere2);
+    auto CSG_2 = std::make_shared<CSG>(UNION, sphere1, capped_cone);
+    auto CSG_3 = std::make_shared<CSG>(UNION, CSG_2, CSG_1);
+
+    scene.add_object(CSG_3);
 }
 
 void init_objects(Scene& scene) {
@@ -65,19 +89,27 @@ void init_objects(Scene& scene) {
     //torus->set_texture(lambertian_random);
     //scene.add_object(torus);
 
-    //auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.6);
-    //auto sphere1 = std::make_shared<Sphere>(Point3(-4, 0, 2), 1);
-    //sphere1->set_texture(lambertian_green);
-    //scene.add_object(sphere1);
-
     //auto metal_orange = std::make_shared<Metal>(orange, 0.2);
     //auto capsule = std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1);
     //capsule->set_texture(metal_orange);
     //scene.add_object(capsule);
 
+    //auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.6);
+    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    //sphere1->set_texture(lambertian_green);
+    //scene.add_object(sphere1);
+
     //auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
-    //auto cube = std::make_shared<Cube>(Point3(0, -1, 0), 2);
+    //auto cube = std::make_shared<Cube>(Point3(-1, -1, -1), 2);
     //cube->set_texture(lambertian_orange);
+    //scene.add_object(cube);
+
+    //auto CSG_1 = std::make_shared<CSG>(MINUS, cube, sphere1);
+    //scene.add_object(CSG_1);
+
+    //auto image_flower_texture = std::make_shared<ImageTexture>("textures/flower.ppm");
+    //auto cube = std::make_shared<Cube>(Point3(-1, -1, -1), 2);
+    //cube->set_texture(image_flower_texture);
     //scene.add_object(cube);
 
     //auto ellipsoid = std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2));
@@ -88,10 +120,13 @@ void init_objects(Scene& scene) {
     //cylinder->set_texture(lambertian_orange);
     //scene.add_object(cylinder);
 
+    //auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), Point3(-2, 1, 0), 2);
     //auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2);
     //cone1->set_texture(lambertian_orange);
     //cone1->set_specular(30);
     //scene.add_object(cone1);
+
+    //add_ice_cream(scene);
 
     //auto lambertian_red = std::make_shared<Metal>(dark_red);
     //lambertian_red->set_transparent_type();
@@ -108,9 +143,15 @@ void init_objects(Scene& scene) {
     //scene.add_object(sphere_map);
 
     //auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
-    //auto capped_cone = std::make_shared<CappedCone>(Point3(2, -1, 0), Point3(2, 1, 0), 1, 0.5);
-    //capped_cone->set_texture(image_texture);
+    //auto strip = std::make_shared<Strip>(orange, light_blue, true, 10);
+    //strip->set_planar(true);
+
     //scene.add_object(capped_cone);
+    //scene.add_object(sphere1);
+    //scene.add_object(sphere2);
+    //scene.add_object(sphere3);
+    //auto sphere2 = std::make_shared<Sphere>(1);
+    //auto sphere3 = std::make_shared<Sphere>(1);
 
     //auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
     //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5);
@@ -124,16 +165,16 @@ void init_objects(Scene& scene) {
     //sphere2->set_texture(strip2);
     //scene.add_object(sphere2);
 
-    auto metal_random = std::make_shared<Metal>(r_random::random_color());
-    auto metal_random2 = std::make_shared<Metal>(r_random::random_color());
-    auto obj1 = std::make_shared<Sphere>(Point3(2, 0, 0), 1);
-    obj1->set_texture(metal_random);
+    //auto metal_random = std::make_shared<Metal>(r_random::random_color());
+    //auto metal_random2 = std::make_shared<Metal>(r_random::random_color());
+    //auto obj1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    //obj1->set_texture(metal_random);
 
-    auto obj2 = std::make_shared<Sphere>(Point3(2.5, 1, 0), 1);
-    //auto obj2 = std::make_shared<Cone>(Point3(2, 0, 0), 0.75, 2.5);
-    obj2->set_texture(metal_random2);
-    auto CSG_union = std::make_shared<CSG>(UNION, obj1, obj2);
-    scene.add_object(CSG_union);
+    //auto obj2 = std::make_shared<Sphere>(Point3(0.5, 1, 0), 1);
+    ////auto obj2 = std::make_shared<Cone>(Point3(0, 0, 0), 0.75, 2.5);
+    //obj2->set_texture(metal_random2);
+    //auto CSG_union = std::make_shared<CSG>(UNION, obj1, obj2);
+    //scene.add_object(CSG_union);
     //scene.add_object(obj1);
     //scene.add_object(obj2);
 

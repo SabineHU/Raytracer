@@ -35,7 +35,7 @@ static bool compute_axis(double& max, double& min, double& max_v, double& min_v,
 bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     const Vect r_dir = Vect(1, 1, 1) / ray.direction;
 
-    Vect min_v = (this->position - ray.origin) * r_dir;
+    Vect min_v = (position - ray.origin) * r_dir;
     Vect max_v = (position + Vect(side, side, side) - ray.origin) * r_dir;
 
     double min = min_v.x;
@@ -56,14 +56,33 @@ bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
 
     /* Get the second solution if first one is negative */
     tools::modify_if_negative(min, max, nmin, nmax);
+    if (min < 0) {
+        min = max;
+        nmin = nmax;
+    }
     if (min < 0 || min < t_min || min >= t_max) return false;
+
+    info.t_max = max;
+    info.t_min = min;
 
     t_max = min;
     this->normal = nmin;
     info.point = ray.origin + ray.direction * t_max;
     info.normal = nmin;
-    info.u = 0;
-    info.v = 0;
+
+    auto OP = (info.point - position) / side;
+    if(std::fabs(nmin.z) > std::fabs(nmin.x)
+            && std::fabs(nmin.z) > std::fabs(nmin.y)) {
+        info.u = OP.x;
+        info.v = OP.y;
+    } else if(std::fabs(nmin.y) > std::fabs(nmin.x)) {
+        info.u = OP.x;
+        info.v = OP.z;
+    } else {
+        info.u = OP.y;
+        info.v = OP.z;
+    }
+
     return true;
 }
 
