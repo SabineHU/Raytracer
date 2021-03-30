@@ -7,8 +7,6 @@ public:
 
     CappedCone();
     CappedCone(const Point3&, const Point3&, double, double);
-    CappedCone(const Point3&, const Point3&, double, double, shared_texture);
-    CappedCone(const Point3&, const Point3&, double, double, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;

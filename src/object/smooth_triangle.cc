@@ -6,11 +6,6 @@ SmoothTriangle::SmoothTriangle(const Point3& a, const Point3& b,
 {}
 
 SmoothTriangle::SmoothTriangle(const Point3& a, const Point3& b,
-        const Point3& c, const Color& col)
-    : Triangle(a, b, c, col), normalA(Vect()), normalB(Vect()), normalC(Vect())
-{}
-
-SmoothTriangle::SmoothTriangle(const Point3& a, const Point3& b,
         const Point3& c, const Vect& na, const Vect& nb, const Vect& nc)
     : Triangle(a, b, c), normalA(na), normalB(nb), normalC(nc)
 {}

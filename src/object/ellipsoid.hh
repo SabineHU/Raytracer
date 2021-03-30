@@ -7,8 +7,6 @@ public:
 
     Ellipsoid();
     Ellipsoid(const Vect&, const Vect&);
-    Ellipsoid(const Vect&, const Vect&, shared_texture);
-    Ellipsoid(const Vect&, const Vect&, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;
@@ -16,7 +14,8 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
-    /* Attribute */
+private:
+    /* Attributes */
     Vect center;
     Vect radius;
 };

@@ -3,29 +3,15 @@
 #include "lambertian.hh"
 
 Triangle::Triangle()
+    : Object()
 {
     A = Point3(1, 0, 0);
     B = Point3(0, 1, 0);
     C = Point3(0, 0, 1);
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
 }
 
 Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c)
-    : A(a), B(b), C(c)
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
-        shared_texture t)
-    : Object(t), A(a), B(b), C(c)
-{}
-
-Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
-        const Color& col)
-    : Object(std::make_shared<Lambertian>(col)), A(a), B(b), C(c)
+    : Object(), A(a), B(b), C(c)
 {}
 
 Vect Triangle::get_normal_at(const Vect&) const {

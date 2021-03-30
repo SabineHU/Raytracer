@@ -6,8 +6,6 @@ class Cylinder : public Object {
 public:
     Cylinder();
     Cylinder(const Point3&, const Point3&, double);
-    Cylinder(const Point3&, const Point3&, double, shared_texture);
-    Cylinder(const Point3&, const Point3&, double, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;

@@ -4,26 +4,13 @@
 #include "math.hh"
 
 CappedCone::CappedCone()
-    : bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)),
+    : Object(), bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)),
     radius_bottom(2), radius_top(1), normal(Vect())
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr)
-    : bottom(b), top(t), radius_bottom(br), radius_top(tr), normal(Vect())
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr, shared_texture s)
-    : Object(s), bottom(b), top(t), radius_bottom(br), radius_top(tr), normal(Vect())
 {}
 
-CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr, const Color& c)
-    : Object(std::make_shared<Lambertian>(c)), bottom(b), top(t), radius_bottom(br), radius_top(tr), normal(Vect())
+CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr)
+    : Object(), bottom(b), top(t), radius_bottom(br), radius_top(tr),
+    normal(Vect())
 {}
 
 Vect CappedCone::get_normal_at(const Vect&) const {

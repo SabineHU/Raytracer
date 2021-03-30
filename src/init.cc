@@ -70,18 +70,26 @@ void init_objects(Scene& scene) {
     //sphere1->set_texture(lambertian_green);
     //scene.add_object(sphere1);
 
+    //auto metal_orange = std::make_shared<Metal>(orange, 0.2);
+    //auto capsule = std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1);
+    //capsule->set_texture(metal_orange);
+    //scene.add_object(capsule);
+
     auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
     //auto cube = std::make_shared<Cube>(Point3(0, -1, 0), 2);
     //cube->set_texture(lambertian_orange);
     //scene.add_object(cube);
 
-    auto metal_orange = std::make_shared<Metal>(orange, 0.2);
-    auto capsule = std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1);
-    capsule->set_texture(metal_orange);
-    scene.add_object(capsule);
-    //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), lambertian_orange));
-    //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(-2, 1, 0), 1, lambertian_orange));
-    //auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, lambertian_orange);
+    //auto ellipsoid = std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2));
+    //ellipsoid->set_texture(lambertian_orange);
+    //scene.add_object(ellipsoid);
+
+    //auto cylinder = std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(-2, 1, 0), 1);
+    //cylinder->set_texture(lambertian_orange);
+    //scene.add_object(cylinder);
+
+    //auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2);
+    //cone1->set_texture(lambertian_orange);
     //cone1->set_specular(30);
     //scene.add_object(cone1);
 
@@ -89,31 +97,32 @@ void init_objects(Scene& scene) {
     //lambertian_red->set_transparent_type();
     //lambertian_red->kd = 0.1;
     //lambertian_red->kt = 0.25;
-    //auto sphere_red = std::make_shared<Sphere>(Point3(-2, 0, 0), 1, lambertian_red);
+    //auto sphere_red = std::make_shared<Sphere>(Point3(-2, 0, 0), 1);
+    //sphere_red->set_texture(lambertian_red);
     //sphere_red->set_specular(30);
     //scene.add_object(sphere_red);
 
     //auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
-    //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
+    //auto sphere_map = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    //sphere_map->set_texture(image_carte_texture);
+    //scene.add_object(sphere_map);
 
     //auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
-    //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, image_texture));
-    //scene.add_object(std::make_shared<CappedCone>(Point3(2, -1, 0), Point3(2, 1, 0), 1, 0.5, image_texture));
+    //auto capped_cone = std::make_shared<CappedCone>(Point3(2, -1, 0), Point3(2, 1, 0), 1, 0.5);
+    //capped_cone->set_texture(image_texture);
+    //scene.add_object(capped_cone);
 
     //auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
-    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, strip);
+    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5);
+    //sphere1->set_texture(strip);
     //sphere1->set_specular(25);
     //scene.add_object(sphere1);
 
     //auto strip2 = std::make_shared<Strip>(red, white, true, 5);
     //strip2->set_planar(true);
-    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, strip2));
-
-    //auto metal_random2 = std::make_shared<Metal>(r_random::random_color());
-    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, metal_random2));
-
-    //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, metal_random));
-    //scene.add_object(std::make_shared<Cone>(Point3(2, 0, 0), 1, 2.5, metal_random2));
+    //auto sphere2 = std::make_shared<Sphere>(Point3(-2, 0, 0), 1);
+    //sphere2->set_texture(strip2);
+    //scene.add_object(sphere2);
 
     //auto metal_random = std::make_shared<Metal>(r_random::random_color());
     //auto obj1 = std::make_shared<Sphere>(Point3(2, 0, 0), 1, metal_random);
@@ -127,22 +136,31 @@ void init_objects(Scene& scene) {
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, lambertian_random));
 
-    //auto perlin = std::make_shared<PerlinNoise>(2, NOISE, red, yellow);
-    //scene.add_object(std::make_shared<Sphere>(Point3(0, 1, 1), 2, perlin));
+    auto perlin = std::make_shared<PerlinNoise>(2, NOISE, red, yellow);
+    auto p1 = std::make_shared<Sphere>(Point3(0, 1, 1), 2);
+    p1->set_texture(perlin);
+    scene.add_object(p1);
 
-    //auto perlin2 = std::make_shared<PerlinNoise>(2, TURBULENCE, purple, black);
-    //scene.add_object(std::make_shared<Sphere>(Point3(-4, 1, 0), 2, perlin2));
+    auto perlin2 = std::make_shared<PerlinNoise>(2, TURBULENCE, purple, black);
+    auto p2 = std::make_shared<Sphere>(Point3(-4, 1, 0), 2);
+    p2->set_texture(perlin2);
+    scene.add_object(p2);
 
-    //auto perlin3 = std::make_shared<PerlinNoise>(2, MARBLE, dark_blue, light_blue);
-    //scene.add_object(std::make_shared<Sphere>(Point3(-5, 1, -4), 2, perlin3));
+    auto perlin3 = std::make_shared<PerlinNoise>(2, MARBLE, dark_blue, light_blue);
+    auto p3 = std::make_shared<Sphere>(Point3(-5, 1, -4), 2);
+    p3->set_texture(perlin3);
+    scene.add_object(p3);
 
-    //auto perlin4 = std::make_shared<PerlinNoise>(2, WOOD);
-    //scene.add_object(std::make_shared<Sphere>(Point3(4, 1, 1), 2, perlin4));
+    auto perlin4 = std::make_shared<PerlinNoise>(2, WOOD);
+    auto p4 = std::make_shared<Sphere>(Point3(4, 1, 1), 2);
+    p4->set_texture(perlin4);
+    scene.add_object(p4);
 
-    //auto perlin5 = std::make_shared<PerlinNoise>(2, WOOD, light_pink, light_red);
-    //auto sphere_wood_colored = std::make_shared<Sphere>(Point3(0, 0, -3), 1, perlin5);
-    //sphere_wood_colored->set_specular(50);
-    //scene.add_object(sphere_wood_colored);
+    auto perlin5 = std::make_shared<PerlinNoise>(2, WOOD, light_pink, light_red);
+    auto sphere_wood_colored = std::make_shared<Sphere>(Point3(0, 0, -3), 1);
+    sphere_wood_colored->set_texture(perlin5);
+    sphere_wood_colored->set_specular(50);
+    scene.add_object(sphere_wood_colored);
 
 }
 

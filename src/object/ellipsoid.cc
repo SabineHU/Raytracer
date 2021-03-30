@@ -3,25 +3,11 @@
 #include "lambertian.hh"
 
 Ellipsoid::Ellipsoid()
-    : center(Vect(0, 0, 0)), radius(Vect(1, 0.5, 1))
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Ellipsoid::Ellipsoid(const Vect& cent, const Vect& rad)
-    : center(cent), radius(rad)
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Ellipsoid::Ellipsoid(const Vect& cent, const Vect& rad, shared_texture t)
-    : Object(t), center(cent), radius(rad)
+    : Object(), center(Vect(0, 0, 0)), radius(Vect(1, 0.5, 1))
 {}
 
-Ellipsoid::Ellipsoid(const Vect& cent, const Vect& rad, const Color& c)
-    : Object(std::make_shared<Lambertian>(c)), center(cent), radius(rad)
+Ellipsoid::Ellipsoid(const Vect& cent, const Vect& rad)
+    : Object(), center(cent), radius(rad)
 {}
 
 Vect Ellipsoid::get_normal_at(const Vect& point) const {

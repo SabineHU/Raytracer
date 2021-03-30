@@ -177,7 +177,8 @@ void Blob::compute_cube(const Point3 p[8], const Color colors[8]) {
             + vertcolor[blob_table[index][i + 1]]
             + vertcolor[blob_table[index][i + 2]]) / 3;
 
-        auto triangle = SmoothTriangle(a, b, c, color);
+        auto triangle = SmoothTriangle(a, b, c);
+        triangle.set_texture(color);
         this->add_triangle(triangle);
 
         if (this->smooth) {

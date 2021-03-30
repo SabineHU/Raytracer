@@ -6,8 +6,6 @@ class Triangle : public Object {
 public:
     Triangle();
     Triangle(const Point3&, const Point3&, const Point3&);
-    Triangle(const Point3&, const Point3&, const Point3&, shared_texture);
-    Triangle(const Point3&, const Point3&, const Point3&, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;

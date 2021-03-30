@@ -4,25 +4,12 @@
 #include "vector3_op.hh"
 
 Cylinder::Cylinder()
-    : bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1), normal(Vect())
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Cylinder::Cylinder(const Point3& b, const Point3& t, double r)
-    : bottom(b), top(t), radius(r), normal(Vect())
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Cylinder::Cylinder(const Point3& b, const Point3& t, double r, shared_texture s)
-    : Object(s), bottom(b), top(t), radius(r), normal(Vect())
+    : Object(), bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1),
+    normal(Vect())
 {}
 
-Cylinder::Cylinder(const Point3& b, const Point3& t, double r, const Color& c)
-    : Object(std::make_shared<Lambertian>(c)), bottom(b), top(t), radius(r), normal(Vect())
+Cylinder::Cylinder(const Point3& b, const Point3& t, double r)
+    : Object(), bottom(b), top(t), radius(r), normal(Vect())
 {}
 
 Vect Cylinder::get_normal_at(const Vect&) const {
