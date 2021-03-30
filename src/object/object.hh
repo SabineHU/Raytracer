@@ -10,7 +10,9 @@
 
 class Object {
 public:
-    Object() = default;
+    Object() : texture(std::make_shared<Lambertian>(Color(.5, .5, .5))),
+        specular(0) {}
+
     Object(shared_texture t) : texture(t), specular(0) {}
     Object(shared_texture t, double s) : texture(t), specular(s) {}
 
@@ -26,14 +28,16 @@ public:
     /* Setters */
     void set_specular(double s) { specular = s; }
     void set_texture(shared_texture t) { texture = t; }
-    void set_color(const Color& c) { texture = std::make_shared<Lambertian>(c); }
+    void set_texture(const Color& c) { texture = std::make_shared<Lambertian>(c); }
 
     shared_texture get_texture() const { return texture; }
 
-    double specular;
-    /* Attributes */
 protected:
+    /* Attributes */
     shared_texture texture;
+
+public:
+    double specular;
 };
 
 using shared_object = std::shared_ptr<Object>;

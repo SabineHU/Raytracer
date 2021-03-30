@@ -40,7 +40,7 @@ Camera init_camera() {
     /* Camera */
     //Vect look_from(6, 4, -8);
     //Vect look_from(0, 1.5, -8);
-    Vect look_from(0, 1.5, -4); // Vu horizon
+    Vect look_from(0, 1.5, -9); // Vu horizon
     //Vect look_from(0, 2, -5);
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
@@ -59,19 +59,26 @@ void init_objects(Scene& scene) {
     plane->set_texture(board_black_white);
     scene.add_object(plane);
 
-    //auto board_black_blue = std::make_shared<CheckerBoard>(black, blue, 1, 0.5);
-    //board_black_blue->set_scale(15);
-    //scene.add_object(std::make_shared<Torus>(Point3(3, 1, 0), board_black_blue));
-    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, board_black_blue);
-    //sphere1->set_specular(25);
-    //scene.add_object(sphere1);
+    /* Torus */
+    //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    //auto torus = std::make_shared<Torus>(Point3(2.5, .5, 0));
+    //torus->set_texture(lambertian_random);
+    //scene.add_object(torus);
 
     //auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.6);
-    //scene.add_object(std::make_shared<Sphere>(Point3(-4, 0, 2), 1, lambertian_green));
+    //auto sphere1 = std::make_shared<Sphere>(Point3(-4, 0, 2), 1);
+    //sphere1->set_texture(lambertian_green);
+    //scene.add_object(sphere1);
 
-    //auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
-    //scene.add_object(std::make_shared<Cube>(Point3(0, -1, 0), 2, lambertian_orange));
-    //scene.add_object(std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1, lambertian_orange));
+    auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
+    //auto cube = std::make_shared<Cube>(Point3(0, -1, 0), 2);
+    //cube->set_texture(lambertian_orange);
+    //scene.add_object(cube);
+
+    auto metal_orange = std::make_shared<Metal>(orange, 0.2);
+    auto capsule = std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1);
+    capsule->set_texture(metal_orange);
+    scene.add_object(capsule);
     //scene.add_object(std::make_shared<Ellipsoid>(Point3(-2, 0, -3), Point3(1.5, 0.5, 2), lambertian_orange));
     //scene.add_object(std::make_shared<Cylinder>(Point3(-2, -1, 0), Point3(-2, 1, 0), 1, lambertian_orange));
     //auto cone1 = std::make_shared<Cone>(Point3(-2, -1, 0), 1, 2, lambertian_orange);
@@ -86,35 +93,35 @@ void init_objects(Scene& scene) {
     //sphere_red->set_specular(30);
     //scene.add_object(sphere_red);
 
-    auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
-    scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
+    //auto image_carte_texture = std::make_shared<ImageTexture>("textures/carte.ppm");
+    //scene.add_object(std::make_shared<Sphere>(Point3(0, 0, 0), 1, image_carte_texture));
 
     //auto image_texture = std::make_shared<ImageTexture>("textures/quadrillage.ppm");
     //scene.add_object(std::make_shared<Cone>(Point3(1.75, -1, 0), 1, 2.5, image_texture));
     //scene.add_object(std::make_shared<CappedCone>(Point3(2, -1, 0), Point3(2, 1, 0), 1, 0.5, image_texture));
 
-    auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
-    auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, strip);
-    sphere1->set_specular(25);
-    scene.add_object(sphere1);
+    //auto strip = std::make_shared<Strip>(orange, light_blue, true, 25);
+    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 1.5, 0), .5, strip);
+    //sphere1->set_specular(25);
+    //scene.add_object(sphere1);
 
     //auto strip2 = std::make_shared<Strip>(red, white, true, 5);
     //strip2->set_planar(true);
     //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, strip2));
 
-    auto metal_random2 = std::make_shared<Metal>(r_random::random_color());
-    scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, metal_random2));
+    //auto metal_random2 = std::make_shared<Metal>(r_random::random_color());
+    //scene.add_object(std::make_shared<Sphere>(Point3(-2, 0, 0), 1, metal_random2));
 
     //scene.add_object(std::make_shared<Sphere>(Point3(2, 0, 0), 1, metal_random));
     //scene.add_object(std::make_shared<Cone>(Point3(2, 0, 0), 1, 2.5, metal_random2));
 
-    auto metal_random = std::make_shared<Metal>(r_random::random_color());
-    auto obj1 = std::make_shared<Sphere>(Point3(2, 0, 0), 1, metal_random);
+    //auto metal_random = std::make_shared<Metal>(r_random::random_color());
+    //auto obj1 = std::make_shared<Sphere>(Point3(2, 0, 0), 1, metal_random);
     //auto obj2 = std::make_shared<Sphere>(Point3(2.5, 1, 0), 1, metal_random2);
     //auto obj2 = std::make_shared<Cone>(Point3(2, 0, 0), 0.75, 2.5, metal_random2);
     //auto CSG_union = std::make_shared<CSG>(MINUS, obj1, obj2);
     //scene.add_object(CSG_union);
-    scene.add_object(obj1);
+    //scene.add_object(obj1);
     //scene.add_object(obj2);
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
@@ -175,9 +182,17 @@ void init_blob(Scene& scene) {
     std::vector<shared_object> blob_objects;
     //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, red));
     //blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 2, 0), 0.5, blue));
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(-3, 0.5, 0), 1, red));
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(0, 0.5, 0), 1, green));
-    blob_objects.push_back(std::make_shared<Sphere>(Point3(3, 0.5, 0), 1, blue));
+    auto red_sphere = std::make_shared<Sphere>(Point3(-3, 0.5, 0), 1);
+    auto green_sphere = std::make_shared<Sphere>(Point3(0, 0.5, 0), 1);
+    auto blue_sphere = std::make_shared<Sphere>(Point3(3, 0.5, 0), 1);
+
+    red_sphere->set_texture(red);
+    green_sphere->set_texture(green);
+    blue_sphere->set_texture(blue);
+
+    blob_objects.push_back(red_sphere);
+    blob_objects.push_back(green_sphere);
+    blob_objects.push_back(blue_sphere);
 
     Blob blob(Point3(0, 0, 0), 11, 1, 75, blob_objects, true);
     blob.compute();

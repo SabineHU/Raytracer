@@ -6,25 +6,11 @@
 #include "lambertian.hh"
 
 Sphere::Sphere()
-    : center(Vect(0, 0, 0)), radius(1)
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Sphere::Sphere(const Vect& cent, double rad)
-    : center(cent), radius(rad)
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Sphere::Sphere(const Vect& cent, double rad, shared_texture t)
-    : Object(t), center(cent), radius(rad)
+    : Object(), center(Vect(0, 0, 0)), radius(1)
 {}
 
-Sphere::Sphere(const Vect& cent, double rad, const Color& c)
-    : Object(std::make_shared<Lambertian>(c)), center(cent), radius(rad)
+Sphere::Sphere(const Vect& cent, double rad)
+    : Object(), center(cent), radius(rad)
 {}
 
 Vect Sphere::get_normal_at(const Vect& point) const {

@@ -5,8 +5,7 @@
 class Cube : public Object {
 public:
     Cube();
-    Cube(const Point3&, double, shared_texture);
-    Cube(const Point3&, double, const Color&);
+    Cube(const Point3&, double);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;

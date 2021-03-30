@@ -7,8 +7,6 @@ public:
 
     Sphere();
     Sphere(const Vect&, double);
-    Sphere(const Vect&, double, shared_texture);
-    Sphere(const Vect&, double, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;
@@ -16,7 +14,8 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
-    /* Attribute */
+private:
+    /* Attributes */
     Vect center;
     double radius;
 

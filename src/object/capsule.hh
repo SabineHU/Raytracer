@@ -6,8 +6,6 @@ class Capsule : public Object {
 public:
     Capsule();
     Capsule(const Point3&, const Point3&, double);
-    Capsule(const Point3&, const Point3&, double, shared_texture);
-    Capsule(const Point3&, const Point3&, double, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;

@@ -7,8 +7,6 @@ public:
 
     Torus();
     Torus(const Point3&);
-    Torus(const Point3&, shared_texture);
-    Torus(const Point3&, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect& point) const override;

@@ -3,18 +3,11 @@
 #include "tools.hh"
 
 Cube::Cube()
-    : position(Point3(0, 0, 0)), side(1), normal(Vect())
-{
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
-}
-
-Cube::Cube(const Point3& p, double s, shared_texture t)
-    : Object(t), position(p), side(s), normal(Vect())
+    : Object(), position(Point3(0, 0, 0)), side(1), normal(Vect())
 {}
 
-Cube::Cube(const Point3& p, double s, const Color& c)
-    : Object(std::make_shared<Lambertian>(c)), position(p), side(s), normal(Vect())
+Cube::Cube(const Point3& p, double s)
+    : Object(), position(p), side(s), normal(Vect())
 {}
 
 Vect Cube::get_normal_at(const Vect&) const {
