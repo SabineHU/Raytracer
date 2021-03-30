@@ -38,9 +38,9 @@ image::Image init_image(double angle, double zmin) {
 
 Camera init_camera() {
     /* Camera */
-    Vect look_from(6, 4, -8);
-    //Vect look_from(0, 2, -9);
-    //Vect look_from(0, 0, -5);
+    //Vect look_from(6, 4, -8);
+    //Vect look_from(0, 0, -6);
+    Vect look_from(0, 3, -5);
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
@@ -76,6 +76,26 @@ static void add_ice_cream(Scene& scene) {
     scene.add_object(CSG_3);
 }
 
+static void add_CSG_fig_1(Scene& scene) {
+    auto lambertian_blue = std::make_shared<Lambertian>(blue3, 0.6);
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    sphere1->set_texture(lambertian_blue);
+
+    auto sphere2 = std::make_shared<Sphere>(Point3(0, 0, 0), .5);
+    sphere2->set_texture(lambertian_blue);
+
+    auto cylinder = std::make_shared<Cylinder>(Point3(-1.5, 0, 0), Point3(1.5, 0, 0), .75);
+    cylinder->set_texture(lambertian_blue);
+
+    auto cube = std::make_shared<Cube>(Point3(-1, -1, -1), 2);
+    cube->set_texture(lambertian_blue);
+
+    auto CSG_1 = std::make_shared<CSG>(UNION, cube, cylinder);
+    auto CSG_2 = std::make_shared<CSG>(MINUS, CSG_1, sphere1);
+    auto CSG_3 = std::make_shared<CSG>(UNION, CSG_2, sphere2);
+    scene.add_object(CSG_3);
+}
+
 void init_objects(Scene& scene) {
     /* Black and white plane */
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
@@ -93,19 +113,6 @@ void init_objects(Scene& scene) {
     //auto capsule = std::make_shared<Capsule>(Point3(-2, 0, -3), Point3(2, 1, 0), 1);
     //capsule->set_texture(metal_orange);
     //scene.add_object(capsule);
-
-    //auto lambertian_green = std::make_shared<Lambertian>(light_green, 0.6);
-    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
-    //sphere1->set_texture(lambertian_green);
-    //scene.add_object(sphere1);
-
-    //auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
-    //auto cube = std::make_shared<Cube>(Point3(-1, -1, -1), 2);
-    //cube->set_texture(lambertian_orange);
-    //scene.add_object(cube);
-
-    //auto CSG_1 = std::make_shared<CSG>(MINUS, cube, sphere1);
-    //scene.add_object(CSG_1);
 
     //auto image_flower_texture = std::make_shared<ImageTexture>("textures/flower.ppm");
     //auto cube = std::make_shared<Cube>(Point3(-1, -1, -1), 2);
