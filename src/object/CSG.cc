@@ -84,6 +84,11 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
 
             /* Intersect both */
             if (found2) {
+                if (info2.t_min >= info1.t_min) {
+                    t_max = t_max1;
+                    obj1_closest = true;
+                    return true;
+                }
                 return false;
             }
 

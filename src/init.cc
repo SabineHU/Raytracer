@@ -78,11 +78,13 @@ static void add_ice_cream(Scene& scene) {
 
 static void add_CSG_fig_1(Scene& scene) {
     auto lambertian_blue = std::make_shared<Lambertian>(blue3, 0.6);
-    auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    auto lambertian_red = std::make_shared<Lambertian>(red, 0.6);
+
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1.1);
     sphere1->set_texture(lambertian_blue);
 
-    auto sphere2 = std::make_shared<Sphere>(Point3(0, 0, 0), .5);
-    sphere2->set_texture(lambertian_blue);
+    auto sphere2 = std::make_shared<Sphere>(Point3(0, 1, 0), .4);
+    sphere2->set_texture(lambertian_red);
 
     auto cylinder = std::make_shared<Cylinder>(Point3(-1.5, 0, 0), Point3(1.5, 0, 0), .75);
     cylinder->set_texture(lambertian_blue);
@@ -107,9 +109,9 @@ static void add_CSG_fig_2(Scene& scene) {
     auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1.25);
     sphere1->set_texture(lambertian_blue3);
 
-    auto cylinder1 = std::make_shared<Cylinder>(Point3(-1.5, 0, 0), Point3(1.5, 0, 0), .25);
-    auto cylinder2 = std::make_shared<Cylinder>(Point3(0, 0, -1.5), Point3(0, 0, 1.5), .25);
-    auto cylinder3 = std::make_shared<Cylinder>(Point3(0, -1.5, 0), Point3(0, 1.5, 0), .25);
+    auto cylinder1 = std::make_shared<Cylinder>(Point3(-1.25, 0, 0), Point3(1.25, 0, 0), .25);
+    auto cylinder2 = std::make_shared<Cylinder>(Point3(0, 0, -1.25), Point3(0, 0, 1.25), .25);
+    auto cylinder3 = std::make_shared<Cylinder>(Point3(0, -1.25, 0), Point3(0, 1.25, 0), .25);
     cylinder1->set_texture(lambertian_blue2);
     cylinder2->set_texture(lambertian_blue2);
     cylinder3->set_texture(lambertian_blue2);
@@ -118,7 +120,7 @@ static void add_CSG_fig_2(Scene& scene) {
     auto CSG_2 = std::make_shared<CSG>(UNION, cylinder1, cylinder2);
     auto CSG_3 = std::make_shared<CSG>(UNION, CSG_2, cylinder3);
 
-    auto CSG_4 = std::make_shared<CSG>(MINUS, CSG_1, CSG_3);
+    auto CSG_4 = std::make_shared<CSG>(UNION, CSG_1, CSG_3);
 
     //scene.add_object(std::make_shared<CSG>(MINUS, sphere1, cylinder2));
     scene.add_object(CSG_4);
@@ -131,8 +133,8 @@ void init_objects(Scene& scene) {
     plane->set_texture(board_black_white);
     scene.add_object(plane);
 
-    //add_CSG_fig_2(scene);
-    add_CSG_fig_1(scene);
+    add_CSG_fig_2(scene);
+    //add_CSG_fig_1(scene);
 
     /* Torus */
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
