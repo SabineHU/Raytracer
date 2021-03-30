@@ -2,10 +2,10 @@
 #include "lambertian.hh"
 
 CSG::CSG(ObjectOperator o, shared_object s1, shared_object s2)
-    : Object(), op(o), obj1(s1), obj2(s2), obj1_closest(false)
+    : op(o), obj1(s1), obj2(s2), obj1_closest(false)
 {
-    auto color = Color(0.5, 0.5, 0.5);
-    texture = std::make_shared<Lambertian>(color);
+    texture = nullptr;
+    specular = 0;
 }
 
 Vect CSG::get_normal_at(const Vect& point) const {
@@ -22,11 +22,28 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
     switch (op) {
         case UNION:
             if (obj1->find_intersection(ray, t_min, t_max1, info)) found1 = true;
-            if (obj2->find_intersection(ray, t_min, t_max2, info)) found1 = true;
-            if (!found1) return false;
+            if (obj2->find_intersection(ray, t_min, t_max2, info)) found2 = true;
 
-            if (t_max1 < t_max2) obj1_closest = true;
-            t_max = std::min(t_max1, t_max2);
+            /* No intersections */
+            if (!found1 && !found2) return false;
+
+            /* Intersect both */
+            if (found1 && found2) {
+                if (t_max1 < t_max2) obj1_closest = true;
+                else obj1_closest = false;
+                t_max = std::min(t_max1, t_max2);
+                return true;
+            }
+
+            if (found1) {
+                t_max = t_max1;
+                obj1_closest = true;
+            }
+
+            if (found2) {
+                t_max = t_max2;
+                obj1_closest = false;
+            }
             return true;
 
         case INTERSECTION:
@@ -41,6 +58,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
                 return true;
             } else if (info1.t_min < info2.t_min && info1.t_max > info2.t_min) {
                 t_max = info2.t_min;
+                obj1_closest = false;
                 return true;
             }
             return false;
@@ -90,6 +108,14 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             }
             return false;
     }
+}
+
+Color CSG::get_color_at(const Point3& p, double u, double v) const {
+    return obj1_closest ? obj1->get_color_at(p, u, v) : obj2->get_color_at(p, u, v);
+}
+
+shared_texture CSG::get_texture() const {
+    return obj1_closest ? obj1->get_texture() : obj2->get_texture();
 }
 
 int CSG::get_isolevel_at(const Point3& p) const {

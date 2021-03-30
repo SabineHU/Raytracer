@@ -21,7 +21,7 @@ public:
     virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) = 0;
     virtual int get_isolevel_at(const Point3&) const = 0;
 
-    Color get_color_at(const Point3& point, double u, double v) const {
+    virtual Color get_color_at(const Point3& point, double u, double v) const {
         return this->texture->get_color(point, u, v);
     }
 
@@ -30,7 +30,7 @@ public:
     void set_texture(shared_texture t) { texture = t; }
     void set_texture(const Color& c) { texture = std::make_shared<Lambertian>(c); }
 
-    shared_texture get_texture() const { return texture; }
+    virtual shared_texture get_texture() const { return texture; }
 
 protected:
     /* Attributes */
