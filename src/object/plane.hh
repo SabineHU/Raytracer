@@ -7,8 +7,6 @@ class Plane : public Object {
 public:
     Plane();
     Plane(const Vect&, double);
-    Plane(const Vect&, double, shared_texture);
-    Plane(const Vect&, double, const Color&);
 
     /* Methods */
     virtual Vect get_normal_at(const Vect&) const override;
@@ -16,6 +14,7 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
+private:
     /* Attributes */
     Vect normal;
     double distance;

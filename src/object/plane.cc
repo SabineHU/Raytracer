@@ -16,14 +16,6 @@ Plane::Plane(const Vect& n, double d)
     texture = std::make_shared<Lambertian>(color);
 }
 
-Plane::Plane(const Vect& n, double d, shared_texture t)
-    : Object(t), normal(n), distance(d)
-{}
-
-Plane::Plane(const Vect& n, double d, const Color& c)
-    : Object(std::make_shared<Lambertian>(c)), normal(n), distance(d)
-{}
-
 Vect Plane::get_normal_at(const Vect&) const {
     return normal;
 }
