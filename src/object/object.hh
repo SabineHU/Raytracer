@@ -38,6 +38,7 @@ public:
         info.kt = this->texture->kt;
     }
 
+    // TODO, set it as virtual -> CSG
     Vect get_bump_at(const Point3& p) const {
         if (bump.has_value()) {
             auto x0 = Vect(p.x - e, p.y, p.z);

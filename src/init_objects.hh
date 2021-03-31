@@ -40,6 +40,7 @@ void add_CSG_fig_2(Scene& scene);
 /* Image mapping */
 void add_sphere_map(Scene& scene);
 void add_flower_cube(Scene& scene);
+void add_sheep_cube(Scene& scene);
 
 /* Bump mapping */
 void add_sphere_noise_mapping(Scene& scene);

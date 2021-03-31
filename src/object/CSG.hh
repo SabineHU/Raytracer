@@ -22,6 +22,8 @@ public:
     virtual Color get_color_at(const Point3& point, double u, double v) const override;
     virtual shared_texture get_texture() const override;
 
+    virtual void get_properties(IntersectionInfo& info) const override;
+
 private:
     /* Attributes */
     ObjectOperator op;

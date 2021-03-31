@@ -58,10 +58,38 @@ void init_lights(Scene& scene) {
 void init_objects(Scene& scene) {
     add_plane_black_white(scene);
 
-    //add_CSG_fig_1(scene);
-    //add_CSG_fig_2(scene);
     //add_ice_cream(scene);
-    add_sphere_turb_mapping(scene);
+    //add_CSG_fig_1(scene);
+    add_CSG_fig_2(scene);
+
+    //add_sphere_map(scene);
+    //add_flower_cube(scene);
+    //add_sheep_cube(scene);
+
+    //add_sphere_noise_mapping(scene);
+    //add_sphere_turb_mapping(scene);
+    //add_sphere_marble_mapping(scene);
+    //add_sphere_wood_mapping(scene);
+
+    //add_transparent_sphere(scene);
+
+    //add_sphere_noise(scene);
+    //add_sphere_turb(scene);
+    //add_sphere_marble(scene);
+    //add_sphere_wood(scene);
+    //add_sphere_wood_custom_color(scene);
+
+    //add_strip_sphere_spherical(scene);
+    //add_strip_vertical_sphere_planar(scene);
+    //add_strip_horizontal_sphere_planar(scene);
+
+    //add_torus(scene);
+    //add_capsule(scene);
+    //add_cube(scene);
+    //add_cylinder(scene);
+    //add_capped_cone(scene);
+    //add_cone(scene);
+    //add_ellipsoid(scene);
 }
 
 void init_objects2(Scene& scene) {

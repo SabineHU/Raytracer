@@ -24,7 +24,7 @@ Strip::Strip(const Color& c1, const Color& c2, bool h, double s,
 Color Strip::get_color(const Point3& p, double u, double v) const {
     double value;
     if (!planar) {
-        value = horizontal ? v : u;
+        value = horizontal ? u : v;
     } else {
         value = horizontal ? p.y : p.x;
     }

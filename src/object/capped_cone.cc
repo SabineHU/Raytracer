@@ -43,7 +43,6 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
     double offtop = vector::dot(ot, axis);
     double offbot = vector::dot(ob, axis);
     double dir = vector::dot(ray.direction, axis);
-    double t;
 
     if (offtop < 0) {
         if (intersection_top_bot(ot, ray.direction, radius_top, offtop, dir,
@@ -81,7 +80,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
     double discriminant = b * b - a * c;
     if (discriminant < 0) return false;
 
-    t = (-b - std::sqrt(discriminant)) / a;
+    double t = (-b - std::sqrt(discriminant)) / a;
 
     double y = dir * t + offtop;
     if (y > 0 && y < dist && t > t_min && t < t_max)
