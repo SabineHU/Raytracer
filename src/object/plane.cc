@@ -16,7 +16,7 @@ Plane::Plane(const Vect& n, double d)
     texture = std::make_shared<Lambertian>(color);
 }
 
-Vect Plane::get_normal_at(const Point3& point, double u, double v) const {
+Vect Plane::get_normal_at(const Point3&, double, double) const {
     return normal;
 }
 

@@ -10,7 +10,7 @@ Ellipsoid::Ellipsoid(const Vect& cent, const Vect& rad)
     : Object(), center(cent), radius(rad)
 {}
 
-Vect Ellipsoid::get_normal_at(const Point3& point, double u, double v) const {
+Vect Ellipsoid::get_normal_at(const Point3& point, double, double) const {
     return ((point - center) / radius).normalize();
 }
 

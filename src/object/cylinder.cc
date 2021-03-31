@@ -12,7 +12,7 @@ Cylinder::Cylinder(const Point3& b, const Point3& t, double r)
     : Object(), bottom(b), top(t), radius(r), normal(Vect())
 {}
 
-Vect Cylinder::get_normal_at(const Point3& point, double u, double v) const {
+Vect Cylinder::get_normal_at(const Point3&, double, double) const {
     return normal;
 }
 
