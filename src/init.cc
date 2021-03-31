@@ -60,7 +60,7 @@ void init_objects(Scene& scene) {
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
-    add_CSG_fig_2(scene);
+    //add_CSG_fig_2(scene);
 
     //add_sphere_map(scene);
     //add_flower_cube(scene);
@@ -87,7 +87,7 @@ void init_objects(Scene& scene) {
     //add_capsule(scene);
     //add_cube(scene);
     //add_cylinder(scene);
-    //add_capped_cone(scene);
+    add_capped_cone(scene);
     //add_cone(scene);
     //add_ellipsoid(scene);
 }

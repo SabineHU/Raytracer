@@ -22,18 +22,6 @@ static void compute_uv(IntersectionInfo& info, double dist) {
     info.v = -info.point.z / dist;
 }
 
-static bool intersection_top_bot(const Vect& ot, const Vect& raydir,
-        double radius, double off, double dir, double& t_min, double& t_max) {
-    auto t = -off / dir;
-    auto r = radius * radius * dir * dir;
-    if (t > t_min && t < t_max && (ot * dir - raydir * off).square_length() < r) {
-        t_max = t;
-        return true;
-    }
-    return false;
-
-}
-
 bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     Vect axis = this->bottom - this->top;
     Vect ot = ray.origin - this->top;
@@ -45,22 +33,22 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
     double dir = vector::dot(ray.direction, axis);
 
     if (offtop < 0) {
-        if (intersection_top_bot(ot, ray.direction, radius_top, offtop, dir,
-                    t_min, t_max)) {
-            this->normal = axis * - 1 / std::sqrt(dist);
+        double r = radius_top * radius_top * dir * dir;
+        if ((ot * dir - ray.direction * offtop).square_length() < r) {
+            t_max = -offtop / dir;
+            this->normal = axis.negative() / std::sqrt(dist);
 
             info.point = ray.origin + ray.direction * t_max;
-            info.normal = axis * -1 / std::sqrt(dist);
             compute_uv(info, dist);
             return true;
         }
     } else if (offbot > 0) {
-        if (intersection_top_bot(ot, ray.direction, radius_bottom, offbot, dir,
-                    t_min, t_max)) {
+        double r = radius_bottom * radius_bottom * dir * dir;
+        if ((ob * dir - ray.direction * offbot).square_length() < r) {
+            t_max = -offbot / dir;
             this->normal = axis / std::sqrt(dist);
 
             info.point = ray.origin + ray.direction * t_max;
-            info.normal = axis * -1 / std::sqrt(dist);
             compute_uv(info, dist);
             return true;
         }

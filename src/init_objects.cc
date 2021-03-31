@@ -236,10 +236,9 @@ void add_cylinder(Scene& scene) {
     scene.add_object(cylinder);
 }
 
-// TODO: works not well
 void add_capped_cone(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color(), 0.6);
-    auto capped_cone = std::make_shared<CappedCone>(Point3(0, 0, 0), Point3(1, 1, 1), 1, .5);
+    auto capped_cone = std::make_shared<CappedCone>(Point3(1, 0, 0), Point3(-1, 1, 1), 1, .5);
     capped_cone->set_texture(lambertian_random);
     scene.add_object(capped_cone);
 }
