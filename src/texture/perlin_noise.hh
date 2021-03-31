@@ -3,13 +3,6 @@
 #include "texture_material.hh"
 #include "noise.hh"
 
-enum PerlinNoiseType {
-    NOISE,
-    TURBULENCE,
-    MARBLE,
-    WOOD
-};
-
 class PerlinNoise : public TextureMaterial {
 public:
     PerlinNoise();

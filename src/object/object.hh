@@ -7,6 +7,7 @@
 #include "intersection.hh"
 #include "texture_material.hh"
 #include "lambertian.hh"
+#include "noise.hh"
 
 class Object {
 public:
@@ -30,13 +31,13 @@ public:
     void set_texture(shared_texture t) { texture = t; }
     void set_texture(const Color& c) { texture = std::make_shared<Lambertian>(c); }
 
+    /* Getters */
     virtual shared_texture get_texture() const { return texture; }
+    double get_specular() const { return specular; }
 
 protected:
     /* Attributes */
     shared_texture texture;
-
-public:
     double specular;
 };
 

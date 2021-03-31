@@ -45,6 +45,20 @@ static double interpolate(Vect c[2][2][2], const Vect& point) {
     return res;
 }
 
+double Noise::compute(PerlinNoiseType type, const Point3& p, double scale,
+        int depth) const {
+    switch (type) {
+    case NOISE:
+        return 0.5 + this->noise(p * scale) * 0.5;
+    case TURBULENCE:
+        return 0.5 + sin(scale * p.z + this->turb(p, depth) * 10) * 0.5;
+    case MARBLE:
+        return 1 - sqrt(abs(sin(scale * p.z + this->marble(p, depth) * 2 * M_PI)));
+    default: // WOOD
+        return sin(scale * p.z + this->wood(p) * 10);
+    }
+}
+
 double Noise::noise(const Point3& point) const {
     int x = std::floor(point.x);
     int y = std::floor(point.y);
