@@ -11,7 +11,7 @@ Cube::Cube(const Point3& p, double s)
 {}
 
 Vect Cube::get_normal_at(const Point3& point, double, double) const {
-    return normal;
+    return (normal + Object::get_bump_at(point)).normalize();
 }
 
 static bool compute_axis(double& max, double& min, double& max_v, double& min_v,

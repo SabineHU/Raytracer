@@ -29,6 +29,15 @@ public:
         return this->texture->get_color(point, u, v);
     }
 
+    virtual void get_properties(IntersectionInfo& info) const {
+        info.specular = this->specular;
+        info.texture = this->texture;
+        info.ka = this->texture->ka;
+        info.kd = this->texture->kd;
+        info.ks = this->texture->ks;
+        info.kt = this->texture->kt;
+    }
+
     Vect get_bump_at(const Point3& p) const {
         if (bump.has_value()) {
             auto x0 = Vect(p.x - e, p.y, p.z);

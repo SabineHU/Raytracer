@@ -48,13 +48,15 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     info.ray_out = Ray(info.point, ray.direction);
     info.color = closest_obj->get_color_at(info.point, info.u, info.v);
     info.normal = closest_obj->get_normal_at(info.point, info.u, info.v);
-    info.specular = closest_obj->get_specular();
 
-    info.texture = closest_obj->get_texture();
-    info.ka = info.texture->ka;
-    info.kd = info.texture->kd;
-    info.ks = info.texture->ks;
-    info.kt = info.texture->kt;
+    closest_obj->get_properties(info);
+    //info.specular = closest_obj->get_specular();
+
+    //info.texture = closest_obj->get_texture();
+    //info.ka = info.texture->ka;
+    //info.kd = info.texture->kd;
+    //info.ks = info.texture->ks;
+    //info.kt = info.texture->kt;
 
     return true;
 }

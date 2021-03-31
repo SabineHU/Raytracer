@@ -12,8 +12,8 @@ Cylinder::Cylinder(const Point3& b, const Point3& t, double r)
     : Object(), bottom(b), top(t), radius(r), normal(Vect())
 {}
 
-Vect Cylinder::get_normal_at(const Point3&, double, double) const {
-    return normal;
+Vect Cylinder::get_normal_at(const Point3& point, double, double) const {
+    return (normal + Object::get_bump_at(point)).normalize();
 }
 
 static void compute_uv(IntersectionInfo& info, double dist) {

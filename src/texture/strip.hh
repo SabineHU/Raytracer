@@ -11,6 +11,8 @@ public:
 
     virtual Color get_color(const Point3&, double, double) const override;
 
+    void set_horizontal(bool d) { horizontal = d; }
+    void set_scale(double d) { scale = d; }
     void set_planar(bool d) { planar = d; }
 
 private:

@@ -16,8 +16,8 @@ Plane::Plane(const Vect& n, double d)
     texture = std::make_shared<Lambertian>(color);
 }
 
-Vect Plane::get_normal_at(const Point3&, double, double) const {
-    return normal;
+Vect Plane::get_normal_at(const Point3& point, double, double) const {
+    return (normal + Object::get_bump_at(point)).normalize();
 }
 
 bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {

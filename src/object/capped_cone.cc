@@ -13,8 +13,8 @@ CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr)
     normal(Vect())
 {}
 
-Vect CappedCone::get_normal_at(const Point3&, double, double) const {
-    return normal;
+Vect CappedCone::get_normal_at(const Point3& point, double, double) const {
+    return (normal + Object::get_bump_at(point)).normalize();
 }
 
 static void compute_uv(IntersectionInfo& info, double dist) {

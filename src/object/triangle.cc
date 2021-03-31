@@ -14,9 +14,9 @@ Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c)
     : Object(), A(a), B(b), C(c)
 {}
 
-Vect Triangle::get_normal_at(const Point3&, double, double) const {
+Vect Triangle::get_normal_at(const Point3& point, double, double) const {
     // Normal is the same at any point of the triangle
-    return (vector::cross(C - A, B - A)).normalize();
+    return (vector::cross(C - A, B - A) + Object::get_bump_at(point)).normalize();
 }
 
 Vect Triangle::get_normal() const {

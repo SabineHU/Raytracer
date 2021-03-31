@@ -14,7 +14,7 @@ Torus::Torus(const Point3& p)
 Vect Torus::get_normal_at(const Point3& point, double, double) const {
     auto x = Vect(1, 1, -1) * position.x * position.x;
     auto y = point.square_length() - position.y * position.y;
-    return (point * (x * -1 + y)).normalize();
+    return (point * (x * -1 + y) + Object::get_bump_at(point)).normalize();
 }
 
 static double get_double_inv_condition(double x, double r, double k, bool sgn) {
