@@ -2,7 +2,22 @@
 #include "random_color.hh"
 #include "vector3_op.hh"
 
-Noise::Noise() {
+Noise::Noise()
+    : type(NOISE)
+{
+    for (int i = 0; i < count; ++i)
+        random_vect[i] = r_random::random_vector(-1, 1).normalize();
+
+    for (int i = 0; i < count * 3; ++i) {
+        permutation[i] = i / 3;
+    }
+
+    r_random::shuffle(permutation, count * 3);
+}
+
+Noise::Noise(PerlinNoiseType t)
+    : type(t)
+{
     for (int i = 0; i < count; ++i)
         random_vect[i] = r_random::random_vector(-1, 1).normalize();
 
@@ -45,7 +60,7 @@ static double interpolate(Vect c[2][2][2], const Vect& point) {
     return res;
 }
 
-double Noise::compute(PerlinNoiseType type, const Point3& p, double scale,
+double Noise::compute(const Point3& p, double scale,
         int depth) const {
     switch (type) {
     case NOISE:

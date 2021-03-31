@@ -12,7 +12,7 @@ Cone::Cone(const Point3& p, double r, double h)
     : Object(), position(p), radius(r), height(h)
 {}
 
-Vect Cone::get_normal_at(const Vect& point) const {
+Vect Cone::get_normal_at(const Point3& point, double u, double v) const {
     // center of cone and intersection point vector
     Vect PP = point - this->position;
     double r = std::sqrt(PP.dot_x() + PP.dot_z());

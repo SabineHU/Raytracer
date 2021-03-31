@@ -10,7 +10,7 @@ Cube::Cube(const Point3& p, double s)
     : Object(), position(p), side(s), normal(Vect())
 {}
 
-Vect Cube::get_normal_at(const Vect&) const {
+Vect Cube::get_normal_at(const Point3& point, double u, double v) const {
     return normal;
 }
 

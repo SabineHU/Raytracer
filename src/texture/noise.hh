@@ -15,7 +15,8 @@ static const int mask = 255;
 class Noise {
 public:
     Noise();
-    double compute(PerlinNoiseType type, const Point3& p, double scale,
+    Noise(PerlinNoiseType type);
+    double compute(const Point3& p, double scale,
         int depth=7) const;
 
 private:
@@ -25,6 +26,8 @@ private:
     double wood(const Point3&) const;
 
     /* Attributes */
+    PerlinNoiseType type;
+
     Vect random_vect[count];
     int permutation[count * 3];
     int perm_x[count];

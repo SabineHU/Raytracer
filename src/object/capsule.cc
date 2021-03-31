@@ -11,7 +11,7 @@ Capsule::Capsule(const Point3& b, const Point3& t, double r)
     : Object(), bottom(b), top(t), radius(r)
 {}
 
-Vect Capsule::get_normal_at(const Vect& point) const {
+Vect Capsule::get_normal_at(const Point3& point, double u, double v) const {
     Vect ba = bottom - top;
     Vect pa = point - top;
     double h = std::min(std::max(vector::dot(pa, ba) / vector::dot(ba, ba), 0.0), 1.0);

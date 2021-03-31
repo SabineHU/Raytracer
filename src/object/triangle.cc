@@ -14,13 +14,13 @@ Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c)
     : Object(), A(a), B(b), C(c)
 {}
 
-Vect Triangle::get_normal_at(const Vect&) const {
+Vect Triangle::get_normal_at(const Point3& point, double u, double v) const {
     // Normal is the same at any point of the triangle
     return (vector::cross(C - A, B - A)).normalize();
 }
 
 Vect Triangle::get_normal() const {
-    return this->get_normal_at(Vect());
+    return this->get_normal_at(Vect(), 0, 0);
 }
 
 double Triangle::get_distance() const {

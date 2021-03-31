@@ -13,7 +13,7 @@ CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr)
     normal(Vect())
 {}
 
-Vect CappedCone::get_normal_at(const Vect&) const {
+Vect CappedCone::get_normal_at(const Point3& point, double u, double v) const {
     return normal;
 }
 

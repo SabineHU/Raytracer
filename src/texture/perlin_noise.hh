@@ -14,9 +14,8 @@ public:
 
 private:
     /* Attributes */
-    Noise noise;
     double scale;
-    PerlinNoiseType type;
+    Noise noise;
 
     Color color1;
     Color color2;

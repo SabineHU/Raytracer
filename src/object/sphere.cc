@@ -13,8 +13,8 @@ Sphere::Sphere(const Vect& cent, double rad)
     : Object(), center(cent), radius(rad)
 {}
 
-Vect Sphere::get_normal_at(const Vect& point) const {
-    return (point - center).normalize();
+Vect Sphere::get_normal_at(const Point3& point, double, double) const {
+    return ((point - center) + Object::get_bump_at(point)).normalize();
 }
 
 bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
@@ -36,10 +36,11 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
 
     t_max = x;
     info.point = ray.origin + ray.direction * t_max;
-    info.normal = this->get_normal_at(info.point);
 
     info.u = 0.5 + atan2(info.point.z, info.point.x) / (2 * math::pi);
     info.v = 0.5 - asin(info.point.y) / math::pi;
+
+    info.normal = this->get_normal_at(info.point, info.u, info.v);
 
     info.t_min = roots[0];
     info.t_max = roots[1];

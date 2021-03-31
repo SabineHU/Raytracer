@@ -9,7 +9,7 @@ public:
     Ellipsoid(const Vect&, const Vect&);
 
     /* Methods */
-    virtual Vect get_normal_at(const Vect& point) const override;
+    virtual Vect get_normal_at(const Point3& point, double u, double v) const override;
     virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) override;
 
     virtual int get_isolevel_at(const Point3&) const override;

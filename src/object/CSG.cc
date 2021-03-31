@@ -8,8 +8,8 @@ CSG::CSG(ObjectOperator o, shared_object s1, shared_object s2)
     specular = 0;
 }
 
-Vect CSG::get_normal_at(const Vect& point) const {
-    return obj1_closest ? obj1->get_normal_at(point) : obj2->get_normal_at(point);
+Vect CSG::get_normal_at(const Point3& point, double u, double v) const {
+    return obj1_closest ? obj1->get_normal_at(point, u, v) : obj2->get_normal_at(point, u, v);
 }
 
 bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
