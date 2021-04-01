@@ -57,8 +57,9 @@ void init_lights(Scene& scene) {
 
 void init_objects(Scene& scene) {
     //add_ground_plane(scene);
-    add_water_plane(scene);
-    //add_plane_black_white(scene);
+    //add_water_plane(scene);
+    //add_water_plane2(scene);
+    add_plane_black_white(scene);
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
@@ -75,7 +76,7 @@ void init_objects(Scene& scene) {
 
     //add_transparent_sphere(scene);
 
-    //add_sphere_noise(scene);
+    add_sphere_noise(scene);
     //add_sphere_turb(scene);
     //add_sphere_marble(scene);
     //add_sphere_wood(scene);

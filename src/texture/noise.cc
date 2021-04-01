@@ -66,6 +66,8 @@ static double interpolate(Vect c[2][2][2], const Vect& point) {
 
 double Noise::compute(const Point3& p, int depth) const {
     switch (type) {
+    case CLOUD:
+        return this->cloud(p * scale) * 0.7;
     case NOISE:
         return 0.5 + this->noise(p * scale) * 0.5;
     case TURBULENCE:
@@ -124,4 +126,18 @@ double Noise::marble(const Point3& p, int depth) const {
 
 double Noise::wood(const Point3& p) const {
     return std::fabs(this->noise(p)) * 10;
+}
+
+double Noise::cloud(const Point3& p, int depth) const {
+    double res = 0;
+    double factor = 1;
+    double freq = 1;
+    Point3 tmp = p;
+    for (int i = 0; i < depth; i++) {
+        res += this->noise(tmp * freq) * factor;
+        factor *= 0.5;
+        freq *= 2;
+        //tmp = tmp * 2 + Vect(100, 100, 0);
+    }
+    return res;
 }

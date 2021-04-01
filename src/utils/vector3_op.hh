@@ -30,4 +30,16 @@ inline double dot_z(const Vect& u, const Vect& v) {
 inline double dot_xy(const Vect& u, const Vect& v) {
     return dot_x(u, v) + dot_y(u, v);
 }
+
+inline Vect rotate(const Vect& u, double theta) {
+    // Matrix 3 * 3
+    // [ a b 0 ]
+    // [ d e 0 ]
+    // [ 0 0 1 ]
+    auto a = cos(theta);
+    auto b = -sin(theta);
+    auto d = sin(theta);
+    auto e = cos(theta);
+    return Vect(a * u.x + b * u.y, d * u.x + e * u.y, u.z);
+}
 }

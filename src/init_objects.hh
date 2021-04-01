@@ -32,6 +32,7 @@
 /* Plane */
 void add_ground_plane(Scene& scene);
 void add_water_plane(Scene& scene);
+void add_water_plane2(Scene& scene);
 void add_plane_black_white(Scene& scene);
 
 /* CSG */

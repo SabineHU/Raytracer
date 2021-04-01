@@ -25,6 +25,18 @@ void add_water_plane(Scene& scene) {
     scene.add_object(plane);
 }
 
+void add_water_plane2(Scene& scene) {
+    auto perlin = std::make_shared<PerlinNoise>(2, CLOUD, r_random::random_color(), r_random::random_color());
+    auto p1= std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    p1->set_texture(perlin);
+    p1->add_bump_mapping(Noise(TURBULENCE, 15), 10);
+    p1->add_bump_mapping(Noise(TURBULENCE, 10), 2);
+    p1->add_bump_mapping(Noise(MARBLE, 5), 3);
+    p1->add_bump_mapping(Noise(TURBULENCE, 20), 7);
+    p1->set_specular(20);
+    scene.add_object(p1);
+}
+
 void add_plane_black_white(Scene& scene) {
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
@@ -173,7 +185,7 @@ void add_transparent_sphere(Scene& scene) {
 
 void add_sphere_noise(Scene& scene) {
     auto perlin = std::make_shared<PerlinNoise>(2, NOISE, r_random::random_color(), r_random::random_color());
-    auto p1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    auto p1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
     p1->set_texture(perlin);
     scene.add_object(p1);
 }
