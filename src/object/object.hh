@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <optional>
+#include <map>
 
 #include "ray.hh"
 #include "vector3.hh"
@@ -13,12 +14,10 @@
 class Object {
 public:
     Object() : texture(std::make_shared<Lambertian>(Color(.5, .5, .5))),
-        bump(std::nullopt), specular(0), scale(5), depth(5) {}
+        specular(0), depth(5) {}
 
-    Object(shared_texture t) : texture(t), bump(std::nullopt), specular(0),
-        scale(5), depth(5) {}
-    Object(shared_texture t, double s) : texture(t), bump(std::nullopt),
-        specular(s), scale(5), depth(5) {}
+    Object(shared_texture t) : texture(t), specular(0), depth(5) {}
+    Object(shared_texture t, double s) : texture(t), specular(s), depth(5) {}
 
     /* Methods */
     virtual Vect get_normal_at(const Point3& point, double u, double v) const = 0;
@@ -40,33 +39,34 @@ public:
 
     // TODO, set it as virtual -> CSG
     Vect get_bump_at(const Point3& p) const {
-        if (bump.has_value()) {
-            auto x0 = Vect(p.x - e, p.y, p.z);
-            auto x1 = Vect(p.x + e, p.y, p.z);
-            auto x = bump.value().compute(x0, depth)
-                - bump.value().compute(x1, depth);
+        if (bumps.empty()) return Vect(0, 0, 0);
 
-            auto y0 = Vect(p.x, p.y - e, p.z);
-            auto y1 = Vect(p.x, p.y + e, p.z);
-            auto y = bump.value().compute(y0, depth)
-                - bump.value().compute(y1, depth);
+        auto x0 = Vect(p.x - e, p.y, p.z);
+        auto x1 = Vect(p.x + e, p.y, p.z);
+        auto y0 = Vect(p.x, p.y - e, p.z);
+        auto y1 = Vect(p.x, p.y + e, p.z);
+        auto z0 = Vect(p.x, p.y, p.z - e);
+        auto z1 = Vect(p.x, p.y, p.z + e);
+        double x, y, z = 0.0;
+        for (auto const& [coeff, noise] : bumps) {
+            x += (noise.compute(x0, depth)
+                - noise.compute(x1, depth)) * coeff;
 
-            auto z0 = Vect(p.x, p.y, p.z - e);
-            auto z1 = Vect(p.x, p.y, p.z + e);
-            auto z = bump.value().compute(z0, depth)
-                - bump.value().compute(z1, depth);
+            y += (noise.compute(y0, depth)
+                - noise.compute(y1, depth)) * coeff;
 
-            return Vect(x, y, z);
+            z += (noise.compute(z0, depth)
+                - noise.compute(z1, depth)) * coeff;
         }
-        return Vect(0, 0, 0);
+        double size = bumps.size();
+        return Vect(x / size, y / size, z / size);
     }
 
     /* Setters */
     void set_specular(double s) { specular = s; }
     void set_texture(shared_texture t) { texture = t; }
     void set_texture(const Color& c) { texture = std::make_shared<Lambertian>(c); }
-    void set_bump_mapping(const Noise n) { bump = n; }
-    void set_scale(double s) { scale = s; }
+    void add_bump_mapping(const Noise n, double coeff=1) { bumps.insert(std::pair<double, Noise>(coeff, n)); }
     void set_depth(int d) { depth = d; }
 
     /* Getters */
@@ -76,10 +76,9 @@ public:
 protected:
     /* Attributes */
     shared_texture texture;
-    std::optional<Noise> bump;
+    std::map<double, Noise> bumps;
     double specular;
 
-    double scale;
     int depth;
     double e = 0.01;
 };

@@ -107,7 +107,7 @@ void add_sphere_noise_mapping(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     auto obj1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
     obj1->set_texture(lambertian_random);
-    obj1->set_bump_mapping(Noise(NOISE));
+    obj1->add_bump_mapping(Noise(NOISE, 10));
     scene.add_object(obj1);
 }
 
@@ -115,7 +115,7 @@ void add_sphere_turb_mapping(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     auto obj1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
     obj1->set_texture(lambertian_random);
-    obj1->set_bump_mapping(Noise(TURBULENCE));
+    obj1->add_bump_mapping(Noise(TURBULENCE, 10));
     scene.add_object(obj1);
 }
 
@@ -123,7 +123,7 @@ void add_sphere_marble_mapping(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     auto obj1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
     obj1->set_texture(lambertian_random);
-    obj1->set_bump_mapping(Noise(MARBLE));
+    obj1->add_bump_mapping(Noise(MARBLE, 10));
     scene.add_object(obj1);
 }
 
@@ -131,7 +131,7 @@ void add_sphere_wood_mapping(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     auto obj1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
     obj1->set_texture(lambertian_random);
-    obj1->set_bump_mapping(Noise(WOOD));
+    obj1->add_bump_mapping(Noise(WOOD, 10));
     scene.add_object(obj1);
 }
 
@@ -177,7 +177,7 @@ void add_sphere_wood(Scene& scene) {
 void add_sphere_wood_custom_color(Scene& scene) {
     auto perlin5 = std::make_shared<PerlinNoise>(2, WOOD, r_random::random_color(), r_random::random_color());
     auto sphere_wood_colored = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
-    sphere_wood_colored->set_bump_mapping(Noise(WOOD));
+    sphere_wood_colored->add_bump_mapping(Noise(WOOD, 10));
     sphere_wood_colored->set_texture(perlin5);
     sphere_wood_colored->set_specular(50);
     scene.add_object(sphere_wood_colored);

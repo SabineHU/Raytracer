@@ -66,7 +66,7 @@ void init_objects(Scene& scene) {
     //add_flower_cube(scene);
     //add_sheep_cube(scene);
 
-    //add_sphere_noise_mapping(scene);
+    add_sphere_noise_mapping(scene);
     //add_sphere_turb_mapping(scene);
     //add_sphere_marble_mapping(scene);
     //add_sphere_wood_mapping(scene);
@@ -91,11 +91,15 @@ void init_objects(Scene& scene) {
     //add_cone(scene);
     //add_ellipsoid(scene);
 
-    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
-    auto obj1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
-    obj1->set_texture(lambertian_random);
-    obj1->set_bump_mapping(Noise(WOOD, 10));
-    scene.add_object(obj1);
+    //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    //auto obj1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
+    //obj1->set_texture(lambertian_random);
+    //obj1->add_bump_mapping(Noise(WOOD, 10));
+    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
+    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
+    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
+    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
+    //scene.add_object(obj1);
 }
 
 void init_objects2(Scene& scene) {
