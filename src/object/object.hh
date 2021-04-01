@@ -47,7 +47,7 @@ public:
         auto y1 = Vect(p.x, p.y + e, p.z);
         auto z0 = Vect(p.x, p.y, p.z - e);
         auto z1 = Vect(p.x, p.y, p.z + e);
-        double x, y, z = 0.0;
+        double x = 0, y = 0, z = 0;
         for (auto const& [coeff, noise] : bumps) {
             x += (noise.compute(x0, depth)
                 - noise.compute(x1, depth)) * coeff;
@@ -62,11 +62,12 @@ public:
         return Vect(x / size, y / size, z / size);
     }
 
+    void add_bump_mapping(const Noise n, double coeff=1) { bumps.insert(std::pair<double, Noise>(coeff, n)); }
+
     /* Setters */
     void set_specular(double s) { specular = s; }
     void set_texture(shared_texture t) { texture = t; }
     void set_texture(const Color& c) { texture = std::make_shared<Lambertian>(c); }
-    void add_bump_mapping(const Noise n, double coeff=1) { bumps.insert(std::pair<double, Noise>(coeff, n)); }
     void set_depth(int d) { depth = d; }
 
     /* Getters */

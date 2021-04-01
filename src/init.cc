@@ -56,7 +56,9 @@ void init_lights(Scene& scene) {
 }
 
 void init_objects(Scene& scene) {
-    add_plane_black_white(scene);
+    //add_ground_plane(scene);
+    add_water_plane(scene);
+    //add_plane_black_white(scene);
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
@@ -66,7 +68,7 @@ void init_objects(Scene& scene) {
     //add_flower_cube(scene);
     //add_sheep_cube(scene);
 
-    add_sphere_noise_mapping(scene);
+    //add_sphere_noise_mapping(scene);
     //add_sphere_turb_mapping(scene);
     //add_sphere_marble_mapping(scene);
     //add_sphere_wood_mapping(scene);
@@ -123,7 +125,7 @@ void init_blob(Scene& scene) {
     blob_objects.push_back(green_sphere);
     blob_objects.push_back(blue_sphere);
 
-    Blob blob(Point3(0, 0, 0), 11, 1, 75, blob_objects, true);
+    Blob blob(Point3(0, 0, 0), 11, .25, 75, blob_objects, true);
     blob.compute();
 
     /* Add triangles to scene */

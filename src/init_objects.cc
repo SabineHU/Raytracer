@@ -1,5 +1,30 @@
 #include "init_objects.hh"
 
+void add_ground_plane(Scene& scene) {
+    auto lambertian_ground = std::make_shared<Lambertian>(Color(0.41, 0.25, 0.20), 0.5);
+    auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    plane->set_texture(lambertian_ground);
+    //plane->add_bump_mapping(Noise(MARBLE, 10), 10);
+    plane->add_bump_mapping(Noise(TURBULENCE, 15), 10);
+    plane->add_bump_mapping(Noise(TURBULENCE, 10), 2);
+    plane->add_bump_mapping(Noise(MARBLE, 5), 3);
+    plane->add_bump_mapping(Noise(TURBULENCE, 20), 7);
+    scene.add_object(plane);
+}
+
+void add_water_plane(Scene& scene) {
+    auto lambertian_water = std::make_shared<Metal>(Color(0.05, 0.41, 0.75), 0.5);
+    auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    plane->set_texture(lambertian_water);
+    plane->set_specular(20);
+    //plane->add_bump_mapping(Noise(MARBLE, 10), 10);
+    plane->add_bump_mapping(Noise(TURBULENCE, 15), 10);
+    plane->add_bump_mapping(Noise(TURBULENCE, 10), 2);
+    plane->add_bump_mapping(Noise(MARBLE, 5), 3);
+    plane->add_bump_mapping(Noise(TURBULENCE, 20), 7);
+    scene.add_object(plane);
+}
+
 void add_plane_black_white(Scene& scene) {
     auto board_black_white = std::make_shared<CheckerBoard>(black, white);
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
