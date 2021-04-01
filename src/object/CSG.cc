@@ -81,20 +81,37 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             if (obj2->find_intersection(ray, t_min, t_max2, info2)) found2 = true;
 
             if (!found1) return false;
-
-            /* Intersect both */
-            if (found2) {
-                if (info2.t_min >= info1.t_min) {
-                    t_max = t_max1;
-                    obj1_closest = true;
-                    return true;
-                }
-                return false;
+            if (!found2) {
+                t_max = t_max1;
+                obj1_closest = true;
+                return true;
             }
 
-            t_max = t_max1;
-            obj1_closest = true;
-            return true;
+            /* Intersect both */
+            /* Right closer */
+            if (info2.t_max < info1.t_min) {
+                t_max = info1.t_min;
+                obj1_closest = true;
+                return true;
+            }
+            /* Left closer */
+            if (info1.t_max < info2.t_min) {
+                t_max = info1.t_min;
+                obj1_closest = true;
+                return true;
+            }
+            if (info1.t_min < info2.t_min) {
+                t_max = info1.t_min;
+                obj1_closest = true;
+                return true;
+            }
+
+            if (info2.t_max < info1.t_max) {
+                t_max = info2.t_max;
+                obj1_closest = false;
+                return true;
+            }
+            return false;
 
         default:
             if (obj1->find_intersection(ray, t_min, t_max1, info1)) found1 = true;

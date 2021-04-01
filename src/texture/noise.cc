@@ -3,21 +3,24 @@
 #include "vector3_op.hh"
 
 Noise::Noise()
-    : type(NOISE)
+    : type(NOISE), scale(1)
 {
-    for (int i = 0; i < count; ++i)
-        random_vect[i] = r_random::random_vector(-1, 1).normalize();
-
-    for (int i = 0; i < count * 3; ++i) {
-        permutation[i] = i / 3;
-    }
-
-    r_random::shuffle(permutation, count * 3);
+    this->init_noise_arrays();
 }
 
 Noise::Noise(PerlinNoiseType t)
-    : type(t)
+    : type(t), scale(1)
 {
+    this->init_noise_arrays();
+}
+
+Noise::Noise(PerlinNoiseType t, double s)
+    : type(t), scale(s)
+{
+    this->init_noise_arrays();
+}
+
+void Noise::init_noise_arrays() {
     for (int i = 0; i < count; ++i)
         random_vect[i] = r_random::random_vector(-1, 1).normalize();
 
@@ -27,6 +30,7 @@ Noise::Noise(PerlinNoiseType t)
 
     r_random::shuffle(permutation, count * 3);
 }
+
 
 static double smooth_step(double x) {
     if (x <= 0) return 0;
@@ -60,8 +64,7 @@ static double interpolate(Vect c[2][2][2], const Vect& point) {
     return res;
 }
 
-double Noise::compute(const Point3& p, double scale,
-        int depth) const {
+double Noise::compute(const Point3& p, int depth) const {
     switch (type) {
     case NOISE:
         return 0.5 + this->noise(p * scale) * 0.5;

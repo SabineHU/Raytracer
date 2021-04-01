@@ -43,18 +43,18 @@ public:
         if (bump.has_value()) {
             auto x0 = Vect(p.x - e, p.y, p.z);
             auto x1 = Vect(p.x + e, p.y, p.z);
-            auto x = bump.value().compute(x0, scale, depth)
-                - bump.value().compute(x1, scale, depth);
+            auto x = bump.value().compute(x0, depth)
+                - bump.value().compute(x1, depth);
 
             auto y0 = Vect(p.x, p.y - e, p.z);
             auto y1 = Vect(p.x, p.y + e, p.z);
-            auto y = bump.value().compute(y0, scale, depth)
-                - bump.value().compute(y1, scale, depth);
+            auto y = bump.value().compute(y0, depth)
+                - bump.value().compute(y1, depth);
 
             auto z0 = Vect(p.x, p.y, p.z - e);
             auto z1 = Vect(p.x, p.y, p.z + e);
-            auto z = bump.value().compute(z0, scale, depth)
-                - bump.value().compute(z1, scale, depth);
+            auto z = bump.value().compute(z0, depth)
+                - bump.value().compute(z1, depth);
 
             return Vect(x, y, z);
         }

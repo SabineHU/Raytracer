@@ -87,9 +87,15 @@ void init_objects(Scene& scene) {
     //add_capsule(scene);
     //add_cube(scene);
     //add_cylinder(scene);
-    add_capped_cone(scene);
+    //add_capped_cone(scene);
     //add_cone(scene);
     //add_ellipsoid(scene);
+
+    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    auto obj1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
+    obj1->set_texture(lambertian_random);
+    obj1->set_bump_mapping(Noise(WOOD, 10));
+    scene.add_object(obj1);
 }
 
 void init_objects2(Scene& scene) {

@@ -16,10 +16,11 @@ class Noise {
 public:
     Noise();
     Noise(PerlinNoiseType type);
-    double compute(const Point3& p, double scale,
-        int depth=7) const;
+    Noise(PerlinNoiseType type, double s);
+    double compute(const Point3& p, int depth=7) const;
 
 private:
+    void init_noise_arrays();
     double noise(const Point3&) const;
     double turb(const Point3&, int depth=7) const;
     double marble(const Point3&, int depth=7) const;
@@ -27,10 +28,8 @@ private:
 
     /* Attributes */
     PerlinNoiseType type;
+    double scale;
 
     Vect random_vect[count];
     int permutation[count * 3];
-    int perm_x[count];
-    int perm_y[count];
-    int perm_z[count];
 };

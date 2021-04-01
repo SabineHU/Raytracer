@@ -14,7 +14,6 @@ public:
 
 private:
     /* Attributes */
-    double scale;
     Noise noise;
 
     Color color1;
