@@ -34,10 +34,14 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
     Color final_color;
     final_color += info.color * scene.ambient_light * info.ka;
     final_color += compute_diffuse_specular(scene, info, accuracy);
+
     if (info.texture->type & REFRACTION && info.texture->type & REFLECTION) {
         final_color += compute_refraction_reflection(scene, info, accuracy, depth);
+
     } else if (info.texture->type & REFLECTION) {
         IntersectionInfo reflection_info;
+        // TODO, normal is modified because of bump mapping
+        // Need to have 2 normals ?
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
             final_color += get_color(scene, reflection_info, accuracy, depth - 1);
@@ -112,7 +116,7 @@ Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info,
     return res_color;
 }
 
-static double fresnel(const Vect& dir, const Vect& normal, const double ior=1) {
+static double fresnel(const Vect& dir, const Vect& normal, const double ior=1.33) {
     double cos1 = std::max(-1.0, std::min(1.0, vector::dot(dir, normal)));
 
     double n2 = 1; // air

@@ -59,7 +59,14 @@ void init_objects(Scene& scene) {
     //add_ground_plane(scene);
     //add_water_plane(scene);
     //add_water_plane2(scene);
-    add_plane_black_white(scene);
+    add_water_plane_reflection(scene);
+    //add_plane_black_white(scene);
+
+    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);
+    obj1->set_texture(lambertian_random);
+    obj1->add_bump_mapping(Noise(WOOD, 10));
+    scene.add_object(obj1);
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
@@ -76,7 +83,7 @@ void init_objects(Scene& scene) {
 
     //add_transparent_sphere(scene);
 
-    add_sphere_noise(scene);
+    //add_sphere_noise(scene);
     //add_sphere_turb(scene);
     //add_sphere_marble(scene);
     //add_sphere_wood(scene);

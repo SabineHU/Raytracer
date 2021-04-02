@@ -11,7 +11,9 @@ public:
     Point3 at(double i) const;
 
     Vect get_reflection_dir(const Vect& normal) const;
-    Vect get_refraction_dir(const Vect& normal, double ior=1) const;
+    Vect get_refraction_dir(const Vect& normal, double ior=1.33) const;
+    // ior water = 1.33
+    // ior air = 1
 
     /* Attributes */
     Vect origin;

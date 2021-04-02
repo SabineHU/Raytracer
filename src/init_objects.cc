@@ -13,9 +13,9 @@ void add_ground_plane(Scene& scene) {
 }
 
 void add_water_plane(Scene& scene) {
-    auto lambertian_water = std::make_shared<Metal>(Color(0.05, 0.41, 0.75), 0.5);
+    auto metal_water = std::make_shared<Metal>(Color(0.05, 0.41, 0.75), 0.5);
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
-    plane->set_texture(lambertian_water);
+    plane->set_texture(metal_water);
     plane->set_specular(20);
     //plane->add_bump_mapping(Noise(MARBLE, 10), 10);
     plane->add_bump_mapping(Noise(TURBULENCE, 15), 10);
@@ -34,6 +34,20 @@ void add_water_plane2(Scene& scene) {
     p1->add_bump_mapping(Noise(MARBLE, 5), 3);
     p1->add_bump_mapping(Noise(TURBULENCE, 20), 7);
     p1->set_specular(20);
+    scene.add_object(p1);
+}
+
+void add_water_plane_reflection(Scene& scene) {
+    auto perlin = std::make_shared<PerlinNoise>(2, CLOUD, r_random::random_color(), r_random::random_color());
+    perlin->kd = 0.25;
+    perlin->kt = 0.5;
+    perlin->ks = 0.7;
+    perlin->set_transparent_type();
+    auto p1= std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    p1->set_texture(perlin);
+    p1->add_bump_mapping(Noise(TURBULENCE, 10), 2);
+    p1->add_bump_mapping(Noise(TURBULENCE, 20), 3);
+    p1->set_specular(40);
     scene.add_object(p1);
 }
 
