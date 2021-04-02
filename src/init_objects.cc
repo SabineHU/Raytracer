@@ -42,7 +42,7 @@ void add_water_plane_reflection(Scene& scene) {
     perlin->kd = 0.25;
     perlin->kt = 0.5;
     perlin->ks = 0.7;
-    perlin->set_transparent_type();
+    perlin->set_reflection_type();
     auto p1= std::make_shared<Plane>(Point3(0, 1, 0), -1);
     p1->set_texture(perlin);
     p1->add_bump_mapping(Noise(TURBULENCE, 10), 2);

@@ -20,6 +20,7 @@
 #include "sphere.hh"
 #include "triangle.hh"
 #include "torus.hh"
+#include "rectangle.hh"
 
 #include "point_light.hh"
 
@@ -32,6 +33,8 @@
 #include "noise.hh"
 
 #include "init_objects.hh"
+
+#include "vector3_op.hh"
 
 image::Image init_image(double angle, double zmin) {
     double alpha = math::degree_to_radian(angle);
@@ -59,14 +62,19 @@ void init_objects(Scene& scene) {
     //add_ground_plane(scene);
     //add_water_plane(scene);
     //add_water_plane2(scene);
-    add_water_plane_reflection(scene);
-    //add_plane_black_white(scene);
+    //add_water_plane_reflection(scene);
+    add_plane_black_white(scene);
 
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
-    auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);
+    auto obj1 = std::make_shared<Rectangle>(Point3(-2, -1, 0), Point3(2, 2, 0));
     obj1->set_texture(lambertian_random);
-    obj1->add_bump_mapping(Noise(WOOD, 10));
     scene.add_object(obj1);
+
+    //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    //auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);
+    //obj1->set_texture(lambertian_random);
+    //obj1->add_bump_mapping(Noise(WOOD, 10));
+    //scene.add_object(obj1);
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
