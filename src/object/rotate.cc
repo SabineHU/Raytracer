@@ -35,11 +35,11 @@ bool RotatedObject::find_intersection(const Ray& ray, double& t_min, double& t_m
         break;
     case AXIS_Y:
         orig = vector::rotate_y(ray.origin, sin, cos);
-        dir = vector::rotate_x(ray.direction, sin, cos);
+        dir = vector::rotate_y(ray.direction, sin, cos);
         break;
     default:
         orig = vector::rotate_z(ray.origin, sin, cos);
-        dir = vector::rotate_x(ray.direction, sin, cos);
+        dir = vector::rotate_z(ray.direction, sin, cos);
         break;
     }
 

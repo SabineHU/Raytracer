@@ -47,7 +47,7 @@ image::Image init_image(double angle, double zmin) {
 Camera init_camera() {
     /* Camera */
     //Vect look_from(6, 4, -8);
-    Vect look_from(0, 2, -6);
+    Vect look_from(0, 2, -8);
     //Vect look_from(2, 2, -10);
     //Vect look_from(0, 10, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
@@ -73,8 +73,8 @@ void init_objects(Scene& scene) {
     obj1->set_texture(lambertian_random);
     //scene.add_object(obj1);
 
-    auto obj2_rot = std::make_shared<RotatedObject>(obj1, -45 - 90, AXIS_X);
-    scene.add_object(obj2_rot);
+    //auto obj2_rot = std::make_shared<RotatedObject>(obj1, 45, AXIS_Y);
+    //scene.add_object(obj2_rot);
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     //auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);
