@@ -8,6 +8,7 @@
 #include "raytracer.hh"
 
 #include "scene2.hh"
+#include "scene3.hh"
 
 int main() {
     std::srand(std::time(nullptr));
@@ -29,7 +30,9 @@ int main() {
     //init_objects2(scene);
     //init_blob(scene);
 
-    Scene scene = init_scene2();
+    //Scene scene = init_scene1();
+    //Scene scene = init_scene2();
+    Scene scene = init_scene3();
     render(img, scene, accuracy, samples, depth);
 
     img.save();

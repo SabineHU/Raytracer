@@ -20,7 +20,9 @@
 #include "sphere.hh"
 #include "triangle.hh"
 #include "torus.hh"
-#include "rectangle.hh"
+#include "rectangle_xy.hh"
+#include "rectangle_xz.hh"
+#include "rectangle_yz.hh"
 #include "rotate.hh"
 #include "translate.hh"
 
@@ -68,7 +70,6 @@ void init_objects(Scene& scene) {
     //add_water_plane2(scene);
     //add_water_plane_reflection(scene);
     //add_plane_black_white(scene);
-    init_landscape_2(scene);
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     //auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);

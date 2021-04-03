@@ -20,7 +20,9 @@
 #include "sphere.hh"
 #include "triangle.hh"
 #include "torus.hh"
-#include "rectangle.hh"
+#include "rectangle_xy.hh"
+#include "rectangle_xz.hh"
+#include "rectangle_yz.hh"
 
 #include "rotate.hh"
 #include "translate.hh"

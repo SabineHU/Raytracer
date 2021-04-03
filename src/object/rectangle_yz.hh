@@ -2,10 +2,10 @@
 
 #include "object.hh"
 
-class Rectangle : public Object {
+class Rectangle_yz : public Object {
 public:
-    Rectangle();
-    Rectangle(const Vect&, const Vect&);
+    Rectangle_yz();
+    Rectangle_yz(const Vect&, const Vect&);
 
     /* Methods */
     virtual Vect get_normal_at(const Point3& point, double u, double v) const override;

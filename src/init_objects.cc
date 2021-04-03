@@ -313,7 +313,7 @@ void add_rectangle_rotated(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     auto p1 = Point3(-2, -1, 0);
     auto p2 = Point3(2, 2, 0);
-    auto obj1 = std::make_shared<Rectangle>(p1, p2);
+    auto obj1 = std::make_shared<Rectangle_xy>(p1, p2);
     obj1->set_texture(lambertian_random);
     //scene.add_object(obj1);
 

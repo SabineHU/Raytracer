@@ -17,6 +17,7 @@ SRC= src/main.cc \
      src/init_objects.cc \
      src/init_landscape.cc \
      src/init_scene/scene2.cc \
+     src/init_scene/scene3.cc \
      \
      src/blob/blob.cc \
      \
@@ -32,7 +33,9 @@ SRC= src/main.cc \
      src/object/cylinder.cc \
      src/object/ellipsoid.cc \
      src/object/plane.cc \
-     src/object/rectangle.cc \
+     src/object/rectangle_xy.cc \
+     src/object/rectangle_xz.cc \
+     src/object/rectangle_yz.cc \
      src/object/sphere.cc \
      src/object/triangle.cc \
      src/object/torus.cc \
