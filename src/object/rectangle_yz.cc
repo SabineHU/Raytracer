@@ -24,7 +24,7 @@ bool Rectangle_yz::find_intersection(const Ray& ray, double& t_min, double& t_ma
     if (hit) {
         t_max = t;
         info.point = p;
-        normal = Vect(0, 0, 1);
+        normal = Vect(1, 0, 0);
         if (vector::dot(ray.direction, normal) > 0)
             normal = normal.negative();
 

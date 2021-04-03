@@ -43,6 +43,12 @@ static shared_object create_rectangle_yz(const Point3& p1, const Point3& p2, sha
     return obj1;
 }
 
+static shared_object create_rectangle_xz(const Point3& p1, const Point3& p2, shared_texture t) {
+    auto obj1 = std::make_shared<Rectangle_xz>(p1, p2);
+    obj1->set_texture(t);
+    return obj1;
+}
+
 static void add_table_leg(Scene& scene, shared_texture t, double x1, double x2, double z1, double z2) {
     scene.add_object(create_rectangle_xy(Point3(x1, -1, z1), Point3(x2, .5, z1), t));
     scene.add_object(create_rectangle_xy(Point3(x1, -1, z2), Point3(x2, .5, z2), t));
@@ -51,20 +57,50 @@ static void add_table_leg(Scene& scene, shared_texture t, double x1, double x2, 
     scene.add_object(create_rectangle_yz(Point3(x2, -1, z1), Point3(x2, .5, z2), t));
 }
 
-static void add_table_legs(Scene& scene, shared_texture t) {
-    add_table_leg(scene, t, -1.75      , -1.5     , -2.75    , -2.5);
-    add_table_leg(scene, t, -1.75      , -1.5     , -2.75 + 3, -2.5 + 3);
-    add_table_leg(scene, t, -1.75 + 4  , -1.5 + 4 , -2.75 + 3, -2.5 + 3);
-    add_table_leg(scene, t, -1.75 + 4  , -1.5 + 4 , -2.75    , -2.5);
+static void add_table_plank(Scene& scene, shared_texture t, const Point3& pos,
+        double l, double w) {
+    double x1 = pos.x - l / 2;
+    double z1 = pos.z - w / 2;
 
-    auto obj = std::make_shared<Rectangle_xz>(Point3(-2, .5, -3), Point3(-1.25 + 4, .5, -2.25 + 3));
-    obj->set_texture(t);
-    scene.add_object(obj);
+    double x_min = x1 - .25;
+    double x_max = x1 + l + .25;
+
+    double z_min = z1 - .25;
+    double z_max = z1 + w + .25;
+
+    double y_min = .5;
+    double y_max = y_min + .15;
+
+    scene.add_object(create_rectangle_xz(Point3(x_min, y_min, z_min), Point3(x_max, y_min, z_max), t));
+    scene.add_object(create_rectangle_xz(Point3(x_min, y_max, z_min), Point3(x_max, y_max, z_max), t));
+
+    scene.add_object(create_rectangle_xy(Point3(x_min, y_min, z_min), Point3(x_max, y_max, z_min), t));
+    scene.add_object(create_rectangle_xy(Point3(x_min, y_min, z_max), Point3(x_max, y_max, z_max), t));
+
+    scene.add_object(create_rectangle_yz(Point3(x_min, y_min, z_min), Point3(x_min, y_max, z_max), t));
+    scene.add_object(create_rectangle_yz(Point3(x_max, y_min, z_min), Point3(x_max, y_max, z_max), t));
+
 }
 
-static void add_table(Scene& scene) {
+static void add_table_legs(Scene& scene, shared_texture t, const Point3& pos,
+        double l, double w) {
+    double x1 = pos.x - l / 2;
+    double z1 = pos.z - w / 2;
+
+    double x2 = x1 + .25;
+    double z2 = z1 + .25;
+
+    add_table_leg(scene, t, x1      , x2     , z1    , z2);
+    add_table_leg(scene, t, x1      , x2     , z1 + w, z2 + w);
+    add_table_leg(scene, t, x1 + l  , x2 + l , z1 + w, z2 + w);
+    add_table_leg(scene, t, x1 + l  , x2 + l , z1    , z2);
+
+    add_table_plank(scene, t, pos, l, w);
+}
+
+static void add_table(Scene& scene, const Point3& pos, double length, double width) {
     auto lambertian_brown = std::make_shared<Lambertian>(Color(.3, .13, .03));
-    add_table_legs(scene, lambertian_brown);
+    add_table_legs(scene, lambertian_brown, pos, length, width);
 }
 
 Scene init_scene3() {
@@ -75,7 +111,7 @@ Scene init_scene3() {
 
     add_plane(scene);
 
-    add_table(scene);
+    add_table(scene, Point3(0, 0, -1.5), 5, 4);
 
     return scene;
 }
