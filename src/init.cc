@@ -21,6 +21,7 @@
 #include "triangle.hh"
 #include "torus.hh"
 #include "rectangle.hh"
+#include "rotate.hh"
 
 #include "point_light.hh"
 
@@ -68,16 +69,12 @@ void init_objects(Scene& scene) {
     auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     auto p1 = Point3(-2, -1, 0);
     auto p2 = Point3(2, 2, 0);
-    //auto obj1 = std::make_shared<Rectangle>(p1, p2);
-    //obj1->set_texture(lambertian_random);
+    auto obj1 = std::make_shared<Rectangle>(p1, p2);
+    obj1->set_texture(lambertian_random);
     //scene.add_object(obj1);
 
-    auto lambertian_random2 = std::make_shared<Lambertian>(r_random::random_color());
-    p1 = vector::rotate_y(p1, M_PI / 2.0);
-    p2 = vector::rotate_y(p2, M_PI / 2.0);
-    auto obj2 = std::make_shared<Rectangle>(p1, p2);
-    obj2->set_texture(lambertian_random);
-    scene.add_object(obj2);
+    auto obj2_rot = std::make_shared<RotatedObject>(obj1, -45 - 90, AXIS_X);
+    scene.add_object(obj2_rot);
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     //auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);

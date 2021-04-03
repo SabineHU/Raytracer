@@ -43,6 +43,10 @@ inline Vect rotate_z(const Vect& u, double theta) {
     return Vect(a * u.x + b * u.y, d * u.x + e * u.y, u.z);
 }
 
+inline Vect rotate_z(const Vect& u, double sin, double cos) {
+    return Vect(cos * u.x + -sin * u.y, sin * u.x + cos * u.y, u.z);
+}
+
 inline Vect rotate_y(const Vect& u, double theta) {
     // Matrix 3 * 3
     // [ a b 0 ]   [ u.z ] = u.z coord
@@ -55,6 +59,10 @@ inline Vect rotate_y(const Vect& u, double theta) {
     return Vect(d * u.z + e * u.x, u.y, u.z * a + b * u.x);
 }
 
+inline Vect rotate_y(const Vect& u, double sin, double cos) {
+    return Vect(sin * u.z + cos * u.x, u.y, u.z * cos + -sin * u.x);
+}
+
 inline Vect rotate_x(const Vect& u, double theta) {
     // Matrix 3 * 3
     // [ a b 0 ]   [ u.y ] = u.y coord
@@ -65,5 +73,9 @@ inline Vect rotate_x(const Vect& u, double theta) {
     auto d = sin(theta);
     auto e = cos(theta);
     return Vect(u.x, a * u.y + b * u.z, d * u.y + e * u.z);
+}
+
+inline Vect rotate_x(const Vect& u, double sin, double cos) {
+    return Vect(u.x, cos * u.y + -sin * u.z, sin * u.y + cos * u.z);
 }
 }

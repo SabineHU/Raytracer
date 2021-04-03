@@ -34,6 +34,7 @@ SRC= src/main.cc \
      src/object/triangle.cc \
      src/object/torus.cc \
      src/object/smooth_triangle.cc \
+     src/object/rotate.cc \
      \
      src/raytracer/raytracer.cc \
      src/raytracer/ray.cc \
