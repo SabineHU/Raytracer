@@ -34,22 +34,19 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
                 t_max = std::min(t_max1, t_max2);
                 info.t_min = std::min(info1.t_min, info2.t_min);
                 info.t_max = std::max(info1.t_max, info2.t_max);
-                return true;
-            }
-
-            if (found1) {
+            } else if (found1) {
                 t_max = t_max1;
                 info.t_min = info1.t_min;
                 info.t_max = info1.t_max;
                 obj1_closest = true;
-            }
-
-            if (found2) {
+            } else if (found2) {
                 t_max = t_max2;
                 info.t_min = info2.t_min;
                 info.t_max = info2.t_max;
                 obj1_closest = false;
             }
+
+            info.point = ray.origin + ray.direction * t_max;
             return true;
 
         case INTERSECTION:
@@ -64,6 +61,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
 
                 info.t_min = info2.t_min;
                 info.t_max = info2.t_max;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             } else if (info1.t_min < info2.t_min && info2.t_min < info1.t_max) {
                 t_max = info2.t_min;
@@ -71,6 +69,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
 
                 info.t_min = info1.t_min;
                 info.t_max = info1.t_max;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
             return false;
@@ -84,6 +83,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             if (!found2) {
                 t_max = t_max1;
                 obj1_closest = true;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
 
@@ -92,23 +92,27 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             if (info2.t_max < info1.t_min) {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
             /* Left closer */
             if (info1.t_max < info2.t_min) {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
             if (info1.t_min < info2.t_min) {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
 
             if (info2.t_max < info1.t_max) {
                 t_max = info2.t_max;
                 obj1_closest = false;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
             return false;
@@ -124,12 +128,14 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             if (found1 && !found2) {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
 
             if (!found1 && found2) {
                 t_max = info2.t_min;
                 obj1_closest = false;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
 
@@ -137,11 +143,13 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             if (info1.t_min < info2.t_min && info1.t_max < info2.t_max) {
                 t_max = info2.t_min;
                 obj1_closest = true;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
             if (info2.t_min < info1.t_min && info2.t_max < info1.t_max) {
                 t_max = info2.t_max;
                 obj1_closest = false;
+                info.point = ray.origin + ray.direction * t_max;
                 return true;
             }
             return false;

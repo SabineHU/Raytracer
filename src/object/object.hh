@@ -29,6 +29,9 @@ public:
     }
 
     virtual void get_properties(IntersectionInfo& info) const {
+        info.color = this->get_color_at(info.point, info.u, info.v);
+        info.normal = this->get_normal_at(info.point, info.u, info.v);
+
         info.specular = this->specular;
         info.texture = this->texture;
         info.ka = this->texture->ka;
