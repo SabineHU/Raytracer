@@ -26,6 +26,9 @@ public:
     /* Getters */
     std::vector<shared_light> get_lights() const { return lights; }
 
+    /* Setters */
+    void set_camera(const Camera& c) { camera = c; }
+
 public:
     /* Attributes */
     Camera camera;

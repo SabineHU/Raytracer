@@ -37,6 +37,7 @@
 #include "init_objects.hh"
 
 #include "vector3_op.hh"
+#include "init_landscape.hh"
 
 image::Image init_image(double angle, double zmin) {
     double alpha = math::degree_to_radian(angle);
@@ -57,7 +58,8 @@ Camera init_camera() {
 }
 
 void init_lights(Scene& scene) {
-    scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -10), white, 2.5));
+    scene.add_light(std::make_shared<PointLight>(Point3(0, 0, -10), light_blue, 1.5));
+    scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -10), white, 1.75));
 }
 
 void init_objects(Scene& scene) {
@@ -65,13 +67,32 @@ void init_objects(Scene& scene) {
     //add_water_plane(scene);
     //add_water_plane2(scene);
     //add_water_plane_reflection(scene);
-    add_plane_black_white(scene);
+    //add_plane_black_white(scene);
+    init_landscape_2(scene);
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     //auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);
     //obj1->set_texture(lambertian_random);
     //obj1->add_bump_mapping(Noise(WOOD, 10));
     //scene.add_object(obj1);
+
+    //std::vector<shared_object> triangles;
+    //triangles.push_back(std::make_shared<Triangle>(Point3(0.95106, 0.30902, 0), Point3(0.30898, 0.42527, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(0.30898, 0.42527, 0), Point3(0, 1, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(0, 1, 0), Point3(-0.30898, 0.42527, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.30989, 0.42527, 0), Point3(-0.95106, 0.30902, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.95106, 0.30902, 0), Point3(-0.49993, -0.16244, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.49993, -0.16244, 0), Point3(-0.58779, -0.80902, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.58779, -0.80902, 0), Point3(0, -0.52566, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(0, -0.52566, 0), Point3(0.58779, -0.80902, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(0.58779, -0.80902, 0), Point3(0.49993, -0.16244, 0), Point3(0, 0, 0)));
+    //triangles.push_back(std::make_shared<Triangle>(Point3(0.49993, -0.16244, 0), Point3(0.95106, 0.30902, 0), Point3(0, 0, 0)));
+
+    //for (auto t : triangles) {
+    //    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    //    t->set_texture(lambertian_random);
+    //    scene.add_object(t);
+    //}
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
@@ -106,16 +127,6 @@ void init_objects(Scene& scene) {
     //add_cone(scene);
     //add_ellipsoid(scene);
     //add_rectangle_rotated(scene);
-
-    //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
-    //auto obj1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
-    //obj1->set_texture(lambertian_random);
-    //obj1->add_bump_mapping(Noise(WOOD, 10));
-    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
-    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
-    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
-    //obj1->add_bump_mapping(Noise(MARBLE, 10), 10);
-    //scene.add_object(obj1);
 }
 
 void init_objects2(Scene& scene) {
