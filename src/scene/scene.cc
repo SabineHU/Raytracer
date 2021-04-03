@@ -4,13 +4,17 @@
 Scene::Scene(const Camera& cam)
     : camera(cam), ambient_light(Color(1, 1, 1)),
     objects(std::vector<shared_object>()),
-    lights(std::vector<shared_light>())
+    lights(std::vector<shared_light>()),
+    background_color1(Color(1, 1, 1)),
+    background_color2(Color(.4, .65, 1))
 {}
 
 Scene::Scene(const Camera& cam, const Color& light)
     : camera(cam), ambient_light(light),
     objects(std::vector<shared_object>()),
-    lights(std::vector<shared_light>())
+    lights(std::vector<shared_light>()),
+    background_color1(Color(1, 1, 1)),
+    background_color2(Color(.4, .65, 1))
 {}
 
 void Scene::add_object(shared_object obj) {
@@ -53,4 +57,9 @@ bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
         if (obj->find_intersection(ray, accuracy, distance, info))
             return true;
     return false;
+}
+
+Color Scene::get_background_color(const Ray& ray) const {
+    auto s = 0.5 * (ray.direction.y + 1.0);
+    return background_color1 * (1 - s) + background_color2 * s;
 }

@@ -25,9 +25,14 @@ public:
 
     /* Getters */
     std::vector<shared_light> get_lights() const { return lights; }
+    Color get_background_color(const Ray& ray) const;
 
     /* Setters */
     void set_camera(const Camera& c) { camera = c; }
+    void set_background_colors(const Color& c1, const Color& c2) {
+        background_color1 = c1;
+        background_color2 = c2;
+    }
 
 public:
     /* Attributes */
@@ -35,4 +40,7 @@ public:
     Color ambient_light;
     std::vector<shared_object> objects;
     std::vector<shared_light> lights;
+
+    Color background_color1;
+    Color background_color2;
 };

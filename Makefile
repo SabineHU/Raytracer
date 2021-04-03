@@ -1,11 +1,12 @@
 CXX=g++
 CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
-         -g3 -O0 -fno-inline \
+         -g3 -O3 -fno-inline \
          -I./src \
          -I./src/utils \
          -I./src/light \
          -I./src/object \
          -I./src/scene \
+         -I./src/init_scene \
          -I./src/image \
          -I./src/texture \
          -I./src/blob \
@@ -15,6 +16,7 @@ SRC= src/main.cc \
      src/init.cc \
      src/init_objects.cc \
      src/init_landscape.cc \
+     src/init_scene/scene2.cc \
      \
      src/blob/blob.cc \
      \

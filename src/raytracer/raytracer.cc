@@ -50,11 +50,6 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
     return final_color;
 }
 
-static Color get_background_color(const Ray& ray) {
-    auto s = 0.5 * (ray.direction.y + 1.0);
-    return Color(1, 1, 1) * (1 - s) + Color(.4, .65, 1) * s;
-}
-
 void render(image::Image& img, const Scene& scene, double accuracy, int samples, int depth) {
     for (int i = 0; i < img.get_width(); ++i) {
         std::cerr << "\rScanlines remaining: " << img.get_width() - i - 1 << ' ' << std::flush;
@@ -72,7 +67,7 @@ void render(image::Image& img, const Scene& scene, double accuracy, int samples,
                 if (scene.has_intersection(cam_ray, info, accuracy)) {
                     pixel_color += get_color(scene, info, accuracy, depth);
                 } else {
-                    pixel_color += get_background_color(cam_ray);
+                    pixel_color += scene.get_background_color(cam_ray);
                 }
 
             }
