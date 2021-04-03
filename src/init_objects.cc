@@ -308,3 +308,15 @@ void add_ellipsoid(Scene& scene) {
     ellipsoid->set_texture(lambertian_random);
     scene.add_object(ellipsoid);
 }
+
+void add_rectangle_rotated(Scene& scene) {
+    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
+    auto p1 = Point3(-2, -1, 0);
+    auto p2 = Point3(2, 2, 0);
+    auto obj1 = std::make_shared<Rectangle>(p1, p2);
+    obj1->set_texture(lambertian_random);
+    //scene.add_object(obj1);
+
+    auto obj2_rot = std::make_shared<RotatedObject>(obj1, 45, AXIS_Y);
+    scene.add_object(obj2_rot);
+}

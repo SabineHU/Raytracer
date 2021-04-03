@@ -20,6 +20,10 @@
 #include "sphere.hh"
 #include "triangle.hh"
 #include "torus.hh"
+#include "rectangle.hh"
+
+#include "rotate.hh"
+#include "translate.hh"
 
 #include "blob.hh"
 #include "random_color.hh"
@@ -75,3 +79,6 @@ void add_cylinder(Scene& scene);
 void add_capped_cone(Scene& scene);
 void add_cone(Scene& scene);
 void add_ellipsoid(Scene& scene);
+
+/* Rotation & translation */
+void add_rectangle_rotated(Scene& scene);
