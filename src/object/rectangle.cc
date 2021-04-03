@@ -2,11 +2,11 @@
 #include "vector3_op.hh"
 
 Rectangle::Rectangle()
-    : min_point(Vect(0, 0, 0)), max_point(Vect(1, 1, 0)), normal(Vect())
+    : p1(Vect(0, 0, 0)), p2(Vect(1, 1, 0)), normal(Vect())
 {}
 
 Rectangle::Rectangle(const Vect& u, const Vect& v)
-    : min_point(u), max_point(v), normal(Vect())
+    : p1(u), p2(v), normal(Vect())
 {}
 
 Vect Rectangle::get_normal_at(const Point3&, double, double) const {
@@ -14,20 +14,24 @@ Vect Rectangle::get_normal_at(const Point3&, double, double) const {
 }
 
 bool Rectangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
-    double rectZ = this->min_point.z;
+    double rectZ = this->p1.z;
 
     double t = (rectZ - ray.origin.z) / ray.direction.z;
-    Vect hitVector = ray.origin + ray.direction * t;
+    if (t <= t_min || t >= t_max) return false;
 
-    bool hit = hitVector.x <= this->max_point.x && hitVector.x >= this->min_point.x &&
-        hitVector.y <= this->max_point.y && hitVector.y >= this->min_point.y;
+    Vect p = ray.origin + ray.direction * t;
+    bool hit = p.x <= this->p2.x && p.x >= this->p1.x &&
+        p.y <= this->p2.y && p.y >= this->p1.y;
 
-    if (hit && t > t_min && t < t_max) {
+    if (hit) {
         t_max = t;
-        info.point = hitVector;
+        info.point = p;
         normal = Vect(0, 0, 1);
         if (vector::dot(ray.direction, normal) > 0)
             normal = normal.negative();
+
+        info.u = (p.x - p1.x) / (p2.x - p1.x);
+        info.v = (p.y - p1.y) / (p2.y - p1.y);
         return true;
     }
     return false;

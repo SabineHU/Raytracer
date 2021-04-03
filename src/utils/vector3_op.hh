@@ -31,15 +31,39 @@ inline double dot_xy(const Vect& u, const Vect& v) {
     return dot_x(u, v) + dot_y(u, v);
 }
 
-inline Vect rotate(const Vect& u, double theta) {
+inline Vect rotate_z(const Vect& u, double theta) {
     // Matrix 3 * 3
-    // [ a b 0 ]
-    // [ d e 0 ]
-    // [ 0 0 1 ]
+    // [ a b 0 ]   [ u.x ]
+    // [ d e 0 ] * [ u.y ]
+    // [ 0 0 1 ]   [ u.z ]
     auto a = cos(theta);
     auto b = -sin(theta);
     auto d = sin(theta);
     auto e = cos(theta);
     return Vect(a * u.x + b * u.y, d * u.x + e * u.y, u.z);
+}
+
+inline Vect rotate_y(const Vect& u, double theta) {
+    // Matrix 3 * 3
+    // [ a b 0 ]   [ u.z ] = u.z coord
+    // [ d e 0 ] * [ u.x ] = u.x coord
+    // [ 0 0 1 ]   [ u.y ] = u.y coord
+    auto a = cos(theta);
+    auto b = -sin(theta);
+    auto d = sin(theta);
+    auto e = cos(theta);
+    return Vect(d * u.z + e * u.x, u.y, u.z * a + b * u.x);
+}
+
+inline Vect rotate_x(const Vect& u, double theta) {
+    // Matrix 3 * 3
+    // [ a b 0 ]   [ u.y ] = u.y coord
+    // [ d e 0 ] * [ u.z ] = u.z coord
+    // [ 0 0 1 ]   [ u.x ] = u.x coord
+    auto a = cos(theta);
+    auto b = -sin(theta);
+    auto d = sin(theta);
+    auto e = cos(theta);
+    return Vect(u.x, a * u.y + b * u.z, d * u.y + e * u.z);
 }
 }

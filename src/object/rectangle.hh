@@ -15,8 +15,8 @@ public:
 
 private:
     /* Attributes */
-    Vect min_point;
-    Vect max_point;
+    Vect p1; // lower left
+    Vect p2; // top right
 
     Vect normal;
 };
