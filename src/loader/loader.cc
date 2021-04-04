@@ -50,11 +50,11 @@ Polygon parse_obj_to_polygon(const char* filename) {
             iss >> x1  >> w >> y1  >> w >> z1;
             iss >> x2  >> w >> y2  >> w >> z2;
 
-            auto vertices = TriangleMesh(x - 1, x1 - 1, x2 - 1);
-            auto textures = TriangleMesh(y - 1, y1 - 1, y2 - 1);
-            auto normals  = TriangleMesh(z - 1, z1 - 1, z2 - 1);
+            auto vertice = TriangleMesh(x - 1, x1 - 1, x2 - 1);
+            auto texture = TriangleMesh(y - 1, y1 - 1, y2 - 1);
+            auto normal  = TriangleMesh(z - 1, z1 - 1, z2 - 1);
 
-            faces.push_back(Face(vertices, normals, textures));
+            faces.push_back(Face(vertice, normal, texture));
         }
 
     }

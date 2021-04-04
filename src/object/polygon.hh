@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <vector>
+#include <memory>
 
 #include "object.hh"
 #include "smooth_triangle.hh"
@@ -48,8 +49,8 @@ private:
     std::vector<Vect2> m_textures;
     std::vector<Face> m_faces;
 
-    std::vector<SmoothTriangle> triangles;
+    std::vector<std::shared_ptr<SmoothTriangle>> triangles;
 
-    SmoothTriangle triangle;
+    std::shared_ptr<SmoothTriangle> triangle;
     Vect normal;
 };
