@@ -2,6 +2,14 @@
 
 #include "math.h"
 
+class Vect2 {
+public:
+    Vect2() : x(0), y(0) {}
+    Vect2(double u, double v) : x(u), y(v) {}
+
+    double x, y;
+};
+
 class Vect {
 public:
     Vect();

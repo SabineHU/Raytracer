@@ -41,6 +41,9 @@
 #include "vector3_op.hh"
 #include "init_landscape.hh"
 
+#include "polygon.hh"
+#include "loader.hh"
+
 image::Image init_image(double angle, double zmin) {
     double alpha = math::degree_to_radian(angle);
     double beta = alpha * 16.0 / 9.0; // Get ratio 16:9
@@ -70,7 +73,10 @@ void init_objects(Scene& scene) {
     //add_water_plane2(scene);
     //add_water_plane_reflection(scene);
     //add_plane_black_white(scene);
-    add_holed_plane(scene);
+    //add_holed_plane(scene);
+
+    auto p = parse_obj_to_polygon("objs/stars2.obj");
+    scene.add_object(std::make_shared<Polygon>(p));
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
     //auto obj1 = std::make_shared<Sphere>(Point3(0, -1, 0), 1);

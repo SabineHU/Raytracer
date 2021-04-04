@@ -11,6 +11,7 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/texture \
          -I./src/blob \
          -I./src/noise \
+         -I./src/loader \
          -I./src/raytracer
 
 SRC= src/main.cc \
@@ -44,6 +45,7 @@ SRC= src/main.cc \
      src/object/smooth_triangle.cc \
      src/object/rotate.cc \
      src/object/translate.cc \
+     src/object/polygon.cc \
      \
      src/raytracer/raytracer.cc \
      src/raytracer/ray.cc \
@@ -59,6 +61,8 @@ SRC= src/main.cc \
      src/texture/perlin_noise.cc \
      \
      src/noise/noise.cc \
+     \
+     src/loader/loader.cc \
      \
      src/utils/vector3.cc
 

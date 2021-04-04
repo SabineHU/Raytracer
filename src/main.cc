@@ -23,7 +23,7 @@ int main() {
     Scene scene(cam, Color(0.5, 0.5, 0.5));
     init_lights(scene);
 
-    ///* TP1 */
+    /* TP1 */
     init_objects(scene);
 
     /* TP2 */
