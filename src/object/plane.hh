@@ -14,7 +14,7 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
-private:
+protected:
     /* Attributes */
     Vect normal;
     double distance;

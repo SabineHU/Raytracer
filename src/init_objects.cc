@@ -58,6 +58,13 @@ void add_plane_black_white(Scene& scene) {
     scene.add_object(plane);
 }
 
+void add_holed_plane(Scene& scene) {
+    auto board_black_white = std::make_shared<CheckerBoard>(black, white);
+    auto plane = std::make_shared<PlaneHoled>(Point3(0, 1, 0), -1);
+    plane->set_texture(board_black_white);
+    scene.add_object(plane);
+}
+
 void add_ice_cream(Scene& scene) {
     auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
     auto lambertian_light_blue = std::make_shared<Lambertian>(light_blue, 0.5);
@@ -232,6 +239,13 @@ void add_sphere_wood_custom_color(Scene& scene) {
     sphere_wood_colored->set_texture(perlin5);
     sphere_wood_colored->set_specular(50);
     scene.add_object(sphere_wood_colored);
+}
+
+void add_sphere_rainbow(Scene& scene) {
+    auto perlin = std::make_shared<PerlinNoise>(2, RAINBOW, r_random::random_color(), r_random::random_color());
+    auto p1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
+    p1->set_texture(perlin);
+    scene.add_object(p1);
 }
 
 void add_strip_sphere_spherical(Scene& scene) {

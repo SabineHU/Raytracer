@@ -22,8 +22,7 @@ Vect Plane::get_normal_at(const Point3& point, double, double) const {
 
 bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     double a = vector::dot(ray.direction, normal);
-    if (a == 0)
-        return -1;
+    if (a == 0) return false;
 
     double b = vector::dot(normal, ray.origin + normal * -distance);
     double x = - b / a;

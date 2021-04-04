@@ -16,6 +16,7 @@
 #include "cylinder.hh"
 #include "ellipsoid.hh"
 #include "plane.hh"
+#include "plane_holed.hh"
 #include "smooth_triangle.hh"
 #include "sphere.hh"
 #include "triangle.hh"
@@ -41,6 +42,7 @@ void add_water_plane(Scene& scene);
 void add_water_plane2(Scene& scene);
 void add_water_plane_reflection(Scene& scene);
 void add_plane_black_white(Scene& scene);
+void add_holed_plane(Scene& scene);
 
 /* CSG */
 void add_ice_cream(Scene& scene);
@@ -67,6 +69,7 @@ void add_sphere_turb(Scene& scene);
 void add_sphere_marble(Scene& scene);
 void add_sphere_wood(Scene& scene);
 void add_sphere_wood_custom_color(Scene& scene);
+void add_sphere_rainbow(Scene& scene);
 
 /* Strip */
 void add_strip_sphere_spherical(Scene& scene);
