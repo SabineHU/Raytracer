@@ -6,7 +6,7 @@
 
 #include "loader.hh"
 
-static std::ifstream open_file(const char* filename) {
+static std::ifstream open_obj_file(const char* filename) {
     // Open file, read only
     std::ifstream ifs(filename, std::ifstream::in);
     if (!ifs.is_open()) {
@@ -18,7 +18,7 @@ static std::ifstream open_file(const char* filename) {
 }
 
 Polygon parse_obj_to_polygon(const char* filename) {
-    std::ifstream f = open_file(filename);
+    std::ifstream f = open_obj_file(filename);
 
     std::vector<Vect> vertices;
     std::vector<Vect> normals;

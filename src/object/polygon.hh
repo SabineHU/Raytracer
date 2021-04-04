@@ -14,6 +14,19 @@ struct TriangleMesh {
     double x, y, z;
 };
 
+struct Material {
+    Material() = default;
+
+    std::string name;
+    double ns;
+    Color ka;
+    Color kd;
+    Color ks;
+    Color ke;
+    double ni;
+    double d;
+};
+
 struct Face {
     Face() = default;
     Face(const TriangleMesh& v) : vertices(v), normals(TriangleMesh()), textures(TriangleMesh()) {}
