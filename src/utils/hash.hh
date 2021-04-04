@@ -1,11 +1,20 @@
 #pragma once
 
+#include <string>
+
 #include "vector3.hh"
 
 namespace hash {
 
 inline size_t get_value_hash(double value) {
     size_t hash = std::hash<double>{}(value);
+    hash += hash << 10;
+    hash ^= hash >> 6;
+    return hash;
+}
+
+inline size_t get_value_hash(std::string value) {
+    size_t hash = std::hash<std::string>{}(value);
     hash += hash << 10;
     hash ^= hash >> 6;
     return hash;

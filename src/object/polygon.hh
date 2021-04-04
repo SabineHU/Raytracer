@@ -3,6 +3,7 @@
 #include <optional>
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "object.hh"
 #include "smooth_triangle.hh"
@@ -17,26 +18,30 @@ struct TriangleMesh {
 struct Material {
     Material() = default;
 
-    std::string name;
     double ns;
     Color ka;
     Color kd;
     Color ks;
     Color ke;
-    double ni;
-    double d;
 };
 
 struct Face {
     Face() = default;
-    Face(const TriangleMesh& v) : vertices(v), normals(TriangleMesh()), textures(TriangleMesh()) {}
-    Face(const TriangleMesh& v, const TriangleMesh& n) : vertices(v), normals(n), textures(TriangleMesh()) {}
-    Face(const TriangleMesh& v, const TriangleMesh& n, const TriangleMesh& t) : vertices(v), normals(n), textures(t) {}
+    Face(const TriangleMesh& v)
+        : vertices(v), normals(TriangleMesh()), textures(TriangleMesh()), material(Material()) {}
+    Face(const TriangleMesh& v, const TriangleMesh& n)
+        : vertices(v), normals(n), textures(TriangleMesh()), material(Material()) {}
+    Face(const TriangleMesh& v, const TriangleMesh& n, const TriangleMesh& t)
+        : vertices(v), normals(n), textures(t), material(Material()) {}
+    Face(const TriangleMesh& v, const TriangleMesh& n, const TriangleMesh& t, const Material& m)
+        : vertices(v), normals(n), textures(t), material(m) {}
 
     /* Attributes */
     TriangleMesh vertices;
     TriangleMesh normals;
     TriangleMesh textures;
+
+    Material material;
 };
 
 class Polygon : public Object {

@@ -7,7 +7,7 @@ Polygon::Polygon()
 {}
 
 Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
-        std::vector<Vect2> textures, std::vector<Face> faces, std::vector<Material> materials)
+        std::vector<Vect2> textures, std::vector<Face> faces)
     : Object(), m_vertices(vertices), m_normals(normals), m_textures(textures), m_faces(faces)
 {
     this->triangles = std::vector<std::shared_ptr<SmoothTriangle>>();

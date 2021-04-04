@@ -75,7 +75,8 @@ void init_objects(Scene& scene) {
     //add_plane_black_white(scene);
     //add_holed_plane(scene);
 
-    auto p = parse_obj_to_polygon("objs/stars2.obj");
+    auto mat = parse_materials("objs/stars2.mtl");
+    auto p = parse_obj_to_polygon("objs/stars2.obj", mat);
     scene.add_object(std::make_shared<Polygon>(p));
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
