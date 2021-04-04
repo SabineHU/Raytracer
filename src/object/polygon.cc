@@ -21,7 +21,7 @@ Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
         Point3 nc = normals[face.normals.z];
 
         SmoothTriangle triangle(a, b, c, na, nb, nc);
-        triangle.set_texture(Color(0.5, 0, 0));
+        triangle.set_texture(face.material.kd / 2);
         triangles.push_back(std::make_shared<SmoothTriangle>(triangle));
     }
 }
