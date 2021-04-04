@@ -4,9 +4,10 @@
 
 enum PerlinNoiseType {
     CLOUD,
-    NOISE,
-    TURBULENCE,
     MARBLE,
+    NOISE,
+    RAINBOW,
+    TURBULENCE,
     WOOD
 };
 
@@ -19,7 +20,9 @@ public:
     Noise(PerlinNoiseType type);
     Noise(PerlinNoiseType type, double s);
     double compute(const Point3& p, int depth=7) const;
+    double compute(double x, double y, double z) const;
 
+    /* Getters */
     PerlinNoiseType get_type() const { return type; }
 
 private:

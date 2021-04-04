@@ -110,6 +110,11 @@ void init_objects(Scene& scene) {
 
     //add_transparent_sphere(scene);
 
+    auto perlin = std::make_shared<PerlinNoise>(2, RAINBOW, r_random::random_color(), r_random::random_color());
+    auto p1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
+    p1->set_texture(perlin);
+    scene.add_object(p1);
+
     //add_sphere_noise(scene);
     //add_sphere_turb(scene);
     //add_sphere_marble(scene);

@@ -79,6 +79,10 @@ double Noise::compute(const Point3& p, int depth) const {
     }
 }
 
+double Noise::compute(double x, double y, double z) const {
+    return 0.5 + this->noise(Point3(x, y, z) * scale) * 0.5;
+}
+
 double Noise::noise(const Point3& point) const {
     int x = std::floor(point.x);
     int y = std::floor(point.y);

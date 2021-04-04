@@ -28,6 +28,12 @@ PerlinNoise::PerlinNoise(double s, PerlinNoiseType t,
 {}
 
 Color PerlinNoise::get_color(const Point3& p, double, double) const {
+    if (this->noise.get_type() == RAINBOW) {
+        auto x = this->noise.compute(p.x, p.y, 0) * 0.85 + 0.15;
+        auto y = this->noise.compute(p.x, p.y, 1) * 0.85 + 0.15;
+        auto z = this->noise.compute(p.x, p.y, 2) * 0.85 + 0.15;
+        return Color(x, y, z);
+    }
     double t = this->noise.compute(p);
     if (this->noise.get_type() == CLOUD) {
         double dist = p.y + t + 0.2;
