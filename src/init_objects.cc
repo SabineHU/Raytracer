@@ -59,10 +59,15 @@ void add_plane_black_white(Scene& scene) {
 }
 
 void add_holed_plane(Scene& scene) {
-    auto board_black_white = std::make_shared<CheckerBoard>(black, white);
-    auto plane = std::make_shared<PlaneHoled>(Point3(0, 1, 0), -1);
-    plane->set_texture(board_black_white);
+    auto perlin = std::make_shared<PerlinNoise>(2, RAINBOW, r_random::random_color(), r_random::random_color());
+    auto plane = std::make_shared<PlaneHoled>(Point3(0, 1, 0), -1, 3, 3);
+    plane->set_texture(perlin);
     scene.add_object(plane);
+
+    auto board_black_white = std::make_shared<CheckerBoard>(Color(.2, .2, .2), white);
+    auto plane2 = std::make_shared<Plane>(Point3(0, 1.01, 0), -1);
+    plane2->set_texture(board_black_white);
+    scene.add_object(plane2);
 }
 
 void add_ice_cream(Scene& scene) {
