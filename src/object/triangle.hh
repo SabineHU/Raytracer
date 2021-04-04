@@ -13,8 +13,6 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
-    void set_barycenter(const Point3& p) { barycenter = p; }
-
 protected:
     Vect get_normal() const;
     double get_distance() const;
@@ -24,6 +22,4 @@ public:
     Point3 A;
     Point3 B;
     Point3 C;
-
-    Point3 barycenter;
 };

@@ -52,9 +52,11 @@ bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     if (t <= 0 || t <= t_min || t >= t_max)
         return false;
 
-    this->barycenter = Vect(u, v, 0);
     t_max = t;
+
     info.point = ray.origin + ray.direction * t_max;
+    info.u = u;
+    info.v = v;
     return true;
 }
 

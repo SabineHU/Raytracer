@@ -14,8 +14,6 @@ Vect SmoothTriangle::get_normal_at(const Point3& point, double u, double v) cons
     if (normalA.is_zero() && normalB.is_zero() && normalC.is_zero())
         return Triangle::get_normal_at(point, u, v);
 
-    auto normal = normalA * (1 - barycenter.x - barycenter.y)
-        + normalB * barycenter.x
-        + normalC * barycenter.y;
+    auto normal = normalA * (1 - u - v) + normalB * u + normalC * v;
     return (normal + Object::get_bump_at(point)).normalize();
 }
