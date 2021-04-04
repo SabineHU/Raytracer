@@ -6,6 +6,7 @@ class Triangle : public Object {
 public:
     Triangle();
     Triangle(const Point3&, const Point3&, const Point3&);
+    Triangle(const Point3&, const Point3&, const Point3&, const Vect&);
 
     /* Methods */
     virtual Vect get_normal_at(const Point3& point, double u, double v) const override;
@@ -22,4 +23,6 @@ public:
     Point3 A;
     Point3 B;
     Point3 C;
+
+    Vect normal;
 };

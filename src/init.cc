@@ -39,7 +39,6 @@
 #include "init_objects.hh"
 
 #include "vector3_op.hh"
-#include "init_landscape.hh"
 
 #include "polygon.hh"
 #include "loader.hh"
@@ -75,8 +74,8 @@ void init_objects(Scene& scene) {
     //add_plane_black_white(scene);
     //add_holed_plane(scene);
 
-    auto mat = parse_materials("objs/stars2.mtl");
-    auto p = parse_obj_to_polygon("objs/stars2.obj", mat);
+    auto mat = parse_materials("objs/boat.mtl");
+    auto p = parse_obj_to_polygon("objs/boat.obj", mat);
     scene.add_object(std::make_shared<Polygon>(p));
 
     //auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());

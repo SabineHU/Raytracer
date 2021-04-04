@@ -8,15 +8,24 @@ Triangle::Triangle()
     A = Point3(1, 0, 0);
     B = Point3(0, 1, 0);
     C = Point3(0, 0, 1);
+    normal = vector::cross(C - A, B - A);
 }
 
 Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c)
     : Object(), A(a), B(b), C(c)
+{
+    this->normal = vector::cross(C - A, B - A);
+
+    auto t = 2;
+}
+
+Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c, const Vect& n)
+    : Object(), A(a), B(b), C(c), normal(n)
 {}
 
 Vect Triangle::get_normal_at(const Point3& point, double, double) const {
     // Normal is the same at any point of the triangle
-    return (vector::cross(C - A, B - A) + Object::get_bump_at(point)).normalize();
+    return ( normal + Object::get_bump_at(point)).normalize();
 }
 
 Vect Triangle::get_normal() const {

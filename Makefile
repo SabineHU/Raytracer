@@ -17,7 +17,6 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
 SRC= src/main.cc \
      src/init.cc \
      src/init_objects.cc \
-     src/init_landscape.cc \
      src/init_scene/scene2.cc \
      src/init_scene/scene3.cc \
      \
