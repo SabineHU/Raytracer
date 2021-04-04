@@ -10,6 +10,7 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/image \
          -I./src/texture \
          -I./src/blob \
+         -I./src/noise \
          -I./src/raytracer
 
 SRC= src/main.cc \
@@ -55,8 +56,9 @@ SRC= src/main.cc \
      src/texture/lambertian.cc \
      src/texture/metal.cc \
      src/texture/strip.cc \
-     src/texture/noise.cc \
      src/texture/perlin_noise.cc \
+     \
+     src/noise/noise.cc \
      \
      src/utils/vector3.cc
 
