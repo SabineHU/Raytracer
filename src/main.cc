@@ -11,6 +11,7 @@
 #include "scene2.hh"
 #include "scene3.hh"
 #include "scene4.hh"
+#include "scene5.hh"
 
 int main() {
     std::srand(std::time(nullptr));
@@ -35,7 +36,8 @@ int main() {
     //Scene scene = init_scene1();
     //Scene scene = init_scene2();
     //Scene scene = init_scene3();
-    Scene scene = init_scene4();
+    //Scene scene = init_scene4();
+    Scene scene = init_scene5();
     render(img, scene, accuracy, samples, depth);
 
     img.save();

@@ -78,13 +78,18 @@ void init_objects(Scene& scene) {
     //auto p = parse_obj_to_polygon("objs/boat.obj", mat);
     //scene.add_object(std::make_shared<Polygon>(p));
 
-    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
-    auto obj1 = std::make_shared<Sphere>(Point3(0, .5, -4), .5);
-    obj1->set_texture(lambertian_random);
-    obj1->add_bump_mapping(Noise(WOOD, 10));
-    scene.add_object(obj1);
+    auto strip = std::make_shared<Strip>(r_random::random_color(), r_random::random_color(), true, 25);
+    auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    sphere1->set_texture(strip);
+    sphere1->set_specular(25);
+    scene.add_object(sphere1);
 
-    add_ice_cream(scene);
+    auto metal = std::make_shared<Metal>(r_random::random_color());
+    auto sphere = std::make_shared<Sphere>(Point3(2, 0, 0), 1);
+    sphere->set_texture(metal);
+    scene.add_object(sphere);
+
+    //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
     //add_CSG_fig_2(scene);
 

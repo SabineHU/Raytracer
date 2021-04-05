@@ -37,7 +37,7 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
     t_max = x;
     info.point = ray.origin + ray.direction * t_max;
 
-    info.u = 0.5 + atan2(info.point.z, info.point.x) / (2 * math::pi);
+    info.u = 0.5 + atan2(info.point.z - center.z, info.point.x - center.x) / (2 * math::pi);
     info.v = 0.5 - asin(info.point.y) / math::pi;
 
     info.normal = this->get_normal_at(info.point, info.u, info.v);

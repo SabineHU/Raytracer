@@ -3,7 +3,10 @@
 #include "point_light.hh"
 #include "color.hh"
 
+#include "CSG.hh"
 #include "plane.hh"
+#include "cube.hh"
+#include "cylinder.hh"
 #include "rectangle_xy.hh"
 #include "rectangle_xz.hh"
 #include "rectangle_yz.hh"
@@ -14,7 +17,9 @@
 #include "random.hh"
 
 static Camera init_camera() {
-    Vect look_from(0, 2, -8);
+    Vect look_from(0, 10, -.000001);
+    //Vect look_from(0, 0, -10);
+    //Vect look_from(0, 2, -6);
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
     return Camera(look_from, look_at, vup);
@@ -111,7 +116,7 @@ Scene init_scene3() {
 
     add_plane(scene);
 
-    add_table(scene, Point3(0, 0, -1.5), 5, 4);
+    add_table(scene, Point3(0, 0, 0), 5, 4);
 
     return scene;
 }
