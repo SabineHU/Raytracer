@@ -6,7 +6,7 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/light \
          -I./src/object \
          -I./src/scene \
-         -I./src/init_scene \
+         -I./src/init \
          -I./src/image \
          -I./src/texture \
          -I./src/blob \
@@ -15,11 +15,11 @@ CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 \
          -I./src/raytracer
 
 SRC= src/main.cc \
-     src/init_scene/init.cc \
-     src/init_scene/init_objects.cc \
-     src/init_scene/scene1.cc \
-     src/init_scene/scene2.cc \
-     src/init_scene/scene3.cc \
+     src/init/init.cc \
+     src/init/init_objects.cc \
+     src/init/scene1.cc \
+     src/init/scene2.cc \
+     src/init/scene3.cc \
      \
      src/blob/blob.cc \
      \
