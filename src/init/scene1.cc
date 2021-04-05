@@ -4,7 +4,7 @@
 #include "plane.hh"
 #include "perlin_noise.hh"
 
-#include "random_color.hh"
+#include "random.hh"
 #include "color.hh"
 
 #include "polygon.hh"

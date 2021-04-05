@@ -4,7 +4,6 @@
 #include "blob.hh"
 #include "blob_tools.hh"
 
-#include "random_color.hh"
 #include "hash.hh"
 #include "vector3_op.hh"
 

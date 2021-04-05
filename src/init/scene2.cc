@@ -4,7 +4,7 @@
 #include "sphere.hh"
 #include "metal.hh"
 
-#include "random_color.hh"
+#include "random.hh"
 #include "color.hh"
 
 static Camera init_camera() {

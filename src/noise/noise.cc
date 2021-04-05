@@ -1,5 +1,5 @@
 #include "noise.hh"
-#include "random_color.hh"
+#include "random.hh"
 #include "vector3_op.hh"
 
 Noise::Noise()

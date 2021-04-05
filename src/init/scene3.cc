@@ -11,7 +11,7 @@
 
 #include "checkerboard.hh"
 #include "lambertian.hh"
-#include "random_color.hh"
+#include "random.hh"
 
 static Camera init_camera() {
     Vect look_from(0, 2, -8);

@@ -31,7 +31,7 @@
 #include "blob.hh"
 
 #include "math.hh"
-#include "random_color.hh"
+#include "random.hh"
 #include "color.hh"
 
 #include "noise.hh"
