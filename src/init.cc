@@ -62,7 +62,7 @@ Camera init_camera() {
 }
 
 void init_lights(Scene& scene) {
-    scene.add_light(std::make_shared<PointLight>(Point3(0, 0, -10), light_blue, 1.5));
+    scene.add_light(std::make_shared<PointLight>(Point3(0, 2, -10), light_blue, 1.5));
     scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -10), white, 1.75));
 }
 
@@ -70,7 +70,7 @@ void init_objects(Scene& scene) {
     //add_ground_plane(scene);
     //add_water_plane(scene);
     //add_water_plane2(scene);
-    //add_water_plane_reflection(scene);
+    add_water_plane_reflection(scene);
     //add_plane_black_white(scene);
     //add_holed_plane(scene);
 

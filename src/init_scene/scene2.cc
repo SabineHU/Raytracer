@@ -3,8 +3,8 @@
 #include "point_light.hh"
 #include "sphere.hh"
 #include "metal.hh"
-#include "random_color.hh"
 
+#include "random_color.hh"
 #include "color.hh"
 
 static Camera init_camera() {
@@ -88,9 +88,9 @@ Scene init_scene2() {
 
     Scene scene(cam, Color(0.5, 0.5, 0.5));
     scene.set_background_colors(Color(0.03, 0.08, 0.25), Color(0.03, 0.05, 0.14));
-
     init_lights(scene);
 
     add_spheres(scene);
+
     return scene;
 }
