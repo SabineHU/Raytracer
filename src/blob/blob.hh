@@ -7,8 +7,8 @@
 
 struct BlobCube {
     Point3 points[8] = { Point3() };
-
     Color colors[8] = { Color() };
+    double iso[8] = { 0 };
 };
 
 class Blob {
@@ -22,18 +22,17 @@ public:
 
     /* Methods */
     void compute();
-    void compute_cube(const Point3 p[8], const Color colors[8]);
+    void compute_cube(const BlobCube&);
     std::vector<SmoothTriangle> get_triangles() const;
 
 private:
     void init_cube(BlobCube& blob, int n, double i, double j, double k);
     void init_cubes(const Point3& orig, double e, double d);
 
+    void compute_vertices_properties(int, Point3*, Color*, const BlobCube&);
     void add_triangle(const SmoothTriangle&);
-    int get_potentiel_index(const Point3* p) const;
-    Point3 interpolate_vertex(const Point3& p1, const Point3& p2);
-
-    Color get_iso_and_color_at(const Point3& p) const;
+    int get_potentiel_index(const double* iso) const;
+    Point3 interpolate_vertex(const Point3&, const Point3&, double, double);
 
     /* Attributes */
     double potentiel;

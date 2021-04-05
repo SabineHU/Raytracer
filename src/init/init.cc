@@ -163,7 +163,7 @@ void init_blob(Scene& scene) {
     blob_objects.push_back(green_sphere);
     blob_objects.push_back(blue_sphere);
 
-    Blob blob(Point3(0, 0, 0), 11, .5, 75, blob_objects, true);
+    Blob blob(Point3(0, 0, 0), 11, 1, 75, blob_objects, true);
     blob.compute();
 
     /* Add triangles to scene */

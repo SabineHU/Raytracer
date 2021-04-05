@@ -2,18 +2,6 @@
 
 #include "vector3.hh"
 
-Vect::Vect()
-    : x(0), y(0), z(0), iso(0)
-{}
-
-Vect::Vect(double a, double b, double c)
-    : x(a), y(b), z(c), iso(0)
-{}
-
-Vect::Vect(double a, double b, double c, double d)
-    : x(a), y(b), z(c), iso(d)
-{}
-
 double Vect::square_length() const {
     return x * x + y * y + z * z;
 }
@@ -134,8 +122,7 @@ bool Vect::operator!=(const Vect& u) const {
 }
 
 static double clamp_value(double value) {
-    if (value < 0)
-        return 0;
+    if (value < 0) return 0;
     return value > 1 ? 1 : value;
 }
 

@@ -12,9 +12,8 @@ public:
 
 class Vect {
 public:
-    Vect();
-    Vect(double, double, double);
-    Vect(double, double, double, double);
+    Vect() : x(0), y(0), z(0) {}
+    Vect(double u, double v, double w) : x(u), y(v), z(w) {}
 
     double square_length() const;
     double magnitude() const;
@@ -56,8 +55,6 @@ public:
 
     /* Attributes */
     double x, y, z;
-    double iso;
-
 };
 
 using Point3 = Vect;
