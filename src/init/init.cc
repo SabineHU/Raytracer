@@ -84,24 +84,6 @@ void init_objects(Scene& scene) {
     obj1->add_bump_mapping(Noise(WOOD, 10));
     scene.add_object(obj1);
 
-    //std::vector<shared_object> triangles;
-    //triangles.push_back(std::make_shared<Triangle>(Point3(0.95106, 0.30902, 0), Point3(0.30898, 0.42527, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(0.30898, 0.42527, 0), Point3(0, 1, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(0, 1, 0), Point3(-0.30898, 0.42527, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.30989, 0.42527, 0), Point3(-0.95106, 0.30902, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.95106, 0.30902, 0), Point3(-0.49993, -0.16244, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.49993, -0.16244, 0), Point3(-0.58779, -0.80902, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(-0.58779, -0.80902, 0), Point3(0, -0.52566, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(0, -0.52566, 0), Point3(0.58779, -0.80902, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(0.58779, -0.80902, 0), Point3(0.49993, -0.16244, 0), Point3(0, 0, 0)));
-    //triangles.push_back(std::make_shared<Triangle>(Point3(0.49993, -0.16244, 0), Point3(0.95106, 0.30902, 0), Point3(0, 0, 0)));
-
-    //for (auto t : triangles) {
-    //    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
-    //    t->set_texture(lambertian_random);
-    //    scene.add_object(t);
-    //}
-
     add_ice_cream(scene);
     //add_CSG_fig_1(scene);
     //add_CSG_fig_2(scene);
