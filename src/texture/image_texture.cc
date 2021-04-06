@@ -31,9 +31,14 @@ void ImageTexture::parse_file(const char* filename) {
     getline(file, line); // max value
 
     for (std::string line; getline(file, line);) {
-        if (line[0] == '#')
-            continue;
-        this->pixels.push_back(std::stod(line));
+        if (line[0] == '#') continue;
+        this->red.push_back(std::stoi(line));
+
+        getline(file, line);
+        this->green.push_back(std::stoi(line));
+
+        getline(file, line);
+        this->blue.push_back(std::stoi(line));
     }
 
     file.close();
@@ -52,9 +57,9 @@ Color ImageTexture::get_color(const Point3&, double u, double v) const {
 
     int index = math::round_multiple(y * width + x, 3);
 
-    double r = this->pixels[3 * index] / 255.0;
-    double g = this->pixels[3 * index + 1] / 255.0;
-    double b = this->pixels[3 * index + 2] / 255.0;
+    double r = this->red[index] / 255.0;
+    double g = this->green[index] / 255.0;
+    double b = this->blue[index] / 255.0;
 
     return Color(r, g, b);
 

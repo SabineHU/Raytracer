@@ -75,6 +75,7 @@ void init_objects(Scene& scene) {
     //add_holed_plane(scene);
 
     auto image_carte_texture = std::make_shared<ImageTexture>("textures/disp_sheep.ppm");
+    image_carte_texture->reverse_image();
 
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
     plane->set_width(8);

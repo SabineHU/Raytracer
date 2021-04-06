@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 #include "texture_material.hh"
 
@@ -11,6 +12,12 @@ public:
 
     virtual Color get_color(const Point3&, double, double) const override;
 
+    void reverse_image() {
+        std::reverse(red.begin(), red.end());
+        std::reverse(green.begin(), green.end());
+        std::reverse(blue.begin(), blue.end());
+    }
+
 private:
     void parse_file(const char* filename);
 
@@ -20,7 +27,7 @@ private:
 
     std::vector<double> pixels;
 
-    std::vector<double> red;
-    std::vector<double> green;
-    std::vector<double> blue;
+    std::vector<int> red;
+    std::vector<int> green;
+    std::vector<int> blue;
 };
