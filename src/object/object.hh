@@ -40,6 +40,7 @@ public:
         info.kd = this->texture->kd;
         info.ks = this->texture->ks;
         info.kt = this->texture->kt;
+        info.ior = this->ior;
     }
 
     virtual Vect get_displacement_at(const Point3& point, double u, double v) const {
@@ -96,6 +97,7 @@ public:
     void set_displacement_image(shared_texture d) {
         displacement = std::make_pair(d, Noise(NOISE, 10));
     }
+    void set_ior(double i) { ior = i; }
 
     /* Getters */
     virtual shared_texture get_texture() const { return texture; }
@@ -111,6 +113,7 @@ protected:
 
     int depth;
     double e = 0.01;
+    double ior = 1;
 };
 
 using shared_object = std::shared_ptr<Object>;

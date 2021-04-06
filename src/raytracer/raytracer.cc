@@ -137,9 +137,9 @@ Color compute_refraction_reflection(const Scene& scene, const IntersectionInfo& 
     Color refract, reflect;
     bool outside = vector::dot(info.ray_out.direction, info.normal) < 0;
 
-    double kr = fresnel(info.ray_out.direction, info.normal);
+    double kr = fresnel(info.ray_out.direction, info.normal, info.ior);
     if (kr < 1) {
-        Vect refract_dir = info.ray_out.get_refraction_dir(info.normal);
+        Vect refract_dir = info.ray_out.get_refraction_dir(info.normal, info.ior);
         Vect refract_orig = outside ? info.point - info.normal : info.point + info.normal;
 
         IntersectionInfo refraction_info;

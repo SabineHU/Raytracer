@@ -104,6 +104,7 @@ static void add_transparent_sphere(Scene& scene) {
     auto sphere = std::make_shared<Sphere>(Point3(3, 0, -5), 1);
     sphere->set_texture(metal_random);
     sphere->set_specular(30);
+    sphere->set_ior(1.33);
     scene.add_object(sphere);
 }
 
@@ -115,6 +116,7 @@ static void add_transparent_sphere2(Scene& scene) {
     auto sphere = std::make_shared<Sphere>(Point3(4, 0, -7.25), 1);
     sphere->set_texture(metal_random);
     sphere->set_specular(30);
+    sphere->set_ior(1.33);
     scene.add_object(sphere);
 }
 
@@ -126,6 +128,7 @@ static void add_transparent_sphere3(Scene& scene) {
     auto sphere = std::make_shared<Sphere>(Point3(2.2, -.4, -6.2), .6);
     sphere->set_texture(metal_random);
     sphere->set_specular(30);
+    sphere->set_ior(1.33);
     scene.add_object(sphere);
 }
 

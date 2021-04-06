@@ -29,6 +29,7 @@ public:
     double ks;
     double kt;
     double specular;
+    double ior;
 
     /* Object operators */
     double t_min;
