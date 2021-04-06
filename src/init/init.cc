@@ -55,7 +55,7 @@ Camera init_camera() {
     //Vect look_from(6, 4, -8);
     Vect look_from(0, 2, -8);
     //Vect look_from(2, 2, -10);
-    //Vect look_from(0, 10, -0.0001); // Vu du dessus
+    //Vect look_from(0, 15, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
     return Camera(look_from, look_at, vup);
@@ -70,30 +70,38 @@ void init_objects(Scene& scene) {
     //add_ground_plane(scene);
     //add_water_plane(scene);
     //add_water_plane2(scene);
-    add_water_plane_reflection(scene);
+    //add_water_plane_reflection(scene);
     //add_plane_black_white(scene);
     //add_holed_plane(scene);
+
+    auto image_carte_texture = std::make_shared<ImageTexture>("textures/disp_sheep.ppm");
+
+    auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    plane->set_width(8);
+    plane->set_height(6);
+    plane->set_texture(image_carte_texture);
+    scene.add_object(plane);
 
     //auto mat = parse_materials("objs/boat.mtl");
     //auto p = parse_obj_to_polygon("objs/boat.obj", mat);
     //scene.add_object(std::make_shared<Polygon>(p));
 
-    auto strip = std::make_shared<Strip>(r_random::random_color(), r_random::random_color(), true, 25);
-    auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
-    sphere1->set_texture(strip);
-    sphere1->set_specular(25);
-    scene.add_object(sphere1);
+    //auto strip = std::make_shared<Strip>(r_random::random_color(), r_random::random_color(), true, 25);
+    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
+    //sphere1->set_texture(strip);
+    //sphere1->set_specular(25);
+    //scene.add_object(sphere1);
 
-    auto metal = std::make_shared<Metal>(r_random::random_color());
-    auto sphere = std::make_shared<Sphere>(Point3(2, 0, 0), 1);
-    sphere->set_texture(metal);
-    scene.add_object(sphere);
+    //auto metal = std::make_shared<Metal>(r_random::random_color());
+    //auto sphere = std::make_shared<Sphere>(Point3(2, 0, 0), 1);
+    //sphere->set_texture(metal);
+    //scene.add_object(sphere);
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
     //add_CSG_fig_2(scene);
 
-    //add_sphere_map(scene);
+    add_sphere_map(scene);
     //add_flower_cube(scene);
     //add_sheep_cube(scene);
 

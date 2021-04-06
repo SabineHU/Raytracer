@@ -40,14 +40,9 @@ void ImageTexture::parse_file(const char* filename) {
 }
 
 Color ImageTexture::get_color(const Point3&, double u, double v) const {
-//     # flip v over so it matches the image layout, with y at the top
-//  let v ← 1 - v
-//
-//  let x ← u * (uv_image.canvas.width - 1)
-//  let y ← v * (uv_image.canvas.height - 1)
-//
-//  # be sure and round x and y to the nearest whole number
-//  return pixel_at(uv_image.canvas, round(x), round(y))
+    if (u < 0) u = std::fmod(u, width - 1) + width - 1;
+    if (v < 0) v = std::fmod(v, height - 1) + height - 1;
+
     int x = std::round(u * (width - 1));
     int y = std::round(v * (height - 1));
     if (x < 0) x = 0;

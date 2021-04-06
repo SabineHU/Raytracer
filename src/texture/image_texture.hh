@@ -19,4 +19,8 @@ private:
     int height;
 
     std::vector<double> pixels;
+
+    std::vector<double> red;
+    std::vector<double> green;
+    std::vector<double> blue;
 };

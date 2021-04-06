@@ -14,8 +14,14 @@ public:
 
     virtual int get_isolevel_at(const Point3&) const override;
 
+    void set_height(double h) { height = h; }
+    void set_width(double w) { width = w; }
+
 protected:
     /* Attributes */
     Vect normal;
     double distance;
+
+    double height;
+    double width;
 };
