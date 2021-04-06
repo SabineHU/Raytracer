@@ -33,6 +33,9 @@ double Vect::dot_z() const {
 bool Vect::is_zero() const {
     return x == 0 && y == 0 && z == 0;
 }
+bool Vect::is_full(double k) const {
+    return x == k && y == k && z == k;
+}
 
 double Vect::sum() const {
     return x + y + z;
@@ -119,6 +122,12 @@ bool Vect::operator==(const Vect& u) const {
 }
 bool Vect::operator!=(const Vect& u) const {
     return !(*this == u);
+}
+bool Vect::operator>(const Vect& u) const {
+    return this->x > u.x && this->y > u.y && this->z > u.z;
+}
+bool Vect::operator<(const Vect& u) const {
+    return this->x < u.x && this->y < u.y && this->z < u.z;
 }
 
 static double clamp_value(double value) {

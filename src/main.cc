@@ -38,6 +38,8 @@ int main() {
     //Scene scene = init_scene3();
     //Scene scene = init_scene4();
     //Scene scene = init_scene5();
+
+    scene.set_fog_properties(50, 3);
     render(img, scene, accuracy, samples, depth);
 
     img.save();

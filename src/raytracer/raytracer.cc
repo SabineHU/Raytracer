@@ -40,14 +40,12 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
 
     } else if (info.texture->type & REFLECTION) {
         IntersectionInfo reflection_info;
-        // TODO, normal is modified because of bump mapping
-        // Need to have 2 normals ?
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
             final_color += get_color(scene, reflection_info, accuracy, depth - 1);
     }
 
-    return final_color;
+    return scene.get_fog_color(final_color, info.dist);
 }
 
 void render(image::Image& img, const Scene& scene, double accuracy, int samples, int depth) {

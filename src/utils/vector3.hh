@@ -27,6 +27,7 @@ public:
 
     double sum() const;
     bool is_zero() const;
+    bool is_full(double) const;
 
     Vect operator+(const Vect& u) const;
     Vect operator-(const Vect& u) const;
@@ -50,6 +51,8 @@ public:
 
     bool operator==(const Vect& u) const;
     bool operator!=(const Vect& u) const;
+    bool operator>(const Vect& u) const;
+    bool operator<(const Vect& u) const;
 
     Vect clamp() const;
 

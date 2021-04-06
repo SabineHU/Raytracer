@@ -7,23 +7,8 @@ class IntersectionInfo {
 public:
     IntersectionInfo() = default;
 
-    IntersectionInfo(const Ray& in) {
-        point = Point3();
-        ray_in = in;
-        ray_out = Ray();
-        normal = Vect();
-        color = Color();
-        texture = nullptr;
-        barycenter = Point3();
-        ka = 1;
-        kd = 1;
-        ks = 1;
-        u = 0;
-        v = 0;
-        specular = 0;
-    }
-
-    /* Intersection point */
+    /* Intersection point and distance */
+    double dist;
     Point3 point;
 
     /* Rays */
@@ -34,9 +19,6 @@ public:
     Vect normal;
     Color color;
     shared_texture texture;
-
-    /* Triangle */
-    Point3 barycenter;
 
     /* Textures coordinates */
     double u, v;

@@ -22,6 +22,7 @@ public:
 
     bool has_intersection(const Ray&, IntersectionInfo&, double) const;
     bool has_shadow(const Ray&, double, double) const;
+    Color get_fog_color(const Color&, double) const;
 
     /* Getters */
     std::vector<shared_light> get_lights() const { return lights; }
@@ -33,6 +34,7 @@ public:
         background_color1 = c1;
         background_color2 = c2;
     }
+    void set_fog_properties(double d, int type=1) { fog = std::make_pair(d, type); }
 
 public:
     /* Attributes */
@@ -43,4 +45,6 @@ public:
 
     Color background_color1;
     Color background_color2;
+
+    std::optional<std::pair<double, int>> fog;
 };

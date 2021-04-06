@@ -44,6 +44,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
 
     if (closest_obj == nullptr) return false;
 
+    info.dist = distance;
     info.ray_in = ray;
     info.ray_out = Ray(info.point, ray.direction);
 
@@ -60,6 +61,26 @@ bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
 }
 
 Color Scene::get_background_color(const Ray& ray) const {
-    auto s = 0.5 * (ray.direction.y + 1.0);
-    return background_color1 * (1 - s) + background_color2 * s;
+    if (!this->fog.has_value()) {
+        double s = 0.5 * (ray.direction.y + 1.0);
+        return background_color1 * (1 - s) + background_color2 * s;
+    }
+    return Color(1, 1, 1);
 }
+
+Color Scene::get_fog_color(const Color& color, double dist) const {
+    if (!this->fog.has_value()) return color;
+
+    double ratio = dist / this->fog.value().first;
+    switch (this->fog.value().second) {
+    case 1: // linear
+        return Color(1, 1, 1) * ratio + color * (1 - ratio);
+    case 2: // exp
+        ratio = exp(-ratio);
+        return Color(1, 1, 1) * (1 - ratio) + color * ratio;
+    default: // square exp
+        ratio = exp(-ratio * ratio);
+        return Color(1, 1, 1) * (1 - ratio) + color * ratio;
+    }
+}
+

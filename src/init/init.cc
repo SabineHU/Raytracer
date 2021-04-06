@@ -53,9 +53,9 @@ image::Image init_image(double angle, double zmin) {
 Camera init_camera() {
     /* Camera */
     //Vect look_from(6, 4, -8);
-    //Vect look_from(0, 2, -8);
+    Vect look_from(0, 2, -8);
     //Vect look_from(2, 2, -10);
-    Vect look_from(0, 15, -0.0001); // Vu du dessus
+    //Vect look_from(0, 15, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
     return Camera(look_from, look_at, vup);
@@ -71,7 +71,7 @@ void init_objects(Scene& scene) {
     //add_water_plane(scene);
     //add_water_plane2(scene);
     //add_water_plane_reflection(scene);
-    //add_plane_black_white(scene);
+    add_plane_black_white(scene);
     //add_holed_plane(scene);
 
     // DISPLACEMENT MAP
