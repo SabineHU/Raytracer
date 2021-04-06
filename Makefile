@@ -22,6 +22,7 @@ SRC= src/main.cc \
      src/init/scene3.cc \
      src/init/scene4.cc \
      src/init/scene5.cc \
+     src/init/scene6.cc \
      \
      src/blob/blob.cc \
      \
