@@ -4,6 +4,8 @@
 #include <optional>
 #include <map>
 
+#include <iostream>
+
 #include "ray.hh"
 #include "vector3.hh"
 #include "intersection.hh"
@@ -14,10 +16,10 @@
 class Object {
 public:
     Object() : texture(std::make_shared<Lambertian>(Color(.5, .5, .5))),
-        specular(0), depth(5) {}
+        displacement(std::nullopt), specular(0), depth(5) {}
 
-    Object(shared_texture t) : texture(t), specular(0), depth(5) {}
-    Object(shared_texture t, double s) : texture(t), specular(s), depth(5) {}
+    Object(shared_texture t) : texture(t), displacement(std::nullopt), specular(0), depth(5) {}
+    Object(shared_texture t, double s) : texture(t), displacement(std::nullopt), specular(s), depth(5) {}
 
     /* Methods */
     virtual Vect get_normal_at(const Point3& point, double u, double v) const = 0;
@@ -38,6 +40,25 @@ public:
         info.kd = this->texture->kd;
         info.ks = this->texture->ks;
         info.kt = this->texture->kt;
+    }
+
+    virtual Vect get_displacement_at(const Point3& point, double u, double v) const {
+        if (!this->displacement.has_value()) return Vect();
+
+        auto color = this->displacement.value().first->get_color(point, u, v);
+        auto noise = this->displacement.value().second;
+
+        auto x0 = Vect(point.x - e, point.y, point.z);
+        auto x1 = Vect(point.x + e, point.y, point.z);
+        auto y0 = Vect(point.x, point.y - e, point.z);
+        auto y1 = Vect(point.x, point.y + e, point.z);
+        auto z0 = Vect(point.x, point.y, point.z - e);
+        auto z1 = Vect(point.x, point.y, point.z + e);
+
+        auto x = (noise.compute(x0, depth) - noise.compute(x1, depth)) * color.x;
+        auto y = (noise.compute(y0, depth) - noise.compute(y1, depth)) * color.y;
+        auto z = (noise.compute(z0, depth) - noise.compute(z1, depth)) * color.z;
+        return Vect(x, y, z);
     }
 
     // TODO, set it as virtual -> CSG
@@ -72,6 +93,9 @@ public:
     void set_texture(shared_texture t) { texture = t; }
     void set_texture(const Color& c) { texture = std::make_shared<Lambertian>(c); }
     void set_depth(int d) { depth = d; }
+    void set_displacement_image(shared_texture d) {
+        displacement = std::make_pair(d, Noise(NOISE, 10));
+    }
 
     /* Getters */
     virtual shared_texture get_texture() const { return texture; }
@@ -81,6 +105,8 @@ protected:
     /* Attributes */
     shared_texture texture;
     std::map<Noise, double> bumps;
+    std::optional<std::pair<shared_texture, Noise>> displacement;
+
     double specular;
 
     int depth;

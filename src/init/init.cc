@@ -53,9 +53,9 @@ image::Image init_image(double angle, double zmin) {
 Camera init_camera() {
     /* Camera */
     //Vect look_from(6, 4, -8);
-    Vect look_from(0, 2, -8);
+    //Vect look_from(0, 2, -8);
     //Vect look_from(2, 2, -10);
-    //Vect look_from(0, 15, -0.0001); // Vu du dessus
+    Vect look_from(0, 15, -0.0001); // Vu du dessus
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
     return Camera(look_from, look_at, vup);
@@ -74,14 +74,17 @@ void init_objects(Scene& scene) {
     //add_plane_black_white(scene);
     //add_holed_plane(scene);
 
-    auto image_carte_texture = std::make_shared<ImageTexture>("textures/disp_sheep.ppm");
-    image_carte_texture->reverse_image();
-
-    auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
-    plane->set_width(8);
-    plane->set_height(6);
-    plane->set_texture(image_carte_texture);
-    scene.add_object(plane);
+    // DISPLACEMENT MAP
+    //auto image_carte_texture = std::make_shared<ImageTexture>("textures/disp_sheep.ppm");
+    //image_carte_texture->reverse_image();
+    //auto lambertian_ground = std::make_shared<Lambertian>(Color(0.41, 0.25, 0.20), 0.5);
+    //auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    //plane->set_width(8);
+    //plane->set_height(6);
+    //plane->set_texture(lambertian_ground);
+    //plane->set_displacement_image(image_carte_texture);
+    //plane->add_bump_mapping(Noise(TURBULENCE, 15));
+    //scene.add_object(plane);
 
     //auto mat = parse_materials("objs/boat.mtl");
     //auto p = parse_obj_to_polygon("objs/boat.obj", mat);
