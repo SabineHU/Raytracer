@@ -3,7 +3,7 @@
 ING2 - IMAGE
 
 # Features
-* Primitives: capped cone, capsule, cone, cube, cylinder, ellipsoid, plane, sphere, torus
+* Primitives: capped cone, capsule, cone, cube, cylinder, ellipsoid, plane, sphere, torus, holed plane
 * Reflection
 * Refraction
 * CSG: union, intersection, substract, minus
@@ -14,7 +14,8 @@ ING2 - IMAGE
     * Metal
     * Lambertian
     * Image mapping
-    * Perlin noise (noise, turbulence, wood, marble)
+    * Perlin noise (noise, turbulence, wood, marble, rainbow)
 * Bump mapping (noise, turbulence, wood, marble)
 * Lights: point, ambient
 * Supersampling
+* Obj loader

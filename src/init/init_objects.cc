@@ -4,11 +4,8 @@ void add_ground_plane(Scene& scene) {
     auto lambertian_ground = std::make_shared<Lambertian>(Color(0.41, 0.25, 0.20), 0.5);
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
     plane->set_texture(lambertian_ground);
-    //plane->add_bump_mapping(Noise(MARBLE, 10), 10);
-    plane->add_bump_mapping(Noise(TURBULENCE, 15), 10);
-    plane->add_bump_mapping(Noise(TURBULENCE, 10), 2);
-    plane->add_bump_mapping(Noise(MARBLE, 5), 3);
-    plane->add_bump_mapping(Noise(TURBULENCE, 20), 7);
+    plane->add_bump_mapping(Noise(MARBLE, 10), 7);
+    plane->add_bump_mapping(Noise(TURBULENCE, 15), 5);
     scene.add_object(plane);
 }
 
@@ -17,7 +14,6 @@ void add_water_plane(Scene& scene) {
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
     plane->set_texture(metal_water);
     plane->set_specular(20);
-    //plane->add_bump_mapping(Noise(MARBLE, 10), 10);
     plane->add_bump_mapping(Noise(TURBULENCE, 15), 10);
     plane->add_bump_mapping(Noise(TURBULENCE, 10), 2);
     plane->add_bump_mapping(Noise(MARBLE, 5), 3);

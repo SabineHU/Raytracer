@@ -24,6 +24,11 @@ public:
 
     /* Getters */
     PerlinNoiseType get_type() const { return type; }
+    const int* get_permutation() const { return permutation; }
+
+    bool operator<(const Noise& n) const {
+        return this->permutation[0] < n.get_permutation()[0];
+    }
 
 private:
     void init_noise_arrays();

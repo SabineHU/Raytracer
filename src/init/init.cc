@@ -70,9 +70,9 @@ void init_objects(Scene& scene) {
     //add_ground_plane(scene);
     //add_water_plane(scene);
     //add_water_plane2(scene);
-    //add_water_plane_reflection(scene);
+    add_water_plane_reflection(scene);
     //add_plane_black_white(scene);
-    add_holed_plane(scene);
+    //add_holed_plane(scene);
 
     //auto mat = parse_materials("objs/boat.mtl");
     //auto p = parse_obj_to_polygon("objs/boat.obj", mat);

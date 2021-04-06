@@ -33,11 +33,11 @@ int main() {
     //init_objects2(scene);
     //init_blob(scene);
 
-    //Scene scene = init_scene1();
+    Scene scene = init_scene1();
     //Scene scene = init_scene2();
     //Scene scene = init_scene3();
     //Scene scene = init_scene4();
-    Scene scene = init_scene5();
+    //Scene scene = init_scene5();
     render(img, scene, accuracy, samples, depth);
 
     img.save();
