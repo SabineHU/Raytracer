@@ -29,6 +29,7 @@ public:
     double ks;
     double kt;
     double specular;
+    double attenuation;
     double ior;
 
     /* Object operators */

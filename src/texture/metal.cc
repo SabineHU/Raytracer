@@ -12,6 +12,13 @@ Metal::Metal(const Color& c, double ks)
     set_reflection_type();
 }
 
+Metal::Metal(const Color& c, double ks, double a)
+    : TextureMaterial(1, ks), color(c)
+{
+    this->attenuation = a;
+    set_reflection_type();
+}
+
 Color Metal::get_color(const Point3&, double, double) const {
     return color;
 }

@@ -114,9 +114,9 @@ Scene init_scene4() {
 
     add_plane(scene);
 
-    //Blob blob = init_blob();
-    //Blob blob = init_blob2();
-    Blob blob = init_blob3();
+    //Blob blob = init_blob(); // 4 spheres
+    //Blob blob = init_blob2(); // 5 sphers
+    Blob blob = init_blob3(); // 3 spheres
     /* Add triangles to scene */
     for (auto& triangle: blob.get_triangles()) {
         scene.add_object(std::make_shared<SmoothTriangle>(triangle));

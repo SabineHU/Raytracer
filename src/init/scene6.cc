@@ -34,8 +34,8 @@ static void init_lights(Scene& scene) {
 
 static void add_plane(Scene& scene) {
     auto perlin = std::make_shared<PerlinNoise>(2, RAINBOW, r_random::random_color(), r_random::random_color());
-    auto lamb = std::make_shared<Lambertian>(Color(.91, .705, .733));
-    //auto lamb = std::make_shared<Lambertian>(white);
+    //auto lamb = std::make_shared<Lambertian>(Color(.91, .705, .733));
+    auto lamb = std::make_shared<Lambertian>(white);
     auto checkerboard = std::make_shared<CheckerBoard>(lamb, perlin);
     auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
     plane->set_texture(checkerboard);

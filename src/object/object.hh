@@ -40,6 +40,7 @@ public:
         info.kd = this->texture->kd;
         info.ks = this->texture->ks;
         info.kt = this->texture->kt;
+        info.attenuation = this->texture->attenuation;
         info.ior = this->ior;
     }
 

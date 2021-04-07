@@ -37,6 +37,7 @@ public:
 
     /* Attributes */
     double ka, kd, ks, kt;
+    double attenuation = 1;
     int type = DIFFUSE;
 };
 

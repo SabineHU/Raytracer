@@ -42,7 +42,7 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
         IntersectionInfo reflection_info;
         Ray reflection_ray = info.ray_out.get_reflection_ray(info.normal);
         if (scene.has_intersection(reflection_ray, reflection_info, accuracy))
-            final_color += get_color(scene, reflection_info, accuracy, depth - 1);
+            final_color += get_color(scene, reflection_info, accuracy, depth - 1) * info.attenuation;
     }
 
     return scene.get_fog_color(final_color, info.dist);

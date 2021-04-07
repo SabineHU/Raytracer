@@ -12,6 +12,14 @@ inline int random_int(int min, int max) {
     return min + std::rand() % (max - min);
 }
 
+inline double random_double() {
+    return std::rand() / (RAND_MAX + 1.0);
+}
+
+inline double random_double(double min, double max) {
+    return min + random_double() * (max - min);
+}
+
 inline double random_0_1() {
     return (double) std::rand() / RAND_MAX;
 }
@@ -20,12 +28,11 @@ inline Color random_color() {
     return Color(random_0_1(), random_0_1(), random_0_1()) / 2;
 }
 
-inline double random_double() {
-    return std::rand() / (RAND_MAX + 1.0);
-}
-
-inline double random_double(double min, double max) {
-    return min + random_double() * (max - min);
+inline Color random_pastel_color() {
+    double x = random_double(0, .5);
+    double y = random_double(0, .5);
+    double z = random_double(0, .5);
+    return Color(.5 + x, .5 + y, .5 + z);
 }
 
 inline Vect random_vector() {

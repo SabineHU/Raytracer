@@ -7,6 +7,7 @@ public:
     Metal() = default;
     Metal(const Color&);
     Metal(const Color&, double);
+    Metal(const Color&, double, double attenuation);
 
     virtual Color get_color(const Point3&, double, double) const override;
 

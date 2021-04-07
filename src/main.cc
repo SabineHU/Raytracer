@@ -36,9 +36,9 @@ int main() {
 
     //Scene scene = init_scene1();
     //Scene scene = init_scene2();
-    //Scene scene = init_scene3();
+    Scene scene = init_scene3();
     //Scene scene = init_scene4();
-    Scene scene = init_scene5();
+    //Scene scene = init_scene5();
     //Scene scene = init_scene6();
 
     //scene.set_fog_properties(50, 3);
