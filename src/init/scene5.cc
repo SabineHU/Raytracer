@@ -52,7 +52,9 @@ static void add_strip_sphere_spherical(Scene& scene) {
 }
 
 static void add_strip_vertical_sphere_planar(Scene& scene) {
-    auto strip2 = std::make_shared<Strip>(Color(.5, .5, .5), r_random::random_color(), true, 10);
+    auto wood = std::make_shared<PerlinNoise>(2, WOOD, r_random::random_color(), r_random::random_color());
+    auto lamb_white = std::make_shared<Lambertian>(white);
+    auto strip2 = std::make_shared<Strip>(wood, lamb_white, true, 15);
     strip2->set_planar(true);
     auto sphere2 = std::make_shared<Sphere>(Point3(-2, -.6, -4.5), .4);
     sphere2->set_texture(strip2);

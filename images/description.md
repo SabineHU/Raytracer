@@ -117,7 +117,7 @@
 * Sphere:
     * bump mapping: marble
 * Sphere:
-    * texture: horizontal stirp
+    * texture: horizontal strip (white && colored wood)
     * specular
 * Sphere:
     * bump mapping: noise

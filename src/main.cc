@@ -23,13 +23,13 @@ int main() {
 
     image::Image img = init_image(20, 1000);
 
-    Scene scene = init_default_scene();
+    //Scene scene = init_default_scene();
 
     //Scene scene = init_scene1();
     //Scene scene = init_scene2();
     //Scene scene = init_scene3();
     //Scene scene = init_scene4();
-    //Scene scene = init_scene5();
+    Scene scene = init_scene5();
     //Scene scene = init_scene6();
 
     render(img, scene, accuracy, samples, depth);
