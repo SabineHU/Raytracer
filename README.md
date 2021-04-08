@@ -13,7 +13,7 @@ ING2 - IMAGE
     * Metal
     * Lambertian
     * Image mapping
-    * Perlin noise (noise, turbulence, wood, marble, rainbow)
+    * Perlin noise (noise, turbulence, wood, marble, rainbow, cloud)
 * Bump mapping (noise, turbulence, wood, marble)
 * Bump / Displacement mapping on plane using any image
 * Lights: point, ambient

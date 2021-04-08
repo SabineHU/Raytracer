@@ -51,7 +51,6 @@ image::Image init_image(double angle, double zmin) {
 }
 
 Camera init_camera() {
-    /* Camera */
     //Vect look_from(6, 4, -8);
     Vect look_from(0, 2, -8);
     //Vect look_from(2, 2, -10);
@@ -71,35 +70,13 @@ void init_objects(Scene& scene) {
     //add_water_plane(scene);
     //add_water_plane2(scene);
     //add_water_plane_reflection(scene);
-    add_plane_black_white(scene);
+    //add_plane_black_white(scene);
     //add_holed_plane(scene);
-
-    // DISPLACEMENT MAP
-    //auto image_carte_texture = std::make_shared<ImageTexture>("textures/disp_sheep.ppm");
-    //image_carte_texture->reverse_image();
-    //auto lambertian_ground = std::make_shared<Lambertian>(Color(0.41, 0.25, 0.20), 0.5);
-    //auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
-    //plane->set_width(8);
-    //plane->set_height(6);
-    //plane->set_texture(lambertian_ground);
-    //plane->set_displacement_image(image_carte_texture);
-    //plane->add_bump_mapping(Noise(TURBULENCE, 15));
-    //scene.add_object(plane);
+    //add_cloudy_plane(scene);
 
     //auto mat = parse_materials("objs/boat.mtl");
     //auto p = parse_obj_to_polygon("objs/boat.obj", mat);
     //scene.add_object(std::make_shared<Polygon>(p));
-
-    //auto strip = std::make_shared<Strip>(r_random::random_color(), r_random::random_color(), true, 25);
-    //auto sphere1 = std::make_shared<Sphere>(Point3(0, 0, 0), 1);
-    //sphere1->set_texture(strip);
-    //sphere1->set_specular(25);
-    //scene.add_object(sphere1);
-
-    //auto metal = std::make_shared<Metal>(r_random::random_color());
-    //auto sphere = std::make_shared<Sphere>(Point3(2, 0, 0), 1);
-    //sphere->set_texture(metal);
-    //scene.add_object(sphere);
 
     //add_ice_cream(scene);
     //add_CSG_fig_1(scene);
@@ -115,11 +92,6 @@ void init_objects(Scene& scene) {
     //add_sphere_wood_mapping(scene);
 
     //add_transparent_sphere(scene);
-
-    //auto perlin = std::make_shared<PerlinNoise>(2, RAINBOW, r_random::random_color(), r_random::random_color());
-    //auto p1 = std::make_shared<Sphere>(Point3(0, 1, 0), 2);
-    //p1->set_texture(perlin);
-    //scene.add_object(p1);
 
     //add_sphere_noise(scene);
     //add_sphere_turb(scene);
@@ -169,4 +141,20 @@ void init_blob(Scene& scene) {
     for (auto& triangle: blob.get_triangles()) {
         scene.add_object(std::make_shared<SmoothTriangle>(triangle));
     }
+}
+
+Scene init_default_scene() {
+    Camera cam = init_camera();
+    Scene scene(cam, Color(0.5, 0.5, 0.5));
+    init_lights(scene);
+
+    /* TP1 */
+    init_objects(scene);
+
+    /* TP2 */
+    //init_objects2(scene);
+    //init_blob(scene);
+
+    //scene.set_fog_properties(50, 3);
+    return scene;
 }

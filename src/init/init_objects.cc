@@ -66,6 +66,15 @@ void add_holed_plane(Scene& scene) {
     scene.add_object(plane2);
 }
 
+void add_cloudy_plane(Scene& scene) {
+    auto perlin = std::make_shared<PerlinNoise>(2, CLOUD, r_random::random_color(), r_random::random_color());
+    //auto perlin = std::make_shared<PerlinNoise>(2, NOISE, blue3, white);
+    auto p1= std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    p1->set_texture(perlin);
+    p1->set_specular(40);
+    scene.add_object(p1);
+}
+
 void add_ice_cream(Scene& scene) {
     auto lambertian_orange = std::make_shared<Lambertian>(orange, 0.5);
     auto lambertian_light_blue = std::make_shared<Lambertian>(light_blue, 0.5);

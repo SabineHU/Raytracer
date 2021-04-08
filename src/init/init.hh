@@ -12,3 +12,5 @@ void init_objects(Scene& scene);
 void init_objects2(Scene& scene);
 
 void init_blob(Scene& scene);
+
+Scene init_default_scene();

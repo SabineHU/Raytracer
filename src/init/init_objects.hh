@@ -43,6 +43,7 @@ void add_water_plane2(Scene& scene);
 void add_water_plane_reflection(Scene& scene);
 void add_plane_black_white(Scene& scene);
 void add_holed_plane(Scene& scene);
+void add_cloudy_plane(Scene& scene);
 
 /* CSG */
 void add_ice_cream(Scene& scene);
