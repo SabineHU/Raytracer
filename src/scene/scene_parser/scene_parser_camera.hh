@@ -4,8 +4,7 @@
 #include "scene_parser_utils.hh"
 #include "camera.hh"
 
-Camera parse_camera(const nlohmann::json& json)
-{
+Camera parse_camera(const nlohmann::json& json) {
     check_missing_field(json, "look_from");
     check_missing_field(json, "look_at");
     check_missing_field(json, "vup");

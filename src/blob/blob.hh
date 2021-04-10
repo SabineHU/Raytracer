@@ -13,10 +13,7 @@ struct BlobCube {
 
 class Blob {
 public:
-    Blob() = default;
-    Blob(std::vector<shared_object>);
-    Blob(double, double, double, std::vector<shared_object>);
-    Blob(const Point3&, double, double, double, std::vector<shared_object>);
+    Blob() = delete;
     Blob(const Point3&, double, double, double, std::vector<shared_object>,
             bool);
 

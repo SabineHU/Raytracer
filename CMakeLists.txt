@@ -40,7 +40,7 @@ set(
     src/raytracer/ray.cc
     src/scene/camera.cc
     src/scene/scene.cc
-    src/scene/scene_parser.cc
+    src/scene/scene_parser/scene_parser.cc
     src/texture/checkerboard.cc
     src/texture/image_texture.cc
     src/texture/lambertian.cc
@@ -59,6 +59,7 @@ include_directories(
     src/light
     src/object
     src/scene
+    src/scene/scene_parser
     src/init
     src/image
     src/texture
@@ -80,7 +81,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Add -Wall -Wextra -pedantic if you want warnings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OPT_FLAGS}")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3 -fsanitize=address")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 

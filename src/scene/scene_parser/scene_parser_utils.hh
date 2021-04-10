@@ -6,24 +6,19 @@
 #include "random.hh"
 #include "color.hh"
 
-static bool has_field(const nlohmann::json& json, const std::string& field)
-{
+static bool has_field(const nlohmann::json& json, const std::string& field) {
     auto it = json.find(field);
-
     return it != json.end();
 }
 
-static void check_missing_field(const nlohmann::json& json, const std::string& field)
-{
-    if (!has_field(json, field))
-    {
+static void check_missing_field(const nlohmann::json& json, const std::string& field) {
+    if (!has_field(json, field)) {
         std::cerr << "Bad scene file: missing \"" << field << "\"!\n";
         exit(1);
     }
 }
 
-Vect parse_vect(const nlohmann::json& json)
-{
+Vect parse_vect(const nlohmann::json& json) {
     if (json == "random") return r_random::random_vector();
 
     check_missing_field(json, "x");
@@ -37,8 +32,7 @@ Vect parse_vect(const nlohmann::json& json)
     return Vect(x, y, z);
 }
 
-Color parse_color(const nlohmann::json& json)
-{
+Color parse_color(const nlohmann::json& json) {
     // TODO: @sebmenozzi refacto, make the colors detection automatic from color.hh...
     if (json == "random") return r_random::random_color();
     if (json == "random_pastel") return r_random::random_pastel_color();
@@ -74,5 +68,5 @@ Color parse_color(const nlohmann::json& json)
     double g = json["g"];
     double b = json["b"];
 
-    return Vect(r, g, b);
+    return Color(r, g, b);
 }

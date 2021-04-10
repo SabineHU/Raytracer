@@ -6,8 +6,7 @@
 #include "scene_parser_utils.hh"
 #include "point_light.hh"
 
-shared_light parse_light(const nlohmann::json& light)
-{
+static shared_light parse_light(const nlohmann::json& light) {
     check_missing_field(light, "position");
     check_missing_field(light, "color");
     check_missing_field(light, "intensity");
@@ -19,8 +18,7 @@ shared_light parse_light(const nlohmann::json& light)
     return std::make_shared<PointLight>(PointLight(position, color, intensity));
 }
 
-std::vector<shared_light> parse_lights(const nlohmann::json& json)
-{
+inline std::vector<shared_light> parse_lights(const nlohmann::json& json) {
     std::vector<shared_light> lights;
 
     for (auto light : json)

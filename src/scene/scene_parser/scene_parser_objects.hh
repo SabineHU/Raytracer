@@ -22,8 +22,9 @@
 #include "scene_parser_utils.hh"
 #include "scene_parser_texture.hh"
 
-shared_object parse_sphere(const nlohmann::json& json)
-{
+inline std::vector<shared_object> parse_objects(const nlohmann::json& json);
+
+static shared_object parse_sphere(const nlohmann::json& json) {
     check_missing_field(json, "center");
     check_missing_field(json, "radius");
 
@@ -33,8 +34,7 @@ shared_object parse_sphere(const nlohmann::json& json)
     return std::make_shared<Sphere>(Sphere(center, radius));
 }
 
-shared_object parse_capped_cone(const nlohmann::json& json)
-{
+static shared_object parse_capped_cone(const nlohmann::json& json) {
     check_missing_field(json, "bottom");
     check_missing_field(json, "top");
     check_missing_field(json, "radius_bottom");
@@ -48,8 +48,7 @@ shared_object parse_capped_cone(const nlohmann::json& json)
     return std::make_shared<CappedCone>(CappedCone(bottom, top, radius_bottom, radius_top));
 }
 
-shared_object parse_capsule(const nlohmann::json& json)
-{
+static shared_object parse_capsule(const nlohmann::json& json) {
     check_missing_field(json, "bottom");
     check_missing_field(json, "top");
     check_missing_field(json, "radius");
@@ -61,8 +60,7 @@ shared_object parse_capsule(const nlohmann::json& json)
     return std::make_shared<Capsule>(Capsule(bottom, top, radius));
 }
 
-shared_object parse_cone(const nlohmann::json& json)
-{
+static shared_object parse_cone(const nlohmann::json& json) {
     check_missing_field(json, "position");
     check_missing_field(json, "radius");
     check_missing_field(json, "height");
@@ -74,8 +72,7 @@ shared_object parse_cone(const nlohmann::json& json)
     return std::make_shared<Cone>(Cone(position, radius, height));
 }
 
-shared_object parse_cube(const nlohmann::json& json)
-{
+static shared_object parse_cube(const nlohmann::json& json) {
     check_missing_field(json, "position");
     check_missing_field(json, "side");
 
@@ -85,8 +82,7 @@ shared_object parse_cube(const nlohmann::json& json)
     return std::make_shared<Cube>(Cube(position, side));
 }
 
-shared_object parse_cylinder(const nlohmann::json& json)
-{
+static shared_object parse_cylinder(const nlohmann::json& json) {
     check_missing_field(json, "bottom");
     check_missing_field(json, "top");
     check_missing_field(json, "radius");
@@ -98,8 +94,7 @@ shared_object parse_cylinder(const nlohmann::json& json)
     return std::make_shared<Cylinder>(Cylinder(bottom, top, radius));
 }
 
-shared_object parse_ellipsoid(const nlohmann::json& json)
-{
+static shared_object parse_ellipsoid(const nlohmann::json& json) {
     check_missing_field(json, "center");
     check_missing_field(json, "radius");
 
@@ -109,8 +104,7 @@ shared_object parse_ellipsoid(const nlohmann::json& json)
     return std::make_shared<Ellipsoid>(Ellipsoid(center, radius));
 }
 
-shared_object parse_plane(const nlohmann::json& json, bool is_holed)
-{
+static shared_object parse_plane(const nlohmann::json& json, bool is_holed) {
     check_missing_field(json, "normal");
     check_missing_field(json, "distance");
 
@@ -123,14 +117,12 @@ shared_object parse_plane(const nlohmann::json& json, bool is_holed)
     else
         plane = std::make_shared<Plane>(Plane(normal, distance));
 
-    if (has_field(json, "width"))
-    {
+    if (has_field(json, "width")) {
         double width = json["width"];
         plane->set_width(width);
     }
 
-    if (has_field(json, "height"))
-    {
+    if (has_field(json, "height")) {
         double height = json["height"];
         plane->set_height(height);
     }
@@ -138,17 +130,14 @@ shared_object parse_plane(const nlohmann::json& json, bool is_holed)
     return plane;
 }
 
-shared_object parse_torus(const nlohmann::json& json)
-{
+static shared_object parse_torus(const nlohmann::json& json) {
     check_missing_field(json, "point");
 
     Point3 point = parse_vect(json["point"]);
-
     return std::make_shared<Torus>(Torus(point));
 }
 
-shared_object parse_polygon(const nlohmann::json& json)
-{
+static shared_object parse_polygon(const nlohmann::json& json) {
     check_missing_field(json, "obj_asset");
     check_missing_field(json, "mtl_asset");
 
@@ -157,49 +146,69 @@ shared_object parse_polygon(const nlohmann::json& json)
 
     auto mat = parse_materials(mtl_asset);
     auto p = parse_obj_to_polygon(obj_asset, mat);
-
     return std::make_shared<Polygon>(p);
 }
 
-// TODO: @sebemenozzi refacto
-std::vector<shared_object> parse_objects(const nlohmann::json& json);
-
-std::vector<shared_object> parse_blob(const nlohmann::json& json)
+static Blob parse_blob(const nlohmann::json& json)
 {
-    std::vector<shared_object> objects;
 
     check_missing_field(json, "point");
     check_missing_field(json, "objects");
-
-    // TODO: @sebmenozzi these fields should be optional
-    check_missing_field(json, "smooth");
     check_missing_field(json, "e");
     check_missing_field(json, "d");
     check_missing_field(json, "s");
+    check_missing_field(json, "smooth");
 
     Point3 point = parse_vect(json["point"]);
-    auto children = parse_objects(json["objects"]);
+    auto objects = parse_objects(json["objects"]);
     bool smooth = json["smooth"];
     double e = json["e"];
     double d = json["d"];
     double s = json["s"];
 
-    auto blob = Blob(point, e, d, s, children, smooth);
+    auto blob = Blob(point, e, d, s, objects, smooth);
     blob.compute();
 
-    // TODO: @sebmenozzi refacto
-    for (auto& triangle: blob.get_triangles())
-        objects.push_back(std::make_shared<SmoothTriangle>(triangle));
-
-    return objects;
+    return blob;
 }
 
-shared_object parse_object(const nlohmann::json& json)
-{
+static void add_blob_triangles(std::vector<shared_object> objects, const Blob& blob) {
+    for (auto& triangle: blob.get_triangles())
+        objects.push_back(std::make_shared<SmoothTriangle>(triangle));
+}
+
+static void parse_object_properties(const nlohmann::json &json, shared_object object) {
+    if (has_field(json, "texture")) {
+        auto texture = parse_texture(json["texture"]);
+        object->set_texture(texture);
+    }
+
+    if (has_field(json, "bump_mappings"))
+        parse_bump_mappings(json["bump_mappings"], object);
+
+    if (has_field(json, "specular")) {
+        double specular = json["specular"];
+        object->set_specular(specular);
+    }
+
+    if (has_field(json, "ior")) {
+        double ior = json["ior"];
+        object->set_ior(ior);
+    }
+
+    if (has_field(json, "displacement_image")) {
+        auto texture = parse_image_texture(json["displacement_image"]);
+        object->set_displacement_image(texture);
+    }
+
+}
+
+static shared_object parse_object(const nlohmann::json& json) {
     auto object_type = json["type"];
 
     shared_object object;
 
+    // TODO: CSG, rectangle, rotation, translate
     if (object_type == "sphere")
         object = parse_sphere(json);
     else if (object_type == "capped_cone")
@@ -222,54 +231,25 @@ shared_object parse_object(const nlohmann::json& json)
         object = parse_torus(json);
     else if (object_type == "polygon")
         object = parse_polygon(json);
-    else
-    {
+    else {
         std::cerr << "Unsupported object \"" << object_type << "\"!\n";
         exit(1);
     }
 
-    if (has_field(json, "texture"))
-    {
-        auto texture = parse_texture(json["texture"]);
-        object->set_texture(texture);
-    }
-
-    if (has_field(json, "bump_mappings"))
-        parse_bump_mappings(json["bump_mappings"], object);
-
-    if (has_field(json, "specular"))
-    {
-        double specular = json["specular"];
-        object->set_specular(specular);
-    }
-
-    if (has_field(json, "ior"))
-    {
-        double ior = json["ior"];
-        object->set_ior(ior);
-    }
-
-    if (has_field(json, "displacement_image"))
-    {
-        auto texture = parse_image_texture(json["displacement_image"]);
-        object->set_displacement_image(texture);
-    }
-
+    parse_object_properties(json, object);
     return object;
 }
 
-std::vector<shared_object> parse_objects(const nlohmann::json& json)
+inline std::vector<shared_object> parse_objects(const nlohmann::json& json)
 {
     std::vector<shared_object> objects;
 
-    for (auto object : json)
-    {
+    for (const auto& object : json) {
         auto object_type = object["type"];
 
-        if (object_type == "blob")
-        {
-            auto blob_objects = parse_blob(object);
-            objects.insert(std::end(objects), std::begin(blob_objects), std::end(blob_objects));
+        if (object_type == "blob") {
+            Blob blob = parse_blob(object);
+            add_blob_triangles(objects, blob);
         }
         else
             objects.push_back(parse_object(object));

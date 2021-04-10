@@ -7,40 +7,6 @@
 #include "hash.hh"
 #include "vector3_op.hh"
 
-Blob::Blob(std::vector<shared_object> obj)
-    : potentiel(3),
-    triangles(std::vector<SmoothTriangle>()),
-    blob_objects(obj),
-    cubes(std::vector<BlobCube>()),
-    smooth(false)
-{
-    const Point3 origin = Point3(0, 0, 0);
-    init_cubes(origin, 10, 1);
-}
-
-Blob::Blob(double e, double d, double s, std::vector<shared_object> obj)
-    : potentiel(s),
-    triangles(std::vector<SmoothTriangle>()),
-    blob_objects(obj),
-    cubes(std::vector<BlobCube>()),
-    smooth(false)
-{
-    const Point3 origin = Point3(0, 0, 0);
-    init_cubes(origin, e, d);
-}
-
-Blob::Blob(const Point3& origin, double e, double d, double s,
-        std::vector<shared_object> obj)
-    : potentiel(s),
-    triangles(std::vector<SmoothTriangle>()),
-    blob_objects(obj),
-    cubes(std::vector<BlobCube>()),
-    smooth(false)
-{
-    init_cubes(origin, e, d);
-}
-
-
 Blob::Blob(const Point3& orig, double e, double d, double s,
         std::vector<shared_object> obj, bool smooth_)
     : potentiel(s),

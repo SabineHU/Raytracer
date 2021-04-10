@@ -83,62 +83,6 @@ void render(image::Image& img, const Scene& scene, double accuracy, int samples,
     std::cerr << "\nDone" << std::endl;
 }
 
-void render_multithreading(image::Image& img, const Scene& scene, double accuracy, int samples, int depth) {
-    std::size_t nb_lines = img.get_height();
-    std::size_t cores = std::thread::hardware_concurrency();
-
-    std::size_t nb_lines_thread = std::ceil(nb_lines / cores);
-
-    volatile std::atomic<std::size_t> count = -nb_lines_thread;
-    int index = -nb_lines_thread;
-    std::vector<std::future<void>> futures;
-    auto mutex = new std::mutex();
-
-    auto progress = ProgressBar(std::cerr, 100);
-
-    while (cores--)
-    {
-        count += nb_lines_thread;
-        index += nb_lines_thread;
-
-        futures.push_back(std::async(std::launch::async, [=, &img, &progress, &count, &index]() {
-            for (int i = 0; i < img.get_width(); ++i) {
-                for (int j = 0; j < index + nb_lines_thread && j < nb_lines; ++j) {
-
-                    Color pixel_color(0, 0, 0);
-
-                    for (int k = 0; k < samples; ++k) {
-                        double x, y;
-                        set_index_x_y(x, y, samples, i, j, k, img.get_width(), img.get_height());
-
-                        IntersectionInfo info;
-                        Ray cam_ray = scene.camera.get_ray(x, y);
-
-                        if (scene.has_intersection(cam_ray, info, accuracy)) {
-                            pixel_color += get_color(scene, info, accuracy, depth);
-                        } else {
-                            pixel_color += scene.get_background_color(cam_ray);
-                        }
-
-                    }
-
-                    pixel_color = pixel_color / (double) (samples);
-
-                    img.set_pixel_color(i, j, pixel_color);
-                }
-            }
-
-            {
-                auto lock = std::lock_guard<std::mutex>(*mutex);
-                progress.write(count / (double) cores);
-            }
-        }));
-    }
-
-    for (auto& future: futures)
-        future.get();
-}
-
 static Color compute_one_light(const IntersectionInfo& info, const shared_light light,
         const Vect& light_direction, double cos) {
     Color light_amt = light->get_light_color() * cos * light->get_intensity();
