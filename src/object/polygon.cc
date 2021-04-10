@@ -11,6 +11,7 @@ Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
     : Object(), m_vertices(vertices), m_normals(normals), m_textures(textures), m_faces(faces)
 {
     this->triangles = std::vector<std::shared_ptr<SmoothTriangle>>();
+
     for (const auto& face : faces) {
         Point3 a = vertices[face.vertices.x];
         Point3 b = vertices[face.vertices.y];
@@ -41,6 +42,7 @@ bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, In
             this->triangle = t;
             found = true;
     }
+
     return found;
 }
 

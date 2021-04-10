@@ -19,6 +19,7 @@ Plane::Plane(const Vect& n, double d)
 Vect Plane::get_normal_at(const Point3& point, double u, double v) const {
     auto bump = Object::get_bump_at(point);
     auto disp = Object::get_displacement_at(point, u, v);
+
     return ((normal + bump).normalize() + disp * 50).normalize();
 }
 

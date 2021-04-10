@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 #include "camera.hh"
 #include "object.hh"
@@ -34,7 +35,16 @@ public:
         background_color1 = c1;
         background_color2 = c2;
     }
-    void set_fog_properties(double d, int type=1) { fog = std::make_pair(d, type); }
+    void set_fog(double d, std::string type = "exp") { fog = std::make_pair(d, type); }
+    void set_objects(std::vector<shared_object> objs) {
+        this->objects = objs;
+    }
+    void set_lights(std::vector<shared_light> l) {
+        this->lights = l;
+    }
+    void set_ambient_light(Color color) {
+        this->ambient_light = color;
+    }
 
 public:
     /* Attributes */
@@ -46,5 +56,5 @@ public:
     Color background_color1;
     Color background_color2;
 
-    std::optional<std::pair<double, int>> fog;
+    std::optional<std::pair<double, std::string>> fog;
 };

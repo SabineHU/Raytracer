@@ -155,6 +155,6 @@ Scene init_default_scene() {
     //init_objects2(scene);
     //init_blob(scene);
 
-    //scene.set_fog_properties(50, 3);
+    //scene.set_fog(50, "square_exp");
     return scene;
 }

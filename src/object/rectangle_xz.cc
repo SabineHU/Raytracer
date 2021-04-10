@@ -30,8 +30,10 @@ bool Rectangle_xz::find_intersection(const Ray& ray, double& t_min, double& t_ma
 
         info.u = (p.x - p1.x) / (p2.x - p1.x);
         info.v = (p.z - p1.z) / (p2.z - p1.z);
+
         return true;
     }
+    
     return false;
 }
 

@@ -51,6 +51,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
 
         info.t_min = roots[0];
         info.t_max = roots[1];
+
         return true;
     }
 
@@ -64,6 +65,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
 
         info.t_min = t;
         info.t_max = t;
+
         return true;
     }
 
@@ -77,8 +79,10 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
 
         info.t_min = t;
         info.t_max = t;
+
         return true;
     }
+
     return false;
 }
 

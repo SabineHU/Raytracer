@@ -1,3 +1,2 @@
-*.ppm
-*.o
-raytracing
+build
+images

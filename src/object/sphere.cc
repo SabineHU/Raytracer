@@ -44,6 +44,7 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
 
     info.t_min = roots[0];
     info.t_max = roots[1];
+
     return true;
 }
 
@@ -56,5 +57,6 @@ int Sphere::get_isolevel_at(const Point3& point) const {
         if (distance > (radius * i / 100) * (radius * i / 100))
             return i - 100;
     }
+    
     return 0;
 }

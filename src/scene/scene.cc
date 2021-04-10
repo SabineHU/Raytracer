@@ -33,8 +33,7 @@ void Scene::clear_lights() {
     this->lights.clear();
 }
 
-bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
-        double accuracy) const {
+bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info, double accuracy) const {
     double distance = math::inf;
     shared_object closest_obj = nullptr;
     for (const auto& obj : this->objects) {
@@ -49,6 +48,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info,
     info.ray_out = Ray(info.point, ray.direction);
 
     closest_obj->get_properties(info);
+
     return true;
 }
 
@@ -57,6 +57,7 @@ bool Scene::has_shadow(const Ray& ray, double distance, double accuracy) const {
     for (const auto& obj : this->objects)
         if (obj->find_intersection(ray, accuracy, distance, info))
             return true;
+
     return false;
 }
 
@@ -65,22 +66,34 @@ Color Scene::get_background_color(const Ray& ray) const {
         double s = 0.5 * (ray.direction.y + 1.0);
         return background_color1 * (1 - s) + background_color2 * s;
     }
+
     return Color(1, 1, 1);
 }
 
 Color Scene::get_fog_color(const Color& color, double dist) const {
-    if (!this->fog.has_value()) return color;
+    if (!this->fog.has_value())
+        return color;
 
     double ratio = dist / this->fog.value().first;
-    switch (this->fog.value().second) {
-    case 1: // linear
+
+    auto type = this->fog.value().second;
+
+    if (type == "linear")
         return Color(1, 1, 1) * ratio + color * (1 - ratio);
-    case 2: // exp
+
+    if (type == "exp")
+    {
         ratio = exp(-ratio);
-        return Color(1, 1, 1) * (1 - ratio) + color * ratio;
-    default: // square exp
-        ratio = exp(-ratio * ratio);
+
         return Color(1, 1, 1) * (1 - ratio) + color * ratio;
     }
-}
 
+    if (type == "square_exp")
+    {
+        ratio = exp(-ratio * ratio);
+
+        return Color(1, 1, 1) * (1 - ratio) + color * ratio;
+    }
+
+    return color;
+}

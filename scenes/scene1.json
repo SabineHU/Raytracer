@@ -1,0 +1,201 @@
+{
+    "name": "Scene1",
+    "camera": {
+        "look_from": { "x": 0, "y": 3, "z": -15 },
+        "look_at": { "x": 0, "y": 0, "z": 0 },
+        "vup": { "x": 0, "y": 1, "z": 0 }
+    },
+    "ambient_light": { "r": 0.5, "g": 0.5, "b": 1.0 },
+    "backgrounds_colors": {
+        "color1": { "r": 0.5, "g": 0.5, "b": 1.0 },
+        "color2": { "r": 0.5, "g": 0.5, "b": 1.0 }
+    },
+    "fog": {
+        "distance": 40,
+        "type": "square_exp"
+    },
+    "lights": [
+        {
+            "position": { "x": 0, "y": 10, "z": -10 },
+            "color": { "r": 1, "g": 1, "b": 1 },
+            "intensity": 2
+        }
+    ],
+    "objects": [
+        {
+            "type": "sphere",
+            "center": { "x": 0, "y": 0, "z": 0 },
+            "radius": 1,
+            "texture": {
+                "type": "image",
+                "image": {
+                    "asset": "textures/carte.ppm",
+                    "is_reverted": false
+                }
+            },
+            "specular": 30
+        },
+        {
+            "type": "capped_cone",
+            "bottom": { "x": 3, "y": -2, "z": 0 },
+            "top": { "x": 3, "y": 2, "z": 0 },
+            "radius_bottom": 2,
+            "radius_top": 1,
+            "texture": {
+                "type": "lambertian",
+                "color": "pink",
+                "kd": 0.5
+            }
+        },
+        {
+            "type": "capsule",
+            "bottom": { "x": -3, "y": 0, "z": 0 },
+            "top": { "x": -3, "y": 2, "z": 0 },
+            "radius": 1,
+            "texture": {
+                "type": "metal",
+                "color": "random",
+                "kd": 0.5
+            }
+        },
+        {
+            "type": "cone",
+            "position": { "x": -7, "y": -2, "z": -6 },
+            "radius": 1,
+            "height": 3,
+            "texture": {
+                "type": "lambertian",
+                "color": "random",
+                "kd": 0.5
+            }
+        },
+        {
+            "type": "cube",
+            "position": { "x": 5, "y": -2, "z": -4 },
+            "side": 2,
+            "texture": {
+                "type": "image",
+                "image": {
+                    "asset": "textures/stars.ppm",
+                    "is_reverted": true
+                }
+            }
+        },
+        {
+            "type": "cylinder",
+            "bottom": { "x": -5, "y": -2, "z": -4 },
+            "top": { "x": -5, "y": 2, "z": -4 },
+            "radius": 1,
+            "ior": 2.417,
+            "displacement_image": {
+                "asset": "textures/bird.ppm",
+                "is_reverted": true
+            },
+            "texture": {
+                "type": "perlin_noise",
+                "perlin_noise": {
+                    "scale": 3,
+                    "type": "rainbow",
+                    "color1": "red",
+                    "color2": "blue"
+                }
+            }
+        },
+        {
+            "type": "plane",
+            "normal": { "x": 0, "y": 0, "z": 1 },
+            "distance": 20,
+            "width": 1,
+            "height": 1,
+            "texture": {
+                "type": "checkerboard",
+                "checkerboard": {
+                    "type": "color",
+                    "color1": "black",
+                    "color2": "white"
+                }
+            }
+        },
+        {
+            "type": "ellipsoid",
+            "center": { "x": 0, "y": 0, "z": -8 },
+            "radius": { "x": 1, "y": 0.5, "z": 1 },
+            "texture": {
+                "type": "perlin_noise",
+                "perlin_noise": {
+                    "scale": 2,
+                    "type": "marble",
+                    "color1": "random_pastel",
+                    "color2": "random"
+                }
+            },
+            "bump_mappings": [
+                {
+                    "noise": {
+                        "type": "wood",
+                        "scale": 10
+                    }
+                }
+            ]
+        },
+        {
+            "type": "plane",
+            "normal": { "x": 0, "y": 1, "z": 0 },
+            "distance": -2,
+            "texture": {
+                "type": "perlin_noise",
+                "perlin_noise": {
+                    "scale": 2,
+                    "type": "cloud",
+                    "color1": "random",
+                    "color2": "random"
+                },
+                "kd": 0.25,
+                "kt": 0.5,
+                "ks": 0.7,
+                "is_reflected": true
+            },
+            "bump_mappings": [
+                {
+                    "noise": {
+                        "type": "turbulence",
+                        "scale": 10
+                    },
+                    "coeff": 2
+                },
+                {
+                    "noise": {
+                        "type": "turbulence",
+                        "scale": 20
+                    },
+                    "coeff": 3
+                }
+            ],
+            "specular": 40
+        },
+        {
+            "type": "torus",
+            "point": { "x": 12, "y": -2, "z": 4 }
+        },
+        {
+            "type": "polygon",
+            "obj_asset": "objs/boat.obj",
+            "mtl_asset": "objs/boat.mtl"
+        },
+        {
+            "type": "sphere",
+            "center": { "x": 6, "y": -2, "z": -6 },
+            "radius": 1,
+            "texture": {
+                "type": "strip",
+                "strip": {
+                    "is_planar": true,
+                    "is_horizontal": false,
+                    "color1": "red",
+                    "color2": "blue"
+                }
+            },
+            "specular": 30
+        }
+    ]
+}

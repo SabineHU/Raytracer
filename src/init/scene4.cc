@@ -18,6 +18,7 @@ static Camera init_camera() {
     Vect look_from(0, 2, -8);
     Vect look_at(0, 0, 0);
     Vect vup(0, 1, 0);
+
     return Camera(look_from, look_at, vup);
 }
 

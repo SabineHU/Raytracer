@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "ellipsoid.hh"
 #include "vector3_op.hh"
 #include "lambertian.hh"
@@ -32,6 +34,7 @@ bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, 
 
     t_max = t;
     info.point = ray.origin + ray.direction * t_max;
+
     return true;
 }
 

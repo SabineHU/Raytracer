@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "cube.hh"
 #include "lambertian.hh"
 #include "tools.hh"
@@ -14,8 +16,7 @@ Vect Cube::get_normal_at(const Point3& point, double, double) const {
     return (normal + Object::get_bump_at(point)).normalize();
 }
 
-static bool compute_axis(double& max, double& min, double& max_v, double& min_v,
-        Vect& nmax, Vect& nmin, int axis) {
+static bool compute_axis(double& max, double& min, double& max_v, double& min_v, Vect& nmax, Vect& nmin, int axis) {
     Vect nmin_v = Vect(0, -1, 0);
     Vect nmax_v = Vect(0, 1, 0);
 

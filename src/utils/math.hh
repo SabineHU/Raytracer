@@ -21,11 +21,11 @@ inline double quadratic_equation_min_root(double a, double b, double delta) {
     double sqrt_delta = std::sqrt(delta);
     double x1 = quadratic_equation_root_1(a, b, sqrt_delta);
     double x2 = quadratic_equation_root_2(a, b, sqrt_delta);
+
     return std::min(x1, x2);
 }
 
-inline void quadratic_equation_roots(double a, double b, double delta,
-        double roots[2]) {
+inline void quadratic_equation_roots(double a, double b, double delta, double roots[2]) {
     double sqrt_delta = std::sqrt(delta);
     roots[0] = quadratic_equation_root_1(a, b, sqrt_delta);
     roots[1] = quadratic_equation_root_2(a, b, sqrt_delta);
@@ -45,6 +45,7 @@ inline double degree_to_radian(double degree) {
 inline double cube_root(double v) {
     if (v < 0)
         return -std::cbrt(-v);
+
     return std::cbrt(v);
 }
 
@@ -52,6 +53,7 @@ inline int round_multiple(int nb, int multiple) {
     if (multiple == 0) return nb;
 
     auto m = nb % multiple;
+
     return m == 0 ? nb : nb - m;
 }
 

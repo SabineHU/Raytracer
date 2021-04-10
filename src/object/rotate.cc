@@ -57,6 +57,7 @@ bool RotatedObject::find_intersection(const Ray& ray, double& t_min, double& t_m
         info.point = vector::rotate_z(info.point, -sin, cos);
         break;
     }
+
     return true;
 }
 

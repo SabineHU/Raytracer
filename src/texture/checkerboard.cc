@@ -35,5 +35,6 @@ CheckerBoard::CheckerBoard(shared_texture c1, shared_texture c2,
 
 Color CheckerBoard::get_color(const Point3& p, double u, double v) const {
     int square = (int) std::floor(u * scale) + (int) std::floor(v * scale);
+
     return ((square % 2) == 0) ? color1->get_color(p, u, v) : color2->get_color(p, u, v);
 }

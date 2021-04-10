@@ -34,22 +34,27 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
 
     if (offtop < 0) {
         double r = radius_top * radius_top * dir * dir;
-        if ((ot * dir - ray.direction * offtop).square_length() < r) {
+
+        if ((ot * dir - ray.direction * offtop).square_length() < r)
+        {
             t_max = -offtop / dir;
             this->normal = axis.negative() / std::sqrt(dist);
 
             info.point = ray.origin + ray.direction * t_max;
             compute_uv(info, dist);
+
             return true;
         }
     } else if (offbot > 0) {
         double r = radius_bottom * radius_bottom * dir * dir;
-        if ((ob * dir - ray.direction * offbot).square_length() < r) {
+        if ((ob * dir - ray.direction * offbot).square_length() < r)
+        {
             t_max = -offbot / dir;
             this->normal = axis / std::sqrt(dist);
 
             info.point = ray.origin + ray.direction * t_max;
             compute_uv(info, dist);
+
             return true;
         }
     }
@@ -80,6 +85,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
         info.point = ray.origin + ray.direction * t_max;
         info.normal = (n * dist - axis * h * y).normalize();
         compute_uv(info, dist);
+
         return true;
     }
 

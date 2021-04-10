@@ -12,6 +12,7 @@ inline Vect cross(const Vect& u, const Vect& v) {
     auto x = u.y * v.z - u.z * v.y;
     auto y = u.z * v.x - u.x * v.z;
     auto z = u.x * v.y - u.y * v.x;
+
     return Vect(x, y, z);
 }
 
@@ -40,6 +41,7 @@ inline Vect rotate_z(const Vect& u, double theta) {
     auto b = -sin(theta);
     auto d = sin(theta);
     auto e = cos(theta);
+
     return Vect(a * u.x + b * u.y, d * u.x + e * u.y, u.z);
 }
 
@@ -56,6 +58,7 @@ inline Vect rotate_y(const Vect& u, double theta) {
     auto b = -sin(theta);
     auto d = sin(theta);
     auto e = cos(theta);
+    
     return Vect(d * u.z + e * u.x, u.y, u.z * a + b * u.x);
 }
 
@@ -72,6 +75,7 @@ inline Vect rotate_x(const Vect& u, double theta) {
     auto b = -sin(theta);
     auto d = sin(theta);
     auto e = cos(theta);
+
     return Vect(u.x, a * u.y + b * u.z, d * u.y + e * u.z);
 }
 

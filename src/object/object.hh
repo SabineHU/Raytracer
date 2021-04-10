@@ -88,7 +88,7 @@ public:
         return Vect(x / size, y / size, z / size);
     }
 
-    void add_bump_mapping(const Noise n, double coeff=1) { bumps.insert(std::pair<Noise, double>(n, coeff)); }
+    void add_bump_mapping(const Noise n, double coeff = 1) { bumps.insert(std::pair<Noise, double>(n, coeff)); }
 
     /* Setters */
     void set_specular(double s) { specular = s; }

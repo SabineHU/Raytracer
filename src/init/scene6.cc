@@ -135,10 +135,10 @@ static void add_transparent_sphere3(Scene& scene) {
 Scene init_scene6() {
     Camera cam = init_camera();
     Scene scene(cam, Color(.5, .5, .5));
-    //scene.set_fog_properties(20, 1);
-    //scene.set_fog_properties(20, 2);
-    scene.set_fog_properties(20, 3);
-    //scene.set_fog_properties(10, 3);
+    //scene.set_fog(20, "exp");
+    //scene.set_fog(20, "exp");
+    scene.set_fog(20, "square_exp");
+    //scene.set_fog(10, "exp");
     init_lights(scene);
 
     add_plane(scene);

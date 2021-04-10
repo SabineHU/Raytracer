@@ -5,13 +5,13 @@
 #include "image_texture.hh"
 #include "math.hh"
 
-ImageTexture::ImageTexture(const char* filename)
+ImageTexture::ImageTexture(const std::string& filename)
     : TextureMaterial()
 {
     parse_file(filename);
 }
 
-void ImageTexture::parse_file(const char* filename) {
+void ImageTexture::parse_file(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Cannot open file " << filename << std::endl;

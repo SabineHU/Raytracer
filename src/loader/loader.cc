@@ -7,21 +7,11 @@
 
 #include "loader.hh"
 #include "hash.hh"
+#include "file.hh"
 
-static std::ifstream open_file(const char* filename) {
-    // Open file, read only
-    std::ifstream ifs(filename, std::ifstream::in);
-    if (!ifs.is_open()) {
-        std::cerr << "Cannot open " << filename << std::endl;
-        exit(1);
-    }
-
-    return ifs;
-}
-
-std::map<size_t, Material> parse_materials(const char* filename) {
+std::map<size_t, Material> parse_materials(const std::string& filename) {
     std::map<size_t, Material> res;
-    std::ifstream f = open_file(filename);
+    std::ifstream f = file::open_file(filename);
 
     std::string code;
     Material m;
@@ -63,8 +53,8 @@ std::map<size_t, Material> parse_materials(const char* filename) {
     return res;
 }
 
-Polygon parse_obj_to_polygon(const char* filename, std::map<size_t, Material> materials) {
-    std::ifstream f = open_file(filename);
+Polygon parse_obj_to_polygon(const std::string& filename, std::map<size_t, Material> materials) {
+    std::ifstream f = file::open_file(filename);
 
     std::vector<Vect> vertices;
     std::vector<Vect> normals;
@@ -75,24 +65,38 @@ Polygon parse_obj_to_polygon(const char* filename, std::map<size_t, Material> ma
     double x, y, z;
 
     ssize_t index = -1;
-    for (std::string line; std::getline(f, line);) {
-        if (line[0] == '#') continue;
+
+    for (std::string line; std::getline(f, line);)
+    {
+        if (line[0] == '#')
+            continue;
+
         std::istringstream iss(line);
 
         iss >> code;
-        if (code == "v") {
+
+        if (code == "v")
+        {
             iss >> x >> y >> z;
             vertices.push_back(Vect(x, y, z));
-        } else if (code == "vt") {
+        }
+        else if (code == "vt")
+        {
             iss >> x >> y;
             textures.push_back(Vect2(x, y));
-        } else if (code == "vn") {
+        }
+        else if (code == "vn")
+        {
             iss >> x >> y >> z;
             normals.push_back(Vect(x, y, z));
-        } else if (code == "usemtl") {
+        }
+        else if (code == "usemtl")
+        {
             iss >> code;
             index = hash::get_value_hash(code);
-        } else if (code == "f") {
+        }
+        else if (code == "f")
+        {
             char w;
             double x1, y1, z1;
             double x2, y2, z2;
@@ -108,6 +112,8 @@ Polygon parse_obj_to_polygon(const char* filename, std::map<size_t, Material> ma
             faces.push_back(Face(vertice, normal, texture, materials[index]));
         }
     }
+
     f.close();
+
     return Polygon(vertices, normals, textures, faces);
 }

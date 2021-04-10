@@ -15,6 +15,7 @@ Vect Capsule::get_normal_at(const Point3& point, double, double) const {
     Vect ba = bottom - top;
     Vect pa = point - top;
     double h = std::min(std::max(vector::dot(pa, ba) / vector::dot(ba, ba), 0.0), 1.0);
+
     return ((pa + ba * -h) / radius + Object::get_bump_at(point)).normalize();
 }
 
@@ -60,6 +61,7 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
 
     t_max = t;
     info.point = ray.origin + ray.direction * t_max;
+
     return true;
 }
 

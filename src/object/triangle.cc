@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "triangle.hh"
 #include "vector3_op.hh"
 #include "lambertian.hh"
@@ -64,6 +66,7 @@ bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     info.point = ray.origin + ray.direction * t_max;
     info.u = u;
     info.v = v;
+
     return true;
 }
 

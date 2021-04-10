@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "noise.hh"
 #include "random.hh"
 #include "vector3_op.hh"

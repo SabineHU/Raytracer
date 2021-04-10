@@ -32,6 +32,7 @@ inline Color random_pastel_color() {
     double x = random_double(0, .5);
     double y = random_double(0, .5);
     double z = random_double(0, .5);
+
     return Color(.5 + x, .5 + y, .5 + z);
 }
 

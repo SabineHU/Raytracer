@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "ray.hh"
 #include "vector3_op.hh"
 

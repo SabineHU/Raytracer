@@ -2,13 +2,14 @@
 
 #include <vector>
 #include <algorithm>
+#include <string>
 
 #include "texture_material.hh"
 
 class ImageTexture : public TextureMaterial {
 public:
     ImageTexture() = default;
-    ImageTexture(const char* filename);
+    ImageTexture(const std::string& filename);
 
     virtual Color get_color(const Point3&, double, double) const override;
 
@@ -19,7 +20,7 @@ public:
     }
 
 private:
-    void parse_file(const char* filename);
+    void parse_file(const std::string& filename);
 
     /* Attributes */
     int width;
