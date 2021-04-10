@@ -4,7 +4,7 @@
 
 class Strip : public TextureMaterial {
 public:
-    Strip();
+    Strip() = delete;
     Strip(const Color&, const Color&);
     Strip(shared_texture, shared_texture);
     Strip(const Color&, const Color&, bool, double);

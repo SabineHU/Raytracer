@@ -5,8 +5,7 @@
 
 class PerlinNoise : public TextureMaterial {
 public:
-    PerlinNoise();
-    PerlinNoise(double s);
+    PerlinNoise() = delete;
     PerlinNoise(double s, PerlinNoiseType t);
     PerlinNoise(double s, PerlinNoiseType t, const Color& c1, const Color& c2);
 

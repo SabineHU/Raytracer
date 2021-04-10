@@ -76,24 +76,18 @@ Color Scene::get_fog_color(const Color& color, double dist) const {
 
     double ratio = dist / this->fog.value().first;
 
-    auto type = this->fog.value().second;
-
-    if (type == "linear")
+    FogType type = this->fog.value().second;
+    switch (type) {
+    case LINEAR:
         return Color(1, 1, 1) * ratio + color * (1 - ratio);
 
-    if (type == "exp")
-    {
+    case EXP:
         ratio = exp(-ratio);
-
         return Color(1, 1, 1) * (1 - ratio) + color * ratio;
-    }
 
-    if (type == "square_exp")
-    {
+    default:
         ratio = exp(-ratio * ratio);
-
         return Color(1, 1, 1) * (1 - ratio) + color * ratio;
-    }
 
-    return color;
+    }
 }

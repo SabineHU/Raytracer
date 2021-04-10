@@ -8,6 +8,12 @@
 #include "light.hh"
 #include "intersection.hh"
 
+enum FogType {
+    LINEAR,
+    EXP,
+    SQUARE_EXP
+};
+
 class Scene {
 public:
     Scene() = default;
@@ -35,7 +41,7 @@ public:
         background_color1 = c1;
         background_color2 = c2;
     }
-    void set_fog(double d, std::string type = "exp") { fog = std::make_pair(d, type); }
+    void set_fog(double d, FogType type = EXP) { fog = std::make_pair(d, type); }
     void set_objects(std::vector<shared_object> objs) {
         this->objects = objs;
     }
@@ -56,5 +62,5 @@ public:
     Color background_color1;
     Color background_color2;
 
-    std::optional<std::pair<double, std::string>> fog;
+    std::optional<std::pair<double, FogType>> fog;
 };

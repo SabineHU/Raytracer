@@ -3,13 +3,6 @@
 #include "strip.hh"
 #include "lambertian.hh"
 
-Strip::Strip()
-    : TextureMaterial(), horizontal(true), scale(15), planar(false)
-{
-    color1 = std::make_shared<Lambertian>(Color(0, 0, 0));
-    color2 = std::make_shared<Lambertian>(Color(1, 1, 1));
-}
-
 Strip::Strip(const Color& c1, const Color& c2)
     : TextureMaterial(), horizontal(true), scale(15), planar(false)
 {

@@ -45,8 +45,12 @@ static void parse_fog(const nlohmann::json& json, Scene& scene) {
 
     double distance = fog["distance"];
     std::string type = fog["type"];
-
-    scene.set_fog(distance, type);
+    if (type == "linear")
+        scene.set_fog(distance, LINEAR);
+    else if (type == "exp")
+        scene.set_fog(distance, EXP);
+    else if (type == "square_exp")
+        scene.set_fog(distance, SQUARE_EXP);
 }
 
 static void parse_ambient_light(const nlohmann::json& json, Scene& scene) {

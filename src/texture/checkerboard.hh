@@ -7,8 +7,6 @@ public:
     CheckerBoard();
     CheckerBoard(const Color&, const Color&);
     CheckerBoard(shared_texture, shared_texture);
-    CheckerBoard(const Color&, const Color&, double, double);
-    CheckerBoard(shared_texture, shared_texture, double, double);
 
     virtual Color get_color(const Point3&, double, double) const override;
 
