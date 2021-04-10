@@ -20,18 +20,18 @@ static nlohmann::json parse_json_file(const std::string& filename) {
 }
 
 static void parse_background_colors(const nlohmann::json& json, Scene& scene) {
-    if (!has_field(json, "fog"))
+    if (!has_field(json, "backgrounds_colors"))
         return;
 
-    auto fog = json["fog"];
+    auto backgrounds_colors = json["backgrounds_colors"];
 
-    check_missing_field(fog, "distance");
-    check_missing_field(fog, "type");
+    check_missing_field(backgrounds_colors, "color1");
+    check_missing_field(backgrounds_colors, "color2");
 
-    double distance = fog["distance"];
-    std::string type = fog["type"];
+    auto color1 = parse_color(backgrounds_colors["color1"]);
+    auto color2 = parse_color(backgrounds_colors["color2"]);
 
-    scene.set_fog(distance, type);
+    scene.set_background_colors(color1, color2);
 }
 
 static void parse_fog(const nlohmann::json& json, Scene& scene) {

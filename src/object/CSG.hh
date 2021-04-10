@@ -6,7 +6,7 @@ enum ObjectOperator : int {
     UNION = 1,
     INTERSECTION = 1 << 1,
     MINUS = 1 << 2,
-    MINUS_INTERSECTION = 1 << 3
+    DIFFERENCE = 1 << 3
 };
 
 class CSG : public Object {

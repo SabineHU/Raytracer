@@ -11,8 +11,8 @@
 class Scene {
 public:
     Scene() = default;
-    Scene(const Camera&);
-    Scene(const Camera&, const Color&);
+    Scene(const Camera&); // TODO delete
+    Scene(const Camera&, const Color&); //TODO: delete it
 
     /* Methods */
     void add_object(shared_object);

@@ -5,19 +5,21 @@
 
 #include "json.hpp"
 
-#include "sphere.hh"
 #include "capped_cone.hh"
 #include "capsule.hh"
 #include "cone.hh"
+#include "CSG.hh"
 #include "cube.hh"
 #include "cylinder.hh"
 #include "ellipsoid.hh"
 #include "plane.hh"
 #include "plane_holed.hh"
+#include "sphere.hh"
 #include "torus.hh"
-#include "polygon.hh"
-#include "loader.hh"
+
 #include "blob.hh"
+#include "loader.hh"
+#include "polygon.hh"
 
 #include "scene_parser_utils.hh"
 #include "scene_parser_texture.hh"
@@ -149,9 +151,7 @@ static shared_object parse_polygon(const nlohmann::json& json) {
     return std::make_shared<Polygon>(p);
 }
 
-static Blob parse_blob(const nlohmann::json& json)
-{
-
+static Blob parse_blob(const nlohmann::json& json) {
     check_missing_field(json, "point");
     check_missing_field(json, "objects");
     check_missing_field(json, "e");
@@ -232,12 +232,30 @@ static shared_object parse_object(const nlohmann::json& json) {
     else if (object_type == "polygon")
         object = parse_polygon(json);
     else {
-        std::cerr << "Unsupported object \"" << object_type << "\"!\n";
+        std::cerr << "Unsupported object " << object_type << "!\n";
         exit(1);
     }
 
     parse_object_properties(json, object);
     return object;
+}
+
+static shared_object parse_csg(const nlohmann::json& json) {
+    shared_object obj1 = parse_object(json["obj1"]);
+    shared_object obj2 = parse_object(json["obj2"]);
+
+    auto csg_type = json["type"];
+    if (csg_type == "UNION")
+        return std::make_shared<CSG>(UNION, obj1, obj2);
+    if (csg_type == "INTERSECTION")
+        return std::make_shared<CSG>(INTERSECTION, obj1, obj2);
+    if (csg_type == "MINUS")
+        return std::make_shared<CSG>(MINUS, obj1, obj2);
+    if (csg_type == "DIFFERENCE")
+        return std::make_shared<CSG>(DIFFERENCE, obj1, obj2);
+
+    std::cerr << "Unsupported CSG object \"" << csg_type << "\"!\n";
+    exit(1);
 }
 
 inline std::vector<shared_object> parse_objects(const nlohmann::json& json)
@@ -250,6 +268,8 @@ inline std::vector<shared_object> parse_objects(const nlohmann::json& json)
         if (object_type == "blob") {
             Blob blob = parse_blob(object);
             add_blob_triangles(objects, blob);
+        } else if (object_type == "CSG") {
+            objects.push_back(parse_csg(object["CSG"]));
         }
         else
             objects.push_back(parse_object(object));

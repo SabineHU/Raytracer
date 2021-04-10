@@ -18,7 +18,7 @@ static void check_missing_field(const nlohmann::json& json, const std::string& f
     }
 }
 
-Vect parse_vect(const nlohmann::json& json) {
+inline Vect parse_vect(const nlohmann::json& json) {
     if (json == "random") return r_random::random_vector();
 
     check_missing_field(json, "x");
@@ -32,7 +32,7 @@ Vect parse_vect(const nlohmann::json& json) {
     return Vect(x, y, z);
 }
 
-Color parse_color(const nlohmann::json& json) {
+inline Color parse_color(const nlohmann::json& json) {
     // TODO: @sebmenozzi refacto, make the colors detection automatic from color.hh...
     if (json == "random") return r_random::random_color();
     if (json == "random_pastel") return r_random::random_pastel_color();

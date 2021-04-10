@@ -113,7 +113,7 @@ static void add_CSG_difference(Scene& scene) {
     sphere1->set_specular(10);
     sphere2->set_specular(10);
 
-    scene.add_object(std::make_shared<CSG>(MINUS_INTERSECTION, sphere1, sphere2));
+    scene.add_object(std::make_shared<CSG>(DIFFERENCE, sphere1, sphere2));
 }
 
 static void add_CSG_intersection(Scene& scene) {
