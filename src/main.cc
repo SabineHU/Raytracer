@@ -1,8 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-#pragma GCC diagnostic ignored "-Wdelete-abstract-non-virtual-dtor"
-
-#include <vector>
 #include <cmath>
 #include <iostream>
 #include <cstdlib>
@@ -10,14 +5,6 @@
 
 #include "init.hh"
 #include "raytracer.hh"
-
-#include "scene1.hh"
-#include "scene2.hh"
-#include "scene3.hh"
-#include "scene4.hh"
-#include "scene5.hh"
-#include "scene6.hh"
-
 #include "scene_parser.hh"
 
 int main(int argc, char *argv[])
@@ -29,12 +16,11 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    auto path = argv[1];
-    SceneParser parser = SceneParser(path);
-
-    auto scene = parser.parse();
-
     std::srand(std::time(nullptr));
+
+    auto path = argv[1];
+    auto parser = SceneParser(path);
+    auto scene = parser.parse();
 
     int samples = 15;
     int depth = 50;
@@ -48,5 +34,3 @@ int main(int argc, char *argv[])
 
     return EXIT_SUCCESS;
 }
-
-#pragma GCC diagnostic pop
