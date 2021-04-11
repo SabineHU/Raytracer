@@ -21,3 +21,4 @@ ING2 - IMAGE
 * Obj loader
 * Add fog (linear, exp, square exp)
 * Blur from camera
+* Soft shadow

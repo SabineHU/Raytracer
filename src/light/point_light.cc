@@ -2,7 +2,6 @@
 
 PointLight::PointLight ()
     : position(Vect(0, 0, 0)), color(Color(1, 1, 1)), intensity(1)
-
 {}
 
 PointLight::PointLight (const Vect& p, const Color& c)

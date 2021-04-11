@@ -6,6 +6,7 @@
 #include <mutex>
 
 #include "options.hh"
+#include "random.hh"
 #include "raytracer.hh"
 #include "vector3_op.hh"
 #include "progress_bar.hh"
@@ -75,12 +76,10 @@ void render(image::Image& img, const Scene& scene, double accuracy, int samples,
                 IntersectionInfo info;
                 Ray cam_ray = scene.camera.get_ray(x, y);
 
-                if (scene.has_intersection(cam_ray, info, accuracy)) {
+                if (scene.has_intersection(cam_ray, info, accuracy))
                     pixel_color += get_color(scene, info, accuracy, depth);
-                } else {
+                else
                     pixel_color += scene.get_background_color(cam_ray);
-                }
-
             }
 
             pixel_color = pixel_color / (double) (samples);
@@ -105,22 +104,29 @@ static Color compute_one_light(const IntersectionInfo& info, const shared_light 
 
 Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info, double accuracy) {
     Color res_color;
-    for (const auto& light: scene.get_lights()) {
-        Vect light_direction = light->get_light_position() - info.ray_out.origin;
-        Vect light_direction_n = light_direction.normalize();
-        float cosine_angle = vector::dot(info.normal, light_direction_n);
+    int i = LIGHT_SAMPLES == 0 ? 1 : 0;
+    for (; i < LIGHT_SAMPLES; ++i) {
+        for (const auto& light: scene.get_lights()) {
+            Vect light_direction = light->get_light_position() - info.ray_out.origin;
+            Vect light_direction_n;
 
-        if (cosine_angle > 0) {
-            double distance_to_light_magnitude = light_direction.magnitude();
-            Ray shadow_ray(info.ray_out.origin, light_direction_n);
+            if (SOFT_SHADOWS)
+                light_direction_n = (light_direction + r_random::random_vector(-1, 1)).normalize();
+            else
+                light_direction_n = light_direction.normalize();
 
-            if (!scene.has_shadow(shadow_ray, distance_to_light_magnitude, accuracy)) {
-                res_color += compute_one_light(info, light, light_direction_n, cosine_angle);
+            float cosine_angle = vector::dot(info.normal, light_direction_n);
+            if (cosine_angle > 0) {
+                double distance_to_light_magnitude = light_direction.magnitude();
+                Ray shadow_ray(info.ray_out.origin, light_direction_n);
+
+                if (!scene.has_shadow(shadow_ray, distance_to_light_magnitude, accuracy))
+                    res_color += compute_one_light(info, light, light_direction_n, cosine_angle);
             }
         }
     }
 
-    return res_color;
+    return res_color / (double) LIGHT_SAMPLES;
 }
 
 static double fresnel(const Vect& dir, const Vect& normal, const double ior=1.33) {
