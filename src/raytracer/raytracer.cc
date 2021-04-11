@@ -104,8 +104,8 @@ static Color compute_one_light(const IntersectionInfo& info, const shared_light 
 
 Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info, double accuracy) {
     Color res_color;
-    int i = LIGHT_SAMPLES == 0 ? 1 : 0;
-    for (; i < LIGHT_SAMPLES; ++i) {
+    int samples = SOFT_SHADOWS && LIGHT_SAMPLES != 0 ? LIGHT_SAMPLES : 1;
+    for (int i = 0; i < samples; ++i) {
         for (const auto& light: scene.get_lights()) {
             Vect light_direction = light->get_light_position() - info.ray_out.origin;
             Vect light_direction_n;
@@ -126,7 +126,7 @@ Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info,
         }
     }
 
-    return res_color / (double) LIGHT_SAMPLES;
+    return res_color / (double) samples;
 }
 
 static double fresnel(const Vect& dir, const Vect& normal, const double ior=1.33) {

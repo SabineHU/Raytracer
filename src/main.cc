@@ -25,9 +25,9 @@ int main(int argc, char *argv[])
         auto parser = SceneParser(path);
         scene = parser.parse();
     } else
-        //scene = init_scene1();
+        scene = init_scene1();
         //scene = init_scene2();
-        scene = init_scene3();
+        //scene = init_scene3();
         //scene = init_scene4();
         //scene = init_scene5();
         //scene = init_scene6();

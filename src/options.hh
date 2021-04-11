@@ -1,7 +1,7 @@
 #pragma once
 
 #define MULTITHREADING true
-#define SOFT_SHADOWS true
+#define SOFT_SHADOWS false
 #define CAM_BLUR false
 
 #define SAMPLES 15
