@@ -79,5 +79,6 @@ bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
         info.v = OP.z;
     }
 
+    this->get_properties(info);
     return true;
 }

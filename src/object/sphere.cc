@@ -44,6 +44,7 @@ bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, Int
 
     info.t_min = roots[0];
     info.t_max = roots[1];
+    this->get_properties(info);
 
     return true;
 }

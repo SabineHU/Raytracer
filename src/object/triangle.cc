@@ -58,6 +58,7 @@ bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     info.u = u;
     info.v = v;
     info.normal = this->get_normal();
+    this->get_properties(info);
 
     return true;
 }

@@ -30,6 +30,7 @@ bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, Inte
     info.u = info.point.x / width;
     info.v = info.point.z / height;
     info.normal = normal;
+    this->get_properties(info);
 
     return true;
 }

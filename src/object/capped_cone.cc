@@ -37,6 +37,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
 
             info.point = ray.origin + ray.direction * t_max;
             compute_uv(info, dist);
+            this->get_properties(info);
 
             return true;
         }
@@ -49,6 +50,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
 
             info.point = ray.origin + ray.direction * t_max;
             compute_uv(info, dist);
+            this->get_properties(info);
 
             return true;
         }
@@ -79,6 +81,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
 
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
+        this->get_properties(info);
 
         return true;
     }

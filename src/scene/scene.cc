@@ -46,9 +46,6 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info, double accu
     info.dist = distance;
     info.ray_in = ray;
     info.ray_out = Ray(info.point, ray.direction);
-
-    closest_obj->get_properties(info);
-
     return true;
 }
 

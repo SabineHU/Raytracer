@@ -119,6 +119,7 @@ bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max, Inte
     t_max = c0;
     info.point = ray.origin + ray.direction * t_max;
     info.normal = this->get_normal(info.point);
+    this->get_properties(info);
 
     return true;
 }

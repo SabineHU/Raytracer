@@ -29,6 +29,7 @@ public:
         return this->texture->get_color(point, u, v);
     }
 
+    /* Used for uncomposed objects */
     virtual void get_properties(IntersectionInfo& info) const {
         info.color = this->get_color_at(info.point, info.u, info.v);
         auto bump = Object::get_bump_at(info.point);

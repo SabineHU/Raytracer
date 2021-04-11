@@ -43,6 +43,7 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
         t_max = t;
         info.point = ray.origin + ray.direction * t_max;
         info.normal = this->get_normal(info.point);
+        this->get_properties(info);
         return true;
     }
 
@@ -64,5 +65,6 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
     info.point = ray.origin + ray.direction * t_max;
     info.normal = this->get_normal(info.point);
 
+    this->get_properties(info);
     return true;
 }

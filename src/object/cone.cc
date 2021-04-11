@@ -60,6 +60,7 @@ bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     info.t_max = roots[1];
 
     info.normal = this->get_normal(info.point);
+    this->get_properties(info);
 
     return true;
 }

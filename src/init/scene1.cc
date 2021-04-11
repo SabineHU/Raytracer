@@ -100,7 +100,7 @@ static void add_CSG_spheres(Scene& scene) {
 }
 
 static void add_rotated_cube(Scene& scene) {
-    auto perlin4 = std::make_shared<PerlinNoise>(2, WOOD, Color(.314, .161, 0), Color(.392, .239, .004));
+    auto perlin4 = std::make_shared<PerlinNoise>(2, WOOD, Color(.514, .261, 0), Color(.592, .389, .004));
     auto cube = std::make_shared<Cube>(Point3(-1, -2, -1), 2);
     cube->set_texture(perlin4);
 

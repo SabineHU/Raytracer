@@ -33,6 +33,7 @@ bool PlaneHoled::find_intersection(const Ray& ray, double& t_min, double& t_max,
 
     t_max = x;
     info.normal = normal;
+    this->get_properties(info);
 
     return true;
 }

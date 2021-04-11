@@ -26,6 +26,7 @@ bool Rectangle_xy::find_intersection(const Ray& ray, double& t_min, double& t_ma
 
         info.u = (p.x - p1.x) / (p2.x - p1.x);
         info.v = (p.y - p1.y) / (p2.y - p1.y);
+        this->get_properties(info);
 
         return true;
     }
