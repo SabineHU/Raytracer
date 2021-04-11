@@ -16,7 +16,7 @@ PlaneHoled::PlaneHoled(const Vect& n, double d, double u, double v)
     : Plane(n, d), scale_u(u), scale_v(v)
 {}
 
-bool PlaneHoled::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool PlaneHoled::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     double a = vector::dot(ray.direction, normal);
     if (a == 0) return false;
 

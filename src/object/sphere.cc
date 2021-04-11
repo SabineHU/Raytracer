@@ -17,7 +17,7 @@ Vect Sphere::get_normal(const Point3& point) const {
     return point - center;
 }
 
-bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Sphere::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     auto oc = ray.origin - this->center;
 
     //double a = 1; // normalized

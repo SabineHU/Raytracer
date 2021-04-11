@@ -24,7 +24,7 @@ Vect RotatedObject::get_normal(const Vect& normal) const {
     }
 }
 
-bool RotatedObject::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool RotatedObject::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     Point3 orig, dir;
     /* Rotate ray */
     switch (axis) {

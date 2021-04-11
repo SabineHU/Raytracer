@@ -49,24 +49,8 @@ public:
     Polygon();
     Polygon(std::vector<Vect> v, std::vector<Vect> n, std::vector<Vect2> t, std::vector<Face> f);
 
-    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) override;
-
-    virtual Color get_color_at(const Point3& point, double u, double v) const override;
-
-    /* Setters / Add */
-    void add_vertice(const Vect& v) { m_vertices.push_back(v); }
-    void add_normal(const Vect& v) { m_normals.push_back(v); }
-    void add_texture(const Vect2& v) { m_textures.push_back(v); }
-    void add_face(const Face& v) { m_faces.push_back(v); }
+    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const override;
 
 private:
-    std::vector<Vect> m_vertices;
-    std::vector<Vect> m_normals;
-    std::vector<Vect2> m_textures;
-    std::vector<Face> m_faces;
-
     std::vector<std::shared_ptr<SmoothTriangle>> triangles;
-
-    std::shared_ptr<SmoothTriangle> triangle;
-    Vect normal;
 };

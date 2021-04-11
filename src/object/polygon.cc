@@ -3,12 +3,12 @@
 #include "smooth_triangle.hh"
 
 Polygon::Polygon()
-    : Object(), triangle(nullptr)
+    : Object()
 {}
 
 Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
         std::vector<Vect2> textures, std::vector<Face> faces)
-    : Object(), m_vertices(vertices), m_normals(normals), m_textures(textures), m_faces(faces)
+    : Object()
 {
     this->triangles = std::vector<std::shared_ptr<SmoothTriangle>>();
 
@@ -31,17 +31,12 @@ Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
     }
 }
 
-bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     bool found = false;
     for (auto &t : this->triangles)
         if (t->find_intersection(ray, t_min, t_max, info)) {
-            this->triangle = t;
             found = true;
     }
 
     return found;
-}
-
-Color Polygon::get_color_at(const Point3& p, double u, double v) const {
-    return triangle->get_color_at(p, u, v);
 }

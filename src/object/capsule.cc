@@ -19,7 +19,7 @@ Vect Capsule::get_normal(const Point3& point) const {
     return ((pa + ba * -h) / radius);
 }
 
-bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
     double dist = axis.square_length();

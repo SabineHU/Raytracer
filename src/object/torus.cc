@@ -85,7 +85,7 @@ static void init_xr(double& x, double& r, double c1, double c2, double R, double
     r = 2 * c1 / (x * x + y * y);
 }
 
-bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     bool positive = true;
 
     double k0, k1, k2, k3;

@@ -22,7 +22,7 @@ public:
     Object(shared_texture t, double s) : texture(t), displacement(std::nullopt), specular(s), depth(5) {}
 
     /* Methods */
-    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) = 0;
+    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const = 0;
     virtual int get_isolevel_at(const Point3&) const { return 100; }
 
     virtual Color get_color_at(const Point3& point, double u, double v) const {

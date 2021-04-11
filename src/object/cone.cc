@@ -25,7 +25,7 @@ static void compute_uv(IntersectionInfo& info, double dist) {
     info.v = -info.point.z / dist;
 }
 
-bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     const Vect dir = ray.direction;
 
     // Position Origin vector

@@ -17,7 +17,7 @@ static void compute_uv(IntersectionInfo& info, double dist) {
     info.v = -info.point.z / dist;
 }
 
-bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     Vect axis = this->bottom - this->top;
     Vect ot = ray.origin - this->top;
     Vect ob = ray.origin - this->bottom;

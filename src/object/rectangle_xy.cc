@@ -9,7 +9,7 @@ Rectangle_xy::Rectangle_xy(const Vect& u, const Vect& v)
     : p1(u), p2(v)
 {}
 
-bool Rectangle_xy::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Rectangle_xy::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     double t = (this->p1.z - ray.origin.z) / ray.direction.z;
     if (t <= t_min || t >= t_max) return false;
 

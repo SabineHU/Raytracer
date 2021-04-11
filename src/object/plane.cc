@@ -16,7 +16,7 @@ Plane::Plane(const Vect& n, double d)
     texture = std::make_shared<Lambertian>(color);
 }
 
-bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     double a = vector::dot(ray.direction, normal);
     if (a == 0) return false;
 

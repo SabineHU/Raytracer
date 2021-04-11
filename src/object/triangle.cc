@@ -27,7 +27,7 @@ Vect Triangle::get_normal() const {
     return this->normal;
 }
 
-bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
+bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     auto v0v1 = B - A;
     auto v0v2 = C - A;
 

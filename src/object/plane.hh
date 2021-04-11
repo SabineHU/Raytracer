@@ -9,7 +9,7 @@ public:
     Plane(const Vect&, double);
 
     /* Methods */
-    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) override;
+    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const override;
 
     void set_height(double h) { height = h; }
     void set_width(double w) { width = w; }

@@ -9,7 +9,7 @@ public:
     Torus(const Point3&);
 
     /* Methods */
-    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) override;
+    virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const override;
 
 private:
     Vect get_normal(const Point3& point) const;
