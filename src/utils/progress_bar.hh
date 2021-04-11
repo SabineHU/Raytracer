@@ -25,10 +25,15 @@ class ProgressBar
 
         ~ProgressBar() { _stream << '\n'; }
 
+        /* Methods */
         void write(int nb, int max) const;
         void write(double fraction) const;
 
+        /* Getters */
+        PrintType get_type() const { return _type; }
+
     private:
+        void write_time() const;
         void write_progress_bar(double fraction) const;
 
         /* Attributes */
@@ -56,11 +61,14 @@ void ProgressBar::write_progress_bar(double fraction) const {
 
     _stream << "] " << std::setprecision(1) << std::fixed << 100 * fraction << "% | ";
 
+    write_time();
+}
+
+void ProgressBar::write_time() const {
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed = end - _start;
 
     _stream << elapsed.count() << "s\r";
-
     _stream << std::flush;
 }
 
@@ -69,7 +77,8 @@ void ProgressBar::write(int nb, int max) const {
     case NO_PRINT:
         return;
     case FRACTION:
-        _stream << '\r' << nb << " / " << max << '\r' << std::flush;
+        _stream << '\r' << nb << " / " << max << " | ";
+        write_time();
         return;
     default:
         write_progress_bar((double) nb / (double) max);
@@ -82,7 +91,8 @@ void ProgressBar::write(double fraction) const {
     case NO_PRINT:
         return;
     case FRACTION:
-        _stream << '\r' << fraction << '\r' << std::flush;
+        _stream << '\r' << fraction << " | ";
+        write_time();
         return;
     default:
         write_progress_bar(fraction);

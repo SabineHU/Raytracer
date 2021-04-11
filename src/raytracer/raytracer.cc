@@ -83,7 +83,6 @@ void render(image::Image& img, const Scene& scene, double accuracy, int samples,
             img.set_pixel_color(i, j, pixel_color);
         }
     }
-    std::cerr << "\nDone" << std::endl;
 }
 
 static Color compute_one_light(const IntersectionInfo& info, const shared_light light,
@@ -196,10 +195,13 @@ void render_square(const ImageSquare square, image::Image& img, const Scene& sce
             pixel_color = pixel_color / (double) (samples);
             img.set_pixel_color(i, j, pixel_color);
 
-            mtx.lock();
-            ++nb_written_pixels;
-            progress.write(nb_written_pixels, nb_pixels);
-            mtx.unlock();
+
+            if (progress.get_type() != NO_PRINT) {
+                mtx.lock();
+                ++nb_written_pixels;
+                progress.write(nb_written_pixels, nb_pixels);
+                mtx.unlock();
+            }
         }
     }
 }
