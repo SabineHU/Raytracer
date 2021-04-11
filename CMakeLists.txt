@@ -79,9 +79,9 @@ project(Raytracer)
 set(CMAKE_CXX_STANDARD 17)
 
 # Add -Wall -Wextra -pedantic if you want warnings
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OPT_FLAGS}")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-inline -pthread")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OPT_FLAGS} -pthread")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3 -pthread")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 

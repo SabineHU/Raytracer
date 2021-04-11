@@ -67,7 +67,7 @@ bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     info.normal = nmin;
 
     auto OP = (info.point - position) / side;
-    if(std::fabs(nmin.z) > std::fabs(nmin.x)
+    if (std::fabs(nmin.z) > std::fabs(nmin.x)
             && std::fabs(nmin.z) > std::fabs(nmin.y)) {
         info.u = OP.x;
         info.v = OP.y;

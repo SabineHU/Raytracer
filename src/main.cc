@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
     } else
         //scene = init_scene1();
         //scene = init_scene2();
-        scene = init_scene3();
+        //scene = init_scene3();
         //scene = init_scene4();
         //scene = init_scene5();
-        //scene = init_scene6();
+        scene = init_scene6();
         //scene = init_default_scene();
 
     int samples = 15;
@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
     double accuracy = 0.00000001;
     image::Image img = init_image(20, 1000);
 
-    render(img, scene, accuracy, samples, depth);
+    render_multithreading(img, scene, accuracy, samples, depth);
+    //render(img, scene, accuracy, samples, depth);
     img.save();
 
     return EXIT_SUCCESS;

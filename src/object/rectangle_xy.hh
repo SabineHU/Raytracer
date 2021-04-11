@@ -14,6 +14,4 @@ private:
     /* Attributes */
     Vect p1; // lower left
     Vect p2; // top right
-
-    Vect normal;
 };

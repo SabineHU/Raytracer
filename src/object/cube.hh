@@ -14,6 +14,4 @@ private:
     /* Attributes */
     Point3 position; // lower left front
     double side;
-
-    Vect normal;
 };

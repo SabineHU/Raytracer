@@ -17,6 +17,4 @@ private:
     Point3 top;
     double radius_bottom;
     double radius_top;
-
-    Vect normal;
 };

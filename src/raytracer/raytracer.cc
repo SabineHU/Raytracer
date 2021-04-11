@@ -8,6 +8,7 @@
 #include "raytracer.hh"
 #include "vector3_op.hh"
 #include "progress_bar.hh"
+#include "image_square.hh"
 
 static void set_index_x_y(double& x, double& y, double samples, int i, int j, double k,
         double width, double height) {
@@ -167,4 +168,63 @@ Color compute_refraction_reflection(const Scene& scene, const IntersectionInfo& 
         return (reflect * kr + refract * (1 - kr) * info.kt) * info.color;
 
     return reflect * kr + refract * (1 - kr);
+}
+
+void render_square(const ImageSquare square, image::Image& img, const Scene& scene, double accuracy, int samples, int depth) {
+    for (int i = square.i_min; i < square.i_max; ++i) {
+        for (int j = square.j_min; j < square.j_max; ++j) {
+            Color pixel_color(0, 0, 0);
+            for (int k = 0; k < samples; ++k) {
+
+                double x, y;
+                set_index_x_y(x, y, samples, i, j, k, img.get_width(), img.get_height());
+
+                IntersectionInfo info;
+                Ray cam_ray = scene.camera.get_ray(x, y);
+
+                if (scene.has_intersection(cam_ray, info, accuracy)) {
+                    pixel_color += get_color(scene, info, accuracy, depth);
+                } else {
+                    pixel_color += scene.get_background_color(cam_ray);
+                }
+
+            }
+
+            pixel_color = pixel_color / (double) (samples);
+            img.set_pixel_color(i, j, pixel_color);
+        }
+    }
+}
+
+
+static std::vector<ImageSquare> compute_image_square(const image::Image& img, int cores) {
+    std::vector<ImageSquare> squares;
+
+    int square_width = img.get_width() / cores * 2;
+    int square_height = img.get_height() / 2;
+
+    if (img.get_width() % square_width != 0)
+        square_width += 1;
+
+    for (int i = 0; i < img.get_width(); i += square_width) {
+        int i_max = std::min(i + square_width, img.get_width());
+        squares.emplace_back(i, 0, i_max, square_height);
+        squares.emplace_back(i, square_height, i_max, img.get_height());
+    }
+
+
+    return squares;
+}
+
+void render_multithreading(image::Image& img, const Scene& scene, double accuracy, int samples, int depth) {
+    int cores = std::thread::hardware_concurrency();
+    auto squares = compute_image_square(img, cores);
+
+    std::vector<std::future<void>> futures;
+    for (int i = 0; i < cores; i++) {
+        futures.push_back(std::async(std::launch::async, render_square, squares[i], std::ref(img), std::ref(scene), accuracy, samples, depth));
+    }
+    for (auto &f : futures) {
+        f.get();
+    }
 }
