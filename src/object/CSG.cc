@@ -8,10 +8,6 @@ CSG::CSG(ObjectOperator o, shared_object s1, shared_object s2)
     specular = 0;
 }
 
-Vect CSG::get_normal_at(const Point3& point, double u, double v) const {
-    return obj1_closest ? obj1->get_normal_at(point, u, v) : obj2->get_normal_at(point, u, v);
-}
-
 bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     double t_max1 = t_max;
     double t_max2 = t_max;
@@ -30,19 +26,26 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
 
             /* Intersect both */
             if (found1 && found2) {
-                if (t_max1 < t_max2) obj1_closest = true;
-                else obj1_closest = false;
+                if (t_max1 < t_max2) {
+                    obj1_closest = true;
+                    info = info1;
+                } else {
+                    obj1_closest = false;
+                    info = info2;
+                }
 
                 t_max = std::min(t_max1, t_max2);
                 info.t_min = std::min(info1.t_min, info2.t_min);
                 info.t_max = std::max(info1.t_max, info2.t_max);
             } else if (found1) {
                 t_max = t_max1;
+                info = info1;
                 info.t_min = info1.t_min;
                 info.t_max = info1.t_max;
                 obj1_closest = true;
             } else if (found2) {
                 t_max = t_max2;
+                info = info2;
                 info.t_min = info2.t_min;
                 info.t_max = info2.t_max;
                 obj1_closest = false;
@@ -62,6 +65,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info = info1;
 
                 info.t_min = info2.t_min;
                 info.t_max = info2.t_max;
@@ -73,6 +77,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info2.t_min;
                 obj1_closest = false;
+                info = info2;
 
                 info.t_min = info1.t_min;
                 info.t_max = info1.t_max;
@@ -93,6 +98,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = t_max1;
                 obj1_closest = true;
+                info = info1;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -104,6 +110,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info = info1;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -113,6 +120,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info = info1;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -121,6 +129,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info = info1;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -129,6 +138,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             if (info2.t_max < info1.t_max) {
                 t_max = info2.t_max;
                 obj1_closest = false;
+                info = info2;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -148,6 +158,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info1.t_min;
                 obj1_closest = true;
+                info = info1;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -157,6 +168,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info2.t_min;
                 obj1_closest = false;
+                info = info2;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -167,6 +179,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info2.t_min;
                 obj1_closest = true;
+                info = info1;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;
@@ -175,6 +188,7 @@ bool CSG::find_intersection(const Ray& ray, double& t_min, double& t_max, Inters
             {
                 t_max = info2.t_max;
                 obj1_closest = false;
+                info = info2;
                 info.point = ray.origin + ray.direction * t_max;
 
                 return true;

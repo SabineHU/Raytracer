@@ -12,7 +12,7 @@ SmoothTriangle::SmoothTriangle(const Point3& a, const Point3& b,
 
 Vect SmoothTriangle::get_normal_at(const Point3& point, double u, double v) const {
     if (normalA.is_zero() && normalB.is_zero() && normalC.is_zero())
-        return Triangle::get_normal_at(point, u, v);
+        return Triangle::get_normal();
 
     auto normal = normalA * (1 - u - v) + normalB * u + normalC * v;
     return (normal + Object::get_bump_at(point)).normalize();

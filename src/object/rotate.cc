@@ -10,8 +10,7 @@ RotatedObject::RotatedObject(shared_object o, double deg, Axis a)
     this->cos = std::cos(theta);
 }
 
-Vect RotatedObject::get_normal_at(const Point3& point, double u, double v) const {
-    auto normal = this->obj->get_normal_at(point, u, v);
+Vect RotatedObject::get_normal(const Vect& normal) const {
     // Rotation of -theta
     // sin(-theta) = -sin(theta)
     // cos(-theta) =  cos(theta)
@@ -58,6 +57,7 @@ bool RotatedObject::find_intersection(const Ray& ray, double& t_min, double& t_m
         break;
     }
 
+    info.normal = this->get_normal(info.normal);
     return true;
 }
 

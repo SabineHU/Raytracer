@@ -4,17 +4,12 @@
 #include "vector3_op.hh"
 
 Cylinder::Cylinder()
-    : Object(), bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1),
-    normal(Vect())
+    : Object(), bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)), radius(1)
 {}
 
 Cylinder::Cylinder(const Point3& b, const Point3& t, double r)
-    : Object(), bottom(b), top(t), radius(r), normal(Vect())
+    : Object(), bottom(b), top(t), radius(r)
 {}
-
-Vect Cylinder::get_normal_at(const Point3& point, double, double) const {
-    return (normal + Object::get_bump_at(point)).normalize();
-}
 
 static void compute_uv(IntersectionInfo& info, double dist) {
     info.u = 0.5 + atan2(info.point.x, info.point.y) / (2 * math::pi);
@@ -44,7 +39,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     // Tube
     double y = dir * t + offs;
     if (y > 0 && y < dist && t > t_min && t < t_max) {
-        normal = (oc + ray.direction * t - axis * y / dist) / radius;
+        info.normal = (oc + ray.direction * t - axis * y / dist) / radius;
         t_max = t;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
@@ -59,7 +54,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     t = - offs / dir;
     if (std::abs(a * t + b) < discriminant && t > t_min && t < t_max) {
         t_max = t;
-        normal = axis / -dist;
+        info.normal = axis / -dist;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
 
@@ -73,7 +68,7 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     t = (dist - offs) / dir;
     if (std::abs(a * t + b) < discriminant && t > t_min && t < t_max) {
         t_max = t;
-        normal = axis / dist;
+        info.normal = axis / dist;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);
 

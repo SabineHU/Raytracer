@@ -7,6 +7,13 @@
 #include "raytracer.hh"
 #include "scene_parser.hh"
 
+#include "scene1.hh"
+#include "scene2.hh"
+#include "scene3.hh"
+#include "scene4.hh"
+#include "scene5.hh"
+#include "scene6.hh"
+
 int main(int argc, char *argv[])
 {
     std::srand(std::time(nullptr));
@@ -17,7 +24,13 @@ int main(int argc, char *argv[])
         auto parser = SceneParser(path);
         scene = parser.parse();
     } else
-        scene = init_default_scene();
+        //scene = init_scene1();
+        //scene = init_scene2();
+        scene = init_scene3();
+        //scene = init_scene4();
+        //scene = init_scene5();
+        //scene = init_scene6();
+        //scene = init_default_scene();
 
     int samples = 15;
     int depth = 50;

@@ -5,16 +5,12 @@
 #include "tools.hh"
 
 Cube::Cube()
-    : Object(), position(Point3(0, 0, 0)), side(1), normal(Vect())
+    : Object(), position(Point3(0, 0, 0)), side(1)
 {}
 
 Cube::Cube(const Point3& p, double s)
-    : Object(), position(p), side(s), normal(Vect())
+    : Object(), position(p), side(s)
 {}
-
-Vect Cube::get_normal_at(const Point3& point, double, double) const {
-    return (normal + Object::get_bump_at(point)).normalize();
-}
 
 static bool compute_axis(double& max, double& min, double& max_v, double& min_v, Vect& nmax, Vect& nmin, int axis) {
     Vect nmin_v = Vect(0, -1, 0);
@@ -67,7 +63,6 @@ bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     info.t_min = min;
 
     t_max = min;
-    this->normal = nmin;
     info.point = ray.origin + ray.direction * t_max;
     info.normal = nmin;
 

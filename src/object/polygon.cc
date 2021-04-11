@@ -31,10 +31,6 @@ Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
     }
 }
 
-Vect Polygon::get_normal_at(const Point3& p, double u, double v) const {
-    return triangle->get_normal_at(p, u, v);
-}
-
 bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
     bool found = false;
     for (auto &t : this->triangles)

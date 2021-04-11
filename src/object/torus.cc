@@ -11,11 +11,11 @@ Torus::Torus(const Point3& p)
     : Object(), position(p)
 {}
 
-Vect Torus::get_normal_at(const Point3& point, double, double) const {
+Vect Torus::get_normal(const Point3& point) const {
     auto x = Vect(1, 1, -1) * position.x * position.x;
     auto y = point.square_length() - position.y * position.y;
 
-    return (point * (x * -1 + y) + Object::get_bump_at(point)).normalize();
+    return point * (x * -1 + y);
 }
 
 static double get_double_inv_condition(double x, double r, double k, bool sgn) {
@@ -118,6 +118,7 @@ bool Torus::find_intersection(const Ray& ray, double& t_min, double& t_max, Inte
     if (c0 <= t_min || c0 >= t_max) return false;
     t_max = c0;
     info.point = ray.origin + ray.direction * t_max;
+    info.normal = this->get_normal(info.point);
 
     return true;
 }

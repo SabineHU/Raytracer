@@ -23,17 +23,8 @@ Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c, const Vect
     : Object(), A(a), B(b), C(c), normal(n)
 {}
 
-Vect Triangle::get_normal_at(const Point3& point, double, double) const {
-    // Normal is the same at any point of the triangle
-    return (this->normal + Object::get_bump_at(point)).normalize();
-}
-
 Vect Triangle::get_normal() const {
-    return this->get_normal_at(Vect(), 0, 0);
-}
-
-double Triangle::get_distance() const {
-    return vector::dot(this->get_normal(), A);
+    return this->normal;
 }
 
 bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
@@ -66,6 +57,7 @@ bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     info.point = ray.origin + ray.direction * t_max;
     info.u = u;
     info.v = v;
+    info.normal = this->get_normal();
 
     return true;
 }

@@ -22,7 +22,6 @@ public:
     Object(shared_texture t, double s) : texture(t), displacement(std::nullopt), specular(s), depth(5) {}
 
     /* Methods */
-    virtual Vect get_normal_at(const Point3& point, double u, double v) const = 0;
     virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) = 0;
     virtual int get_isolevel_at(const Point3&) const { return 100; }
 
@@ -32,7 +31,10 @@ public:
 
     virtual void get_properties(IntersectionInfo& info) const {
         info.color = this->get_color_at(info.point, info.u, info.v);
-        info.normal = this->get_normal_at(info.point, info.u, info.v);
+        auto bump = Object::get_bump_at(info.point);
+        auto disp = Object::get_displacement_at(info.point, info.u, info.v);
+
+        info.normal = ((info.normal + bump).normalize() + disp * 50).normalize();
 
         info.specular = this->specular;
         info.texture = this->texture;

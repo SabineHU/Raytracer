@@ -136,7 +136,7 @@ Scene init_scene6() {
     Camera cam = init_camera();
     Scene scene(cam, Color(.5, .5, .5));
     //scene.set_fog(20, LINEAR);
-    scene.set_fog(20, EXP);
+    //scene.set_fog(20, EXP);
     //scene.set_fog(20, SQUARE_EXP);
     //scene.set_fog(10, EXP);
     init_lights(scene);

@@ -265,7 +265,7 @@ Scene init_scene3() {
     Camera cam = init_camera(1);
 
     Scene scene(cam, Color(.5, .5, .5));
-    add_lights(scene, 2);
+    add_lights(scene, 1);
 
     add_plane(scene, 1);
 

@@ -5,17 +5,12 @@
 
 CappedCone::CappedCone()
     : Object(), bottom(Point3(0, 0, 0)), top(Point3(0, 1, 0)),
-    radius_bottom(2), radius_top(1), normal(Vect())
+    radius_bottom(2), radius_top(1)
 {}
 
 CappedCone::CappedCone(const Point3& b, const Point3& t, double br, double tr)
-    : Object(), bottom(b), top(t), radius_bottom(br), radius_top(tr),
-    normal(Vect())
+    : Object(), bottom(b), top(t), radius_bottom(br), radius_top(tr)
 {}
-
-Vect CappedCone::get_normal_at(const Point3& point, double, double) const {
-    return (normal + Object::get_bump_at(point)).normalize();
-}
 
 static void compute_uv(IntersectionInfo& info, double dist) {
     info.u = 0.5 + atan2(info.point.x, info.point.y) / (2 * math::pi);
@@ -38,7 +33,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
         if ((ot * dir - ray.direction * offtop).square_length() < r)
         {
             t_max = -offtop / dir;
-            this->normal = axis.negative() / std::sqrt(dist);
+            info.normal = axis.negative() / std::sqrt(dist);
 
             info.point = ray.origin + ray.direction * t_max;
             compute_uv(info, dist);
@@ -50,7 +45,7 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
         if ((ob * dir - ray.direction * offbot).square_length() < r)
         {
             t_max = -offbot / dir;
-            this->normal = axis / std::sqrt(dist);
+            info.normal = axis / std::sqrt(dist);
 
             info.point = ray.origin + ray.direction * t_max;
             compute_uv(info, dist);
@@ -80,10 +75,9 @@ bool CappedCone::find_intersection(const Ray& ray, double& t_min, double& t_max,
     {
         t_max = t;
         auto n = (ot + ray.direction * t) * dist + axis * r * radius_top;
-        this->normal = (n * dist - axis * h * y).normalize();
+        info.normal = (n * dist - axis * h * y);
 
         info.point = ray.origin + ray.direction * t_max;
-        info.normal = (n * dist - axis * h * y).normalize();
         compute_uv(info, dist);
 
         return true;

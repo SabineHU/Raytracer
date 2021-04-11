@@ -118,12 +118,12 @@ Scene init_scene1() {
     add_water_plane(scene);
 
     add_boat(scene);
-    //add_rotated_cube(scene); // To add
+    add_rotated_cube(scene);
     add_sphere(scene); // Bottom right
     add_sphere2(scene);
     add_capsule(scene);
     add_ellipsoid(scene);
-    //add_CSG_spheres(scene); // To add
+    add_CSG_spheres(scene);
 
     return scene;
 }

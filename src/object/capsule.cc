@@ -11,12 +11,12 @@ Capsule::Capsule(const Point3& b, const Point3& t, double r)
     : Object(), bottom(b), top(t), radius(r)
 {}
 
-Vect Capsule::get_normal_at(const Point3& point, double, double) const {
+Vect Capsule::get_normal(const Point3& point) const {
     Vect ba = bottom - top;
     Vect pa = point - top;
     double h = std::min(std::max(vector::dot(pa, ba) / vector::dot(ba, ba), 0.0), 1.0);
 
-    return ((pa + ba * -h) / radius + Object::get_bump_at(point)).normalize();
+    return ((pa + ba * -h) / radius);
 }
 
 bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
@@ -42,6 +42,7 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
     if (y > 0 && y < dist && t > t_min && t < t_max) {
         t_max = t;
         info.point = ray.origin + ray.direction * t_max;
+        info.normal = this->get_normal(info.point);
         return true;
     }
 
@@ -61,6 +62,7 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
 
     t_max = t;
     info.point = ray.origin + ray.direction * t_max;
+    info.normal = this->get_normal(info.point);
 
     return true;
 }

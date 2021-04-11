@@ -12,8 +12,8 @@ Ellipsoid::Ellipsoid(const Vect& cent, const Vect& rad)
     : Object(), center(cent), radius(rad)
 {}
 
-Vect Ellipsoid::get_normal_at(const Point3& point, double, double) const {
-    return ((point - center) / radius + Object::get_bump_at(point)).normalize();
+Vect Ellipsoid::get_normal(const Point3& point) const {
+    return (point - center) / radius;
 }
 
 bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) {
@@ -34,6 +34,7 @@ bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, 
 
     t_max = t;
     info.point = ray.origin + ray.direction * t_max;
+    info.normal = this->get_normal(info.point);
 
     return true;
 }

@@ -12,12 +12,12 @@ Cone::Cone(const Point3& p, double r, double h)
     : Object(), position(p), radius(r), height(h)
 {}
 
-Vect Cone::get_normal_at(const Point3& point, double, double) const {
+Vect Cone::get_normal(const Point3& point) const {
     // center of cone and intersection point vector
     Vect PP = point - this->position;
     double r = std::sqrt(PP.dot_x() + PP.dot_z());
 
-    return (Vect(PP.x, r * this->radius / this->height, PP.z) + Object::get_bump_at(point)).normalize();
+    return Vect(PP.x, r * this->radius / this->height, PP.z);
 }
 
 static void compute_uv(IntersectionInfo& info, double dist) {
@@ -58,6 +58,8 @@ bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
 
     info.t_min = roots[0];
     info.t_max = roots[1];
+
+    info.normal = this->get_normal(info.point);
 
     return true;
 }
