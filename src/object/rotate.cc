@@ -61,11 +61,6 @@ bool RotatedObject::find_intersection(const Ray& ray, double& t_min, double& t_m
     return true;
 }
 
-int RotatedObject::get_isolevel_at(const Point3&) const {
-    // TODO: isolevel
-    return 100;
-}
-
 Color RotatedObject::get_color_at(const Point3& point, double u, double v) const {
     return this->obj->get_color_at(point, u, v);
 }

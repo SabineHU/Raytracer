@@ -57,6 +57,5 @@ int Sphere::get_isolevel_at(const Point3& point) const {
         if (distance > (radius * i / 100) * (radius * i / 100))
             return i - 100;
     }
-    
     return 0;
 }

@@ -24,7 +24,7 @@ public:
     /* Methods */
     virtual Vect get_normal_at(const Point3& point, double u, double v) const = 0;
     virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) = 0;
-    virtual int get_isolevel_at(const Point3&) const = 0;
+    virtual int get_isolevel_at(const Point3&) const { return 100; }
 
     virtual Color get_color_at(const Point3& point, double u, double v) const {
         return this->texture->get_color(point, u, v);

@@ -46,10 +46,6 @@ bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, In
     return found;
 }
 
-int Polygon::get_isolevel_at(const Point3&) const {
-    return 100;
-}
-
 Color Polygon::get_color_at(const Point3& p, double u, double v) const {
     return triangle->get_color_at(p, u, v);
 }

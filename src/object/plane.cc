@@ -39,8 +39,3 @@ bool Plane::find_intersection(const Ray& ray, double& t_min, double& t_max, Inte
 
     return true;
 }
-
-int Plane::get_isolevel_at(const Point3&) const {
-    // TODO
-    return 100;
-}

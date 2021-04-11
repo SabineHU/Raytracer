@@ -86,8 +86,3 @@ bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
 
     return true;
 }
-
-int Cube::get_isolevel_at(const Point3&) const {
-    // TODO
-    return 100;
-}

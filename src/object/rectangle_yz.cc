@@ -36,8 +36,3 @@ bool Rectangle_yz::find_intersection(const Ray& ray, double& t_min, double& t_ma
 
     return false;
 }
-
-int Rectangle_yz::get_isolevel_at(const Point3&) const {
-    // TODO: isolevel
-    return 100;
-}

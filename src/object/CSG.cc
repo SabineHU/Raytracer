@@ -198,7 +198,3 @@ void CSG::get_properties(IntersectionInfo& info) const {
     else
         obj2->get_properties(info);
 }
-
-int CSG::get_isolevel_at(const Point3& p) const {
-    return std::min(obj1->get_isolevel_at(p), obj2->get_isolevel_at(p));
-}

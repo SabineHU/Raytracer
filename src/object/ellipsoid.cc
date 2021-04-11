@@ -37,8 +37,3 @@ bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, 
 
     return true;
 }
-
-int Ellipsoid::get_isolevel_at(const Point3&) const {
-    // TODO
-    return 100;
-}

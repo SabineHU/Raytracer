@@ -17,8 +17,3 @@ bool TranslatedObject::find_intersection(const Ray& ray, double& t_min, double& 
 
     return true;
 }
-
-int TranslatedObject::get_isolevel_at(const Point3&) const {
-    // TODO: isolevel
-    return 100;
-}
