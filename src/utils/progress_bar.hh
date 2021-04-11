@@ -6,11 +6,18 @@
 #include <string>
 #include <chrono>
 
+enum PrintType {
+    NO_PRINT,
+    FRACTION,
+    PROGRESS_BAR
+};
+
 class ProgressBar
 {
     public:
-        ProgressBar(std::ostream& stream, std::size_t width)
-            : _stream{stream}, _width(width), _start(std::chrono::system_clock::now()) {}
+        ProgressBar(std::ostream& stream, std::size_t width, PrintType type = FRACTION)
+            : _stream{stream}, _width(width), _start(std::chrono::system_clock::now()), _type(type)
+        {}
 
         // Not copyable
         ProgressBar(const ProgressBar&) = delete;
@@ -18,15 +25,20 @@ class ProgressBar
 
         ~ProgressBar() { _stream << '\n'; }
 
-        void write(double fraction);
+        void write(int nb, int max) const;
+        void write(double fraction) const;
 
     private:
+        void write_progress_bar(double fraction) const;
+
+        /* Attributes */
         std::ostream& _stream;
         std::size_t _width;
         std::chrono::system_clock::time_point _start;
+        PrintType _type;
 };
 
-void ProgressBar::write(double fraction) {
+void ProgressBar::write_progress_bar(double fraction) const {
     if (fraction < 0)
         fraction = 0;
 
@@ -50,4 +62,30 @@ void ProgressBar::write(double fraction) {
     _stream << elapsed.count() << "s\r";
 
     _stream << std::flush;
+}
+
+void ProgressBar::write(int nb, int max) const {
+    switch (_type) {
+    case NO_PRINT:
+        return;
+    case FRACTION:
+        _stream << '\r' << nb << " / " << max << '\r' << std::flush;
+        return;
+    default:
+        write_progress_bar((double) nb / (double) max);
+        return;
+    }
+}
+
+void ProgressBar::write(double fraction) const {
+    switch (_type) {
+    case NO_PRINT:
+        return;
+    case FRACTION:
+        _stream << '\r' << fraction << '\r' << std::flush;
+        return;
+    default:
+        write_progress_bar(fraction);
+        return;
+    }
 }

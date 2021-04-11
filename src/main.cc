@@ -14,6 +14,8 @@
 #include "scene5.hh"
 #include "scene6.hh"
 
+#define MULTITHREADING true
+
 int main(int argc, char *argv[])
 {
     std::srand(std::time(nullptr));
@@ -37,9 +39,11 @@ int main(int argc, char *argv[])
     double accuracy = 0.00000001;
     image::Image img = init_image(20, 1000);
 
-    render_multithreading(img, scene, accuracy, samples, depth);
-    //render(img, scene, accuracy, samples, depth);
-    img.save();
+    if (MULTITHREADING)
+        render_multithreading(img, scene, accuracy, samples, depth);
+    else
+        render(img, scene, accuracy, samples, depth);
 
+    img.save();
     return EXIT_SUCCESS;
 }
