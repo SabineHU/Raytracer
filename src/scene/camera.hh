@@ -9,8 +9,8 @@ public:
     Camera();
     Camera(const Vect&, const Vect&, const Vect&);
 
-    Vect get_position() const { return campos; }
     Ray get_ray(double x, double y) const;
+    Vect get_position() const { return campos; }
 
 private:
     Vect get_ray_direction(double x, double y) const;

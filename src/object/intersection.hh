@@ -7,7 +7,7 @@ class IntersectionInfo {
 public:
     IntersectionInfo() = default;
 
-    IntersectionInfo operator=(const IntersectionInfo& info) {
+    IntersectionInfo& operator=(const IntersectionInfo& info) {
         dist        = info.dist;
         point       = info.point;
         ray_in      = info.ray_in;

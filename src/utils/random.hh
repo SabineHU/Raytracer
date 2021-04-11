@@ -51,4 +51,13 @@ inline void shuffle(int* p, int n) {
     }
 }
 
+inline Vect random_unit_sphere() {
+    Vect point;
+    do {
+        point = Vect(random_double(-.5, .5), random_double(-.5, .5), 0);
+    } while (point.square_length() >= 1);
+
+    return point;
+}
+
 }

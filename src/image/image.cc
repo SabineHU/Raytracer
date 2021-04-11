@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "image.hh"
+#include "file.hh"
 
 namespace image {
 
@@ -35,19 +36,24 @@ void Image::set_pixel_color(int i, int j, const Color& color) {
     this->pixels[i][j].z = color.z;
 }
 
-void Image::save() const {
-    std::cout << "P3" << std::endl;
-    std::cout << width << ' ' << height << std::endl;
-    std::cout << "255" << std::endl;
+void Image::save(const std::string& filename) const {
+    std::ofstream file = file::open_writing_file(filename);
+
+    file << "P3" << std::endl;
+    file << width << ' ' << height << std::endl;
+    file << "255" << std::endl;
 
     for (int j = this->height - 1; j >= 0; --j) {
         for (int i = 0; i < this->width; ++i) {
             auto pixel = pixels[i][j].clamp();
-            std::cout << (int) (pixel.x * 255) << ' ';
-            std::cout << (int) (pixel.y * 255) << ' ';
-            std::cout << (int) (pixel.z * 255) << std::endl;
+            file << (int) (pixel.x * 255) << ' ';
+            file << (int) (pixel.y * 255) << ' ';
+            file << (int) (pixel.z * 255) << std::endl;
         }
     }
+
+    std::cerr << "Saved at " << filename << std::endl;
+    file.close();
 }
 
 }

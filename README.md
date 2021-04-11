@@ -20,3 +20,4 @@ ING2 - IMAGE
 * Supersampling
 * Obj loader
 * Add fog (linear, exp, square exp)
+* Blur from camera

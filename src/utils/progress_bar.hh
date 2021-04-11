@@ -15,7 +15,7 @@ enum PrintType {
 class ProgressBar
 {
     public:
-        ProgressBar(std::ostream& stream, std::size_t width, PrintType type = FRACTION)
+        ProgressBar(std::ostream& stream, int width, PrintType type = FRACTION)
             : _stream{stream}, _width(width), _start(std::chrono::system_clock::now()), _type(type)
         {}
 
@@ -38,7 +38,7 @@ class ProgressBar
 
         /* Attributes */
         std::ostream& _stream;
-        std::size_t _width;
+        int _width;
         std::chrono::system_clock::time_point _start;
         PrintType _type;
 };
@@ -49,14 +49,14 @@ void ProgressBar::write_progress_bar(double fraction) const {
 
     fraction = fraction > 1 ? 1 : fraction;
 
-    auto offset = _width - static_cast<unsigned>(_width * fraction);
+    int offset = _width - static_cast<unsigned>(_width * fraction);
 
     _stream << "\r[";
 
-    for(int i = 0; i < _width - offset; ++i)
+    for (int i = 0; i < _width - offset; ++i)
         _stream << "▒";
 
-    for(int i = 0; i < offset; ++i)
+    for (int i = 0; i < offset; ++i)
         _stream << " ";
 
     _stream << "] " << std::setprecision(1) << std::fixed << 100 * fraction << "% | ";

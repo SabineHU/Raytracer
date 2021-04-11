@@ -5,6 +5,7 @@
 #include <future>
 #include <mutex>
 
+#include "options.hh"
 #include "raytracer.hh"
 #include "vector3_op.hh"
 #include "progress_bar.hh"
@@ -58,8 +59,11 @@ static Color get_color(const Scene& scene, const IntersectionInfo& info, double 
 }
 
 void render(image::Image& img, const Scene& scene, double accuracy, int samples, int depth) {
+    auto progress = ProgressBar(std::cerr, 100, FRACTION);
+
     for (int i = 0; i < img.get_width(); ++i) {
-        std::cerr << "\rScanlines remaining: " << img.get_width() - i - 1 << ' ' << std::flush;
+        progress.write(i, img.get_width() - 1);
+
         for (int j = 0; j < img.get_height(); ++j) {
 
             Color pixel_color(0, 0, 0);
@@ -175,6 +179,7 @@ void render_square(const ImageSquare square, image::Image& img, const Scene& sce
     int nb_pixels = img.get_width() * img.get_height();
     for (int i = square.i_min; i < square.i_max; ++i) {
         for (int j = square.j_min; j < square.j_max; ++j) {
+
             Color pixel_color(0, 0, 0);
             for (int k = 0; k < samples; ++k) {
 
@@ -184,17 +189,14 @@ void render_square(const ImageSquare square, image::Image& img, const Scene& sce
                 IntersectionInfo info;
                 Ray cam_ray = scene.camera.get_ray(x, y);
 
-                if (scene.has_intersection(cam_ray, info, accuracy)) {
+                if (scene.has_intersection(cam_ray, info, accuracy))
                     pixel_color += get_color(scene, info, accuracy, depth);
-                } else {
+                else
                     pixel_color += scene.get_background_color(cam_ray);
-                }
-
             }
 
             pixel_color = pixel_color / (double) (samples);
             img.set_pixel_color(i, j, pixel_color);
-
 
             if (progress.get_type() != NO_PRINT) {
                 mtx.lock();
@@ -221,7 +223,6 @@ static std::vector<ImageSquare> compute_image_square(const image::Image& img, in
         squares.emplace_back(i, 0, i_max, square_height);
         squares.emplace_back(i, square_height, i_max, img.get_height());
     }
-
 
     return squares;
 }

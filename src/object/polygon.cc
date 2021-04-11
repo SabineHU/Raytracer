@@ -7,7 +7,7 @@ Polygon::Polygon()
 {}
 
 Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
-        std::vector<Vect2> textures, std::vector<Face> faces)
+        std::vector<Vect2>, std::vector<Face> faces)
     : Object()
 {
     this->triangles = std::vector<std::shared_ptr<SmoothTriangle>>();
@@ -33,7 +33,7 @@ Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
 
 bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     bool found = false;
-    for (auto &t : this->triangles)
+    for (const auto &t : this->triangles)
         if (t->find_intersection(ray, t_min, t_max, info)) {
             found = true;
     }
