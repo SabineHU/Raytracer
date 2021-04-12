@@ -132,10 +132,14 @@ Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info,
 static double fresnel(const Vect& dir, const Vect& normal, const double ior=1.33) {
     double cos1 = std::max(-1.0, std::min(1.0, vector::dot(dir, normal)));
 
-    double n2 = 1; // air
-    double n1 = ior;
-
-    if (cos1 > 0) std::swap(n2, n1);
+    double n1, n2;
+    if (cos1 > 0) {
+        n1 = 1; // air
+        n2 = ior;
+    } else {
+        n1 = ior;
+        n2 = 1; // air
+    }
 
     double sint = n2 / n1 * sqrtf(std::max(0.0, 1 - cos1 * cos1));
     if (sint >= 1) return 1;
