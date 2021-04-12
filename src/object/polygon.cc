@@ -33,8 +33,8 @@ Polygon::Polygon(std::vector<Vect> vertices, std::vector<Vect> normals,
 
 bool Polygon::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     bool found = false;
-    for (const auto &t : this->triangles)
-        if (t->find_intersection(ray, t_min, t_max, info)) {
+    for (const auto &t : this->triangles) {
+        if (t->find_intersection(ray, t_min, t_max, info))
             found = true;
     }
 

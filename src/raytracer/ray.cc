@@ -30,7 +30,8 @@ Vect Ray::get_reflection_dir(const Vect& normal) const {
 
 Vect Ray::get_refraction_dir(const Vect& normal, double ior) const {
     double cosi = std::max(-1.0, std::min(1.0, vector::dot(direction, normal)));
-    double etai = 1, etat = ior;
+    double etai = 1;
+    double etat = ior;
     Vect n;
     if (cosi < 0) {
         cosi *= -1;

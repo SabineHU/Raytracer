@@ -66,7 +66,6 @@ public:
         return Vect(x, y, z);
     }
 
-    // TODO, set it as virtual -> CSG
     Vect get_bump_at(const Point3& p) const {
         if (bumps.empty()) return Vect(0, 0, 0);
 

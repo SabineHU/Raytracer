@@ -28,29 +28,21 @@ Vect Triangle::get_normal() const {
 }
 
 bool Triangle::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
-    auto v0v1 = B - A;
-    auto v0v2 = C - A;
+    auto cross_dir = vector::cross(ray.direction, C - A);
+    double det = vector::dot(B - A, cross_dir);
 
-    auto pvec = vector::cross(ray.direction, v0v2);
-    double det = vector::dot(v0v1, pvec);
-
-    // ray and triangle are parallel if det is close to 0
     if (std::fabs(det) < 0.000001) return false;
 
-    double invDet = 1 / det;
-
-    auto tvec = ray.origin - A;
-    auto u = vector::dot(tvec, pvec) * invDet;
+    auto orig = ray.origin - A;
+    double u = vector::dot(orig, cross_dir) / det;
     if (u < 0 || u > 1) return false;
 
-    auto qvec = vector::cross(tvec, v0v1);
-    auto v = vector::dot(ray.direction, qvec) * invDet;
+    auto cross_orig = vector::cross(orig, B - A);
+    double v = vector::dot(ray.direction, cross_orig) / det;
     if (v < 0 || u + v > 1) return false;
 
-    auto t = vector::dot(v0v2, qvec) * invDet;
-
-    if (t <= 0 || t <= t_min || t >= t_max)
-        return false;
+    double t = vector::dot(C - A, cross_orig) / det;
+    if (t <= 0 || t <= t_min || t >= t_max) return false;
 
     t_max = t;
 

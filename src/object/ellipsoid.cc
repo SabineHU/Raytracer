@@ -17,14 +17,12 @@ Vect Ellipsoid::get_normal(const Point3& point) const {
 }
 
 bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
-    auto oc = ray.origin - this->center;
+    Vect orig = (ray.origin - this->center) / this->radius;
+    Vect dir = ray.direction / this->radius;
 
-    Vect ocn = oc / this->radius;
-    Vect rdn = ray.direction / this->radius;
-
-    double a = rdn.square_length();
-    double b = vector::dot(ocn, rdn);
-    double c = ocn.square_length() - 1;
+    double a = dir.square_length();
+    double b = vector::dot(orig, dir);
+    double c = orig.square_length() - 1;
 
     double discriminant = b * b - a * c;
     if (discriminant < 0) return false;

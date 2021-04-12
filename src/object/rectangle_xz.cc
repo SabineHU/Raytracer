@@ -17,18 +17,17 @@ bool Rectangle_xz::find_intersection(const Ray& ray, double& t_min, double& t_ma
     bool hit = p.x <= this->p2.x && p.x >= this->p1.x &&
         p.z <= this->p2.z && p.z >= this->p1.z;
 
-    if (hit) {
-        t_max = t;
-        info.point = p;
-        info.normal = Vect(0, 1, 0);
-        if (vector::dot(ray.direction, info.normal) > 0)
-            info.normal = info.normal.negative();
+    if (!hit) return false;
 
-        info.u = (p.x - p1.x) / (p2.x - p1.x);
-        info.v = (p.z - p1.z) / (p2.z - p1.z);
-        this->get_properties(info);
+    t_max = t;
+    info.point = p;
+    info.normal = Vect(0, 1, 0);
+    if (vector::dot(ray.direction, info.normal) > 0)
+        info.normal = info.normal.negative();
 
-        return true;
-    }
-    return false;
+    info.u = (p.x - p1.x) / (p2.x - p1.x);
+    info.v = (p.z - p1.z) / (p2.z - p1.z);
+    this->get_properties(info);
+
+    return true;
 }

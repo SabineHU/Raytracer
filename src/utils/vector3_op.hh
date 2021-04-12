@@ -58,7 +58,7 @@ inline Vect rotate_y(const Vect& u, double theta) {
     auto b = -sin(theta);
     auto d = sin(theta);
     auto e = cos(theta);
-    
+
     return Vect(d * u.z + e * u.x, u.y, u.z * a + b * u.x);
 }
 

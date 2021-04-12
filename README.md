@@ -2,6 +2,9 @@
 
 ING2 - IMAGE
 
+Use json library to parse scenes from json files.
+https://github.com/nlohmann/json
+
 # Features
 * Primitives: capped cone, capsule, cone, cube, cylinder, ellipsoid, plane, sphere, torus, holed plane
 * Reflection & Refraction

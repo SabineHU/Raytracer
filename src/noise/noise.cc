@@ -40,26 +40,22 @@ static double smooth_step(double x) {
     return x * x * (3 - 2 * x);
 }
 
-static double f(double i, double x) {
+static double lerp(double i, double x) {
     return i * x + (1 - i) * (1 - x);
 }
 
-static double interpolate(Vect c[2][2][2], const Vect& point) {
-    double u = point.x - std::floor(point.x);
-    double v = point.y - std::floor(point.y);
-    double w = point.z - std::floor(point.z);
-
-    double uu = smooth_step(u);
-    double vv = smooth_step(v);
-    double ww = smooth_step(w);
+static double interpolate(Vect c[2][2][2], double x, double y, double z) {
+    double xx = smooth_step(x);
+    double yy = smooth_step(y);
+    double zz = smooth_step(z);
 
     double res = 0;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             for (int k = 0; k < 2; k++) {
 
-                Vect factor(u - i, v - j, w - k);
-                res += f(i, uu) * f(j, vv) * f(k, ww) * vector::dot(c[i][j][k], factor);
+                Vect factor(x - i, y - j, z - k);
+                res += lerp(i, xx) * lerp(j, yy) * lerp(k, zz) * vector::dot(c[i][j][k], factor);
             }
         }
     }
@@ -93,15 +89,15 @@ double Noise::noise(const Point3& point) const {
     Vect c[2][2][2] = {};
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
-            for (int k = 0; k < 2; k++)
-                c[i][j][k] = this->random_vect[
-                        this->permutation[(x + i) & mask] ^
-                        this->permutation[((y + j) & mask) * 2] ^
-                        this->permutation[((z + k) & mask) * 3]
-                ];
+            for (int k = 0; k < 2; k++) {
+                int index = this->permutation[(x + i) & mask]
+                    & this->permutation[((y + j) & mask) * 2]
+                    ^ this->permutation[((z + k) & mask) * 3];
+                c[i][j][k] = this->random_vect[index];
+            }
         }
     }
-    return interpolate(c, point);
+    return interpolate(c, point.x - x, point.y - y, point.z - z);
 }
 
 double Noise::turb(const Point3& p, int depth) const {
@@ -138,12 +134,10 @@ double Noise::cloud(const Point3& p, int depth) const {
     double res = 0;
     double factor = 1;
     double freq = 1;
-    Point3 tmp = p;
     for (int i = 0; i < depth; i++) {
-        res += this->noise(tmp * freq) * factor;
+        res += this->noise(p * freq) * factor;
         factor *= 0.5;
         freq *= 2;
-        //tmp = tmp * 2 + Vect(100, 100, 0);
     }
     return res;
 }

@@ -12,15 +12,14 @@ Torus::Torus(const Point3& p)
 {}
 
 Vect Torus::get_normal(const Point3& point) const {
-    auto x = Vect(1, 1, -1) * position.x * position.x;
-    auto y = point.square_length() - position.y * position.y;
+    auto x = Vect(1, 1, -1) * position.dot_x();
+    auto y = point.square_length() - position.dot_y();
 
     return point * (x * -1 + y);
 }
 
 static double get_double_inv_condition(double x, double r, double k, bool sgn) {
     double t = x - r - k;
-
     return sgn ? t : 2 / t;
 }
 
@@ -45,14 +44,14 @@ static double get_min_quadratic_roots(double x, double r, double k3, bool s) {
 }
 
 static void init_kn(double& k0, double& k1, double& k2, double& k3, bool& positive, const Point3& position, const Ray& ray) {
-    double Ra2 = position.dot_x();
+    double dotx = position.dot_x();
     double n = vector::dot(ray.origin,ray.direction);
-    double k = (ray.origin.square_length() + Ra2 - position.dot_y()) / 2.0;
+    double k = (ray.origin.square_length() + dotx - position.dot_y()) / 2.0;
 
     k3 = n;
-    k2 = n * n - Ra2 * (vector::dot_xy(ray.direction, ray.direction)) + k;
-    k1 = n * k - Ra2 * (vector::dot_xy(ray.direction, ray.origin));
-    k0 = k * k - Ra2 * (vector::dot_xy(ray.origin, ray.origin));
+    k2 = n * n - dotx * (vector::dot_xy(ray.direction, ray.direction)) + k;
+    k1 = n * k - dotx * (vector::dot_xy(ray.direction, ray.origin));
+    k0 = k * k - dotx * (vector::dot_xy(ray.origin, ray.origin));
 
     if (std::abs(k3 * (k3 * k3 - k2) + k1) < 0.01)
     {

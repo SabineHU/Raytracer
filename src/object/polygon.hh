@@ -27,12 +27,6 @@ struct Material {
 
 struct Face {
     Face() = default;
-    Face(const TriangleMesh& v)
-        : vertices(v), normals(TriangleMesh()), textures(TriangleMesh()), material(Material()) {}
-    Face(const TriangleMesh& v, const TriangleMesh& n)
-        : vertices(v), normals(n), textures(TriangleMesh()), material(Material()) {}
-    Face(const TriangleMesh& v, const TriangleMesh& n, const TriangleMesh& t)
-        : vertices(v), normals(n), textures(t), material(Material()) {}
     Face(const TriangleMesh& v, const TriangleMesh& n, const TriangleMesh& t, const Material& m)
         : vertices(v), normals(n), textures(t), material(m) {}
 
