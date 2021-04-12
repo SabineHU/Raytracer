@@ -31,6 +31,20 @@ static Camera init_camera_2() {
     return Camera(look_from, look_at, vup);
 }
 
+static Camera init_camera_3() {
+    Vect look_from(0, 13, 0);
+    Vect look_at(0, 0, 5);
+    Vect vup(0, 1, 0);
+    return Camera(look_from, look_at, vup);
+}
+
+static Camera init_camera_4() {
+    Vect look_from(8, 13, 18);
+    Vect look_at(0, 0, 10);
+    Vect vup(0, 1, 0);
+    return Camera(look_from, look_at, vup);
+}
+
 static void init_lights_1(Scene& scene) {
     scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -15), white, 2.5));
 }
@@ -258,16 +272,17 @@ static void add_lights(Scene& scene, int nb) {
 }
 static Camera init_camera(int nb) {
     if (nb == 1) return init_camera_1();
-    return init_camera_2();
+    else if (nb == 2) return init_camera_2();
+    else if (nb == 3) return init_camera_3();
+    return init_camera_4();
 }
 
 Scene init_scene3() {
-    Camera cam = init_camera(1);
+    Camera cam = init_camera(4);
 
     Scene scene(cam, Color(.5, .5, .5));
     add_lights(scene, 1);
-
-    add_plane(scene, 1);
+    add_plane(scene, 4);
 
     add_CSG_union(scene);
     add_CSG_difference(scene);

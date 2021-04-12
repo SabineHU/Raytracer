@@ -1,0 +1,158 @@
+{
+    "name": "Scene1",
+    "camera": {
+        "look_from": { "x": 0, "y": 4, "z": -15 },
+        "look_at": { "x": 0, "y": 0, "z": 0 },
+        "vup": { "x": 0, "y": 1, "z": 0 }
+    },
+    "ambient_light": { "r": 0.5, "g": 0.5, "b": 1.0 },
+    "lights": [
+        {
+            "position": { "x": 0, "y": 10, "z": -10 },
+            "color": { "r": 1, "g": 1, "b": 1 },
+            "intensity": 2
+        }
+    ],
+    "objects": [
+        {
+            "type": "plane",
+            "normal": { "x": 0, "y": 0, "z": 1 },
+            "distance": -16,
+            "width": 10,
+            "height": 10,
+            "texture": {
+                "type": "checkerboard",
+                "checkerboard": {
+                    "type": "color",
+                    "color1": "black",
+                    "color2": "white"
+                }
+            }
+        },
+        {
+            "type": "plane",
+            "normal": { "x": 0, "y": 1, "z": 0 },
+            "distance": -1,
+            "texture": {
+                "type": "perlin_noise",
+                "perlin_noise": {
+                    "scale": 2,
+                    "type": "cloud",
+                    "color1": "random",
+                    "color2": "random"
+                },
+                "kd": 0.25,
+                "kt": 0.5,
+                "ks": 0.7,
+                "is_reflected": true
+            }
+        },
+        {
+            "type": "sphere",
+            "center": { "x": 0, "y": 3, "z": 1.5 },
+            "radius": 4,
+            "ior": 2.417,
+            "texture": {
+                "type": "metal",
+                "color": "random",
+                "kd": 0.5
+            },
+            "specular": 30
+        },
+        {
+            "type": "sphere",
+            "center": { "x": -7, "y": 1, "z": 1 },
+            "radius": 2,
+            "texture": {
+                "type": "strip",
+                "strip": {
+                    "is_planar": true,
+                    "is_horizontal": false,
+                    "color1": "random",
+                    "color2": "blue3",
+                    "scale": 5
+                }
+            },
+            "specular": 30
+        },
+        {
+            "type": "cone",
+            "position": { "x": -7, "y": -2, "z": -6 },
+            "radius": 2,
+            "height": 5,
+            "texture": {
+                "type": "perlin_noise",
+                "perlin_noise": {
+                    "scale": 2,
+                    "type": "rainbow",
+                    "color1": "random_pastel",
+                    "color2": "random"
+                }
+            },
+            "bump_mappings": [
+                {
+                    "noise": {
+                        "type": "wood",
+                        "scale": 10
+                    }
+                }
+            ]
+        },
+        {
+            "type": "cone",
+            "position": { "x": 10, "y": -2, "z": 2 },
+            "radius": 2,
+            "height": 8,
+            "texture": {
+                "type": "strip",
+                "strip": {
+                    "is_planar": true,
+                    "is_horizontal": true,
+                    "color1": "white",
+                    "color2": "random",
+                    "scale": 5
+                }
+            },
+            "bump_mappings": [
+                {
+                    "noise": {
+                        "type": "noise",
+                        "scale": 10
+                    },
+                    "coeff": 5
+                }
+            ]
+        },
+        {
+            "type": "sphere",
+            "center": { "x": -3, "y": 0.5, "z": -6 },
+            "radius": 1.25,
+            "texture": {
+                "type": "metal",
+                "color": "random",
+                "kd": 0.5,
+                "is_reflected": true
+            }
+        },
+        {
+            "type": "blob",
+            "point": { "x": 3, "y": 0.5, "z": -8},
+            "objects": [
+            {
+                "type": "sphere",
+                "center": { "x": 3, "y": 0.5, "z": -8 },
+                "radius": 0.75,
+                "texture": {
+                    "type": "lambertian",
+                    "color": "random",
+                    "kd": 1
+                }
+            }
+            ],
+            "e": 2,
+            "d": 0.5,
+            "s": 80,
+            "smooth": false
+        }
+    ]
+}

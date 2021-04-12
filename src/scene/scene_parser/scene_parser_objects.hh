@@ -172,11 +172,6 @@ static Blob parse_blob(const nlohmann::json& json) {
     return blob;
 }
 
-static void add_blob_triangles(std::vector<shared_object> objects, const Blob& blob) {
-    for (auto& triangle: blob.get_triangles())
-        objects.push_back(std::make_shared<SmoothTriangle>(triangle));
-}
-
 static void parse_object_properties(const nlohmann::json &json, shared_object object) {
     if (has_field(json, "texture")) {
         auto texture = parse_texture(json["texture"]);
@@ -267,7 +262,8 @@ inline std::vector<shared_object> parse_objects(const nlohmann::json& json)
 
         if (object_type == "blob") {
             Blob blob = parse_blob(object);
-            add_blob_triangles(objects, blob);
+            for (auto& triangle: blob.get_triangles())
+                objects.push_back(std::make_shared<SmoothTriangle>(triangle));
         } else if (object_type == "CSG") {
             objects.push_back(parse_csg(object["CSG"]));
         }

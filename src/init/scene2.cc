@@ -80,7 +80,7 @@ static void add_spheres(Scene& scene) {
     double specular = 5;
     auto metal_random = std::make_shared<Metal>(r_random::random_color(), 0.5);
     scene.add_object(create_sphere(metal_random, pos, radius, specular));
-    sphere_fract(scene, NONE, radius, specular, pos, 5);
+    sphere_fract(scene, NONE, radius, specular, pos, 3);
 }
 
 Scene init_scene2() {

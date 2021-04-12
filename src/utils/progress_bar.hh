@@ -12,8 +12,7 @@ enum PrintType {
     PROGRESS_BAR
 };
 
-class ProgressBar
-{
+class ProgressBar {
     public:
         ProgressBar(std::ostream& stream, int width, PrintType type = FRACTION)
             : _stream{stream}, _width(width), _start(std::chrono::system_clock::now()), _type(type)
@@ -67,8 +66,8 @@ void ProgressBar::write_progress_bar(double fraction) const {
 void ProgressBar::write_time() const {
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed = end - _start;
-
-    _stream << elapsed.count() << "s\r";
+    auto min = std::chrono::duration_cast<std::chrono::minutes> (elapsed).count();
+    _stream << min << "min " << elapsed.count() - min * 60 << "s\r";
     _stream << std::flush;
 }
 

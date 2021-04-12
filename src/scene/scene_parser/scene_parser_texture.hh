@@ -125,7 +125,14 @@ static shared_texture parse_checkerboard_texture(const nlohmann::json& json) {
         Color color1 = parse_color(json["color1"]);
         Color color2 = parse_color(json["color2"]);
 
-        return std::make_shared<CheckerBoard>(color1, color2);
+        auto texture = std::make_shared<CheckerBoard>(color1, color2);
+
+        if (has_field(json, "scale")) {
+            double scale = json["scale"];
+            texture->set_scale(scale);
+        }
+        return texture;
+
     } else if (checkerboard_type == "texture") {
         check_missing_field(json, "texture1");
         check_missing_field(json, "texture2");
@@ -157,6 +164,11 @@ static shared_texture parse_strip_texture(const nlohmann::json& json) {
     if (has_field(json, "is_horizontal")) {
         bool is_horizontal = json["is_horizontal"];
         texture->set_horizontal(is_horizontal);
+    }
+
+    if (has_field(json, "scale")) {
+        double scale = json["scale"];
+        texture->set_scale(scale);
     }
 
     if (has_field(json, "scale")) {
