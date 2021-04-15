@@ -48,7 +48,7 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info, double accu
     info.ray_in = ray;
     info.ray_out = Ray(info.point, ray.direction);
 
-    if (vector::dot(info.normal, ray.direction) < 0)
+    if (vector::dot(info.normal, ray.direction) > 0)
         info.normal = info.normal.negative();
 
     return true;
