@@ -31,7 +31,6 @@ set(
     src/object/rectangle_yz.cc
     src/object/sphere.cc
     src/object/triangle.cc
-    src/object/torus.cc
     src/object/smooth_triangle.cc
     src/object/rotate.cc
     src/object/translate.cc

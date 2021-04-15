@@ -19,7 +19,6 @@
 #include "smooth_triangle.hh"
 #include "sphere.hh"
 #include "triangle.hh"
-#include "torus.hh"
 #include "rectangle_xy.hh"
 #include "rectangle_xz.hh"
 #include "rectangle_yz.hh"
@@ -66,6 +65,11 @@ void init_lights(Scene& scene) {
 }
 
 void init_objects(Scene& scene) {
+    auto perlin4 = std::make_shared<PerlinNoise>(2, WOOD);
+    auto plane = std::make_shared<Plane>(Point3(0, 1, 0), -1);
+    plane->set_texture(perlin4);
+    scene.add_object(plane);
+
     //add_ground_plane(scene);
     //add_water_plane(scene);
     //add_water_plane2(scene);
@@ -82,7 +86,7 @@ void init_objects(Scene& scene) {
     //add_CSG_fig_1(scene);
     //add_CSG_fig_2(scene);
 
-    add_sphere_map(scene);
+    //add_sphere_map(scene);
     //add_flower_cube(scene);
     //add_sheep_cube(scene);
 
@@ -103,7 +107,6 @@ void init_objects(Scene& scene) {
     //add_strip_vertical_sphere_planar(scene);
     //add_strip_horizontal_sphere_planar(scene);
 
-    //add_torus(scene);
     //add_capsule(scene);
     //add_cube(scene);
     //add_cylinder(scene);

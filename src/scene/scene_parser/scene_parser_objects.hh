@@ -15,7 +15,6 @@
 #include "plane.hh"
 #include "plane_holed.hh"
 #include "sphere.hh"
-#include "torus.hh"
 
 #include "blob.hh"
 #include "loader.hh"
@@ -132,13 +131,6 @@ static shared_object parse_plane(const nlohmann::json& json, bool is_holed) {
     return plane;
 }
 
-static shared_object parse_torus(const nlohmann::json& json) {
-    check_missing_field(json, "point");
-
-    Point3 point = parse_vect(json["point"]);
-    return std::make_shared<Torus>(Torus(point));
-}
-
 static shared_object parse_polygon(const nlohmann::json& json) {
     check_missing_field(json, "obj_asset");
     check_missing_field(json, "mtl_asset");
@@ -222,8 +214,6 @@ static shared_object parse_object(const nlohmann::json& json) {
         object = parse_plane(json, false);
     else if (object_type == "plane_holed")
         object = parse_plane(json, true);
-    else if (object_type == "torus")
-        object = parse_torus(json);
     else if (object_type == "polygon")
         object = parse_polygon(json);
     else {

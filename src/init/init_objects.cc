@@ -283,13 +283,6 @@ void add_strip_horizontal_sphere_planar(Scene& scene) {
     scene.add_object(sphere2);
 }
 
-void add_torus(Scene& scene) {
-    auto lambertian_random = std::make_shared<Lambertian>(r_random::random_color());
-    auto torus = std::make_shared<Torus>(Point3(2.5, .5, 0));
-    torus->set_texture(lambertian_random);
-    scene.add_object(torus);
-}
-
 void add_capsule(Scene& scene) {
     auto metal_random = std::make_shared<Metal>(r_random::random_color(), 0.2);
     auto capsule = std::make_shared<Capsule>(Point3(-1, 0, -1), Point3(1, 1, 1), 1);

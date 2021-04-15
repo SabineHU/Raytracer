@@ -12,7 +12,6 @@
 #include "cone.hh"
 #include "capped_cone.hh"
 #include "ellipsoid.hh"
-#include "torus.hh"
 #include "cylinder.hh"
 #include "cube.hh"
 #include "capsule.hh"
@@ -59,12 +58,6 @@ static void add_ellipsoid(Scene& scene) {
     ellipsoid->set_texture(metal_random);
     ellipsoid->set_specular(20);
     scene.add_object(ellipsoid);
-}
-
-static void add_torus(Scene& scene) {
-    auto torus = std::make_shared<Torus>(Point3(2.5, .5, 0));
-    torus->set_texture(r_random::random_color());
-    scene.add_object(torus);
 }
 
 static void add_cylinder(Scene& scene) {
@@ -145,7 +138,6 @@ Scene init_scene6() {
 
     add_cone(scene);
     add_ellipsoid(scene);
-    add_torus(scene);
     add_cylinder(scene);
     add_cube(scene);
     add_capped_cone(scene);

@@ -20,7 +20,6 @@
 #include "smooth_triangle.hh"
 #include "sphere.hh"
 #include "triangle.hh"
-#include "torus.hh"
 #include "rectangle_xy.hh"
 #include "rectangle_xz.hh"
 #include "rectangle_yz.hh"
@@ -78,7 +77,6 @@ void add_strip_vertical_sphere_planar(Scene& scene);
 void add_strip_horizontal_sphere_planar(Scene& scene);
 
 /* Primitives */
-void add_torus(Scene& scene);
 void add_capsule(Scene& scene);
 void add_cube(Scene& scene);
 void add_cylinder(Scene& scene);
