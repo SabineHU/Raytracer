@@ -1,5 +1,6 @@
 #include "scene.hh"
 #include "math.hh"
+#include "vector3_op.hh"
 
 Scene::Scene(const Camera& cam)
     : camera(cam), ambient_light(Color(1, 1, 1)),
@@ -46,6 +47,10 @@ bool Scene::has_intersection(const Ray& ray, IntersectionInfo& info, double accu
     info.dist = distance;
     info.ray_in = ray;
     info.ray_out = Ray(info.point, ray.direction);
+
+    if (vector::dot(info.normal, ray.direction) < 0)
+        info.normal = info.normal.negative();
+
     return true;
 }
 
