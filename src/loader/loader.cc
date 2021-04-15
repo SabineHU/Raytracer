@@ -110,6 +110,19 @@ Polygon parse_obj_to_polygon(const std::string& filename, std::map<size_t, Mater
             auto normal  = TriangleMesh(z - 1, z1 - 1, z2 - 1);
 
             faces.push_back(Face(vertice, normal, texture, materials[index]));
+
+            //  x ---- x1
+            //  |       |
+            // x3 ---- x2
+            if (!iss.eof()) {
+                iss >> x1  >> w >> y1  >> w >> z1;
+
+                vertice = TriangleMesh(x - 1, x1 - 1, x2 - 1);
+                texture = TriangleMesh(y - 1, y1 - 1, y2 - 1);
+                normal  = TriangleMesh(z - 1, z1 - 1, z2 - 1);
+
+                faces.push_back(Face(vertice, normal, texture, materials[index]));
+            }
         }
     }
 
