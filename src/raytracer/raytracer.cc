@@ -130,6 +130,8 @@ Color compute_diffuse_specular(const Scene& scene, const IntersectionInfo& info,
 }
 
 static double fresnel(const Vect& dir, const Vect& normal, const double ior=1.33) {
+    // Fresnel equation
+    // https://en.wikipedia.org/wiki/Fresnel_equations#Power_(intensity)_reflection_and_transmission_coefficients
     double cos1 = std::max(-1.0, std::min(1.0, vector::dot(dir, normal)));
 
     double n1, n2;

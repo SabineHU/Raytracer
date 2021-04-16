@@ -278,11 +278,11 @@ static Camera init_camera(int nb) {
 }
 
 Scene init_scene3() {
-    Camera cam = init_camera(4);
+    Camera cam = init_camera(2);
 
     Scene scene(cam, Color(.5, .5, .5));
     add_lights(scene, 1);
-    add_plane(scene, 4);
+    add_plane(scene, 2);
 
     add_CSG_union(scene);
     add_CSG_difference(scene);

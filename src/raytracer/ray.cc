@@ -12,9 +12,8 @@ Ray::Ray (const Vect& o, const Vect& d)
 {}
 
 Ray Ray::get_reflection_ray(const Vect& normal) const {
-    auto prod = normal * vector::dot(normal, this->direction.negative());
-    Vect add = (this->direction + prod) * 2;
-    Vect res = add - this->direction;
+    auto v = normal * vector::dot(normal, this->direction.negative());
+    Vect res = (this->direction + v) * 2 - this->direction;
 
     Vect reflection_direction = res.normalize();
     return Ray(this->origin, reflection_direction);
@@ -29,6 +28,8 @@ Vect Ray::get_reflection_dir(const Vect& normal) const {
 }
 
 Vect Ray::get_refraction_dir(const Vect& normal, double ior) const {
+    // Snell Descartes law's
+    // https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
     double cosi = std::max(-1.0, std::min(1.0, vector::dot(direction, normal)));
     Vect n;
     double n1, n2;

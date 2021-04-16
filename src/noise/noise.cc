@@ -26,9 +26,8 @@ void Noise::init_noise_arrays() {
     for (int i = 0; i < count; ++i)
         random_vect[i] = r_random::random_vector(-1, 1).normalize();
 
-    for (int i = 0; i < count * 3; ++i) {
+    for (int i = 0; i < count * 3; ++i)
         permutation[i] = i / 3;
-    }
 
     r_random::shuffle(permutation, count * 3);
 }
@@ -44,21 +43,33 @@ static double lerp(double i, double x) {
     return i * x + (1 - i) * (1 - x);
 }
 
-static double interpolate(Vect c[2][2][2], double x, double y, double z) {
+static double interpolate(Vect grad[2][2][2], double x, double y, double z) {
     double xx = smooth_step(x);
     double yy = smooth_step(y);
     double zz = smooth_step(z);
 
-    double res = 0;
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 2; j++) {
-            for (int k = 0; k < 2; k++) {
+    double x0 = lerp(0, xx);
+    double x1 = lerp(1, xx);
 
-                Vect factor(x - i, y - j, z - k);
-                res += lerp(i, xx) * lerp(j, yy) * lerp(k, zz) * vector::dot(c[i][j][k], factor);
-            }
-        }
-    }
+    double y0 = lerp(0, yy);
+    double y1 = lerp(1, yy);
+
+    double z0 = lerp(0, zz);
+    double z1 = lerp(1, zz);
+
+    double res = 0;
+    res += x0 * y0 * z0 * vector::dot(grad[0][0][0], Vect(x, y, z));
+    res += x0 * y0 * z1 * vector::dot(grad[0][0][1], Vect(x, y, z - 1));
+
+    res += x0 * y1 * z0 * vector::dot(grad[0][1][0], Vect(x, y - 1, z));
+    res += x0 * y1 * z1 * vector::dot(grad[0][1][1], Vect(x, y - 1, z - 1));
+
+    res += x1 * y0 * z0 * vector::dot(grad[1][0][0], Vect(x - 1, y, z));
+    res += x1 * y0 * z1 * vector::dot(grad[1][0][1], Vect(x - 1, y, z - 1));
+
+    res += x1 * y1 * z0 * vector::dot(grad[1][1][0], Vect(x - 1, y - 1, z));
+    res += x1 * y1 * z1 * vector::dot(grad[1][1][1], Vect(x - 1, y - 1, z - 1));
+
     return res;
 }
 
@@ -86,18 +97,19 @@ double Noise::noise(const Point3& point) const {
     int y = std::floor(point.y);
     int z = std::floor(point.z);
 
-    Vect c[2][2][2] = {};
+    Vect grad[2][2][2] = {};
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             for (int k = 0; k < 2; k++) {
-                int index = this->permutation[(x + i) & mask]
-                    & this->permutation[((y + j) & mask) * 2]
-                    ^ this->permutation[((z + k) & mask) * 3];
-                c[i][j][k] = this->random_vect[index];
+                int index_x = this->permutation[(x + i) & mask];
+                int index_y = this->permutation[index_x + ((y + j) & mask) * 2];
+                int index_z = this->permutation[index_y + ((z + k) & mask) * 3];
+
+                grad[i][j][k] = this->random_vect[index_z & mask];
             }
         }
     }
-    return interpolate(c, point.x - x, point.y - y, point.z - z);
+    return interpolate(grad, point.x - x, point.y - y, point.z - z);
 }
 
 double Noise::turb(const Point3& p, int depth) const {

@@ -115,13 +115,25 @@ Scene init_scene4() {
 
     add_plane(scene);
 
+    auto red_sphere = std::make_shared<Sphere>(Point3(-3, 0.5, 0), 1);
+    auto green_sphere = std::make_shared<Sphere>(Point3(0, 0.5, 0), 1);
+    auto blue_sphere = std::make_shared<Sphere>(Point3(3, 0.5, 0), 1);
+
+    red_sphere->set_texture(red);
+    green_sphere->set_texture(green);
+    blue_sphere->set_texture(blue);
+
+    scene.add_object(red_sphere);
+    scene.add_object(green_sphere);
+    scene.add_object(blue_sphere);
+
     //Blob blob = init_blob(); // 4 spheres
     //Blob blob = init_blob2(); // 5 sphers
-    Blob blob = init_blob3(); // 3 spheres
+    //Blob blob = init_blob3(); // 3 spheres
     /* Add triangles to scene */
-    for (auto& triangle: blob.get_triangles()) {
-        scene.add_object(std::make_shared<SmoothTriangle>(triangle));
-    }
+    //for (auto& triangle: blob.get_triangles()) {
+    //    scene.add_object(std::make_shared<SmoothTriangle>(triangle));
+    //}
 
     return scene;
 }

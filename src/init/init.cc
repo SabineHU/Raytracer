@@ -61,7 +61,7 @@ Camera init_camera() {
 
 void init_lights(Scene& scene) {
     scene.add_light(std::make_shared<PointLight>(Point3(0, 2, -10), light_blue, 1.5));
-    scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -10), white, 1.75));
+    //scene.add_light(std::make_shared<PointLight>(Point3(-7, 10, -10), white, 1.75));
 }
 
 void init_objects(Scene& scene) {
