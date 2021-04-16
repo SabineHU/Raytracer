@@ -17,6 +17,9 @@ Vect Ellipsoid::get_normal(const Point3& point) const {
 }
 
 bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
+    // Equation:
+    // x^2 / a^2 + y^2 / b^2 + z^2 / c^2 - 1 = 0
+
     Vect orig = (ray.origin - this->center) / this->radius;
     Vect dir = ray.direction / this->radius;
 

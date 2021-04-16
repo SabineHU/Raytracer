@@ -174,10 +174,6 @@
             "specular": 40
         },
         {
-            "type": "torus",
-            "point": { "x": 12, "y": -2, "z": 4 }
-        },
-        {
             "type": "polygon",
             "obj_asset": "objs/boat.obj",
             "mtl_asset": "objs/boat.mtl"

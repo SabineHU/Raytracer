@@ -1,9 +1,8 @@
 # Raytracer project
 
-ING2 - IMAGE
+Project realized by Sabine Hu and Sebastien Menozzi
 
-Use json library to parse scenes from json files.
-https://github.com/nlohmann/json
+ING2 - IMAGE
 
 # Features
 * Primitives: capped cone, capsule, cone, cube, cylinder, ellipsoid, plane, sphere, holed plane
@@ -25,3 +24,8 @@ https://github.com/nlohmann/json
 * Add fog (linear, exp, square exp)
 * Blur from camera
 * Soft shadow
+
+# External library
+
+Use json library to parse scenes from json files.
+https://github.com/nlohmann/json

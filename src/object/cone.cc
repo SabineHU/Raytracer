@@ -26,12 +26,11 @@ static void compute_uv(IntersectionInfo& info, double dist) {
 }
 
 bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
+    // Equation over z-axis is x^2 + y^2 = z^2
     const Vect dir = ray.direction;
 
     // Position Origin vector
-    Vect PO = ray.origin - this->position;
-    PO *= Vect(1, -1, 1);
-    PO += Vect(0, height, 0);
+    Vect PO = (ray.origin - this->position) * Vect(1, -1, 1) + Vect(0, height, 0);
 
     double tan = this->radius * this->radius / (this->height * this->height);
 

@@ -17,6 +17,8 @@ static void compute_uv(IntersectionInfo& info, double dist) {
 }
 
 bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
+    // Equation over z-axis is x^2 + y^2 - 1 = 0
+
     Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
     double dist = axis.square_length(); // distance between top and bottom
