@@ -91,8 +91,6 @@ static void parse_texture_coeffs(const nlohmann::json& json, shared_texture text
 }
 
 static void parse_texture_type(const nlohmann::json& json, shared_texture texture) {
-    // TODO: @sebmenozzi should allow multiple types
-
     if (has_field(json, "is_reflected")) {
         bool is_reflected = json["is_reflected"];
 

@@ -20,9 +20,6 @@
 #include "smooth_triangle.hh"
 #include "sphere.hh"
 #include "triangle.hh"
-#include "rectangle_xy.hh"
-#include "rectangle_xz.hh"
-#include "rectangle_yz.hh"
 
 #include "rotate.hh"
 #include "translate.hh"
@@ -83,6 +80,3 @@ void add_cylinder(Scene& scene);
 void add_capped_cone(Scene& scene);
 void add_cone(Scene& scene);
 void add_ellipsoid(Scene& scene);
-
-/* Rotation & translation */
-void add_rectangle_rotated(Scene& scene);

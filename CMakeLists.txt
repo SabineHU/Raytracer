@@ -26,9 +26,6 @@ set(
     src/object/ellipsoid.cc
     src/object/plane.cc
     src/object/plane_holed.cc
-    src/object/rectangle_xy.cc
-    src/object/rectangle_xz.cc
-    src/object/rectangle_yz.cc
     src/object/sphere.cc
     src/object/triangle.cc
     src/object/smooth_triangle.cc

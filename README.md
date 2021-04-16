@@ -6,9 +6,9 @@ Use json library to parse scenes from json files.
 https://github.com/nlohmann/json
 
 # Features
-* Primitives: capped cone, capsule, cone, cube, cylinder, ellipsoid, plane, sphere, torus, holed plane
+* Primitives: capped cone, capsule, cone, cube, cylinder, ellipsoid, plane, sphere, holed plane
 * Reflection & Refraction
-* CSG: union, intersection, substract, minus
+* CSG: union, intersection, minus
 * Blobs: with smooth triangle or not
 * Textures:
     * Strip (planar/spherical)

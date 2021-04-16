@@ -19,9 +19,6 @@
 #include "smooth_triangle.hh"
 #include "sphere.hh"
 #include "triangle.hh"
-#include "rectangle_xy.hh"
-#include "rectangle_xz.hh"
-#include "rectangle_yz.hh"
 #include "rotate.hh"
 #include "translate.hh"
 
@@ -113,7 +110,6 @@ void init_objects(Scene& scene) {
     //add_capped_cone(scene);
     //add_cone(scene);
     //add_ellipsoid(scene);
-    //add_rectangle_rotated(scene);
 }
 
 void init_objects2(Scene& scene) {

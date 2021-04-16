@@ -33,7 +33,6 @@ inline Vect parse_vect(const nlohmann::json& json) {
 }
 
 inline Color parse_color(const nlohmann::json& json) {
-    // TODO: @sebmenozzi refacto, make the colors detection automatic from color.hh...
     if (json == "random") return r_random::random_color();
     if (json == "random_pastel") return r_random::random_pastel_color();
     if (json == "white") return white;

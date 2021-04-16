@@ -195,7 +195,6 @@ static shared_object parse_object(const nlohmann::json& json) {
 
     shared_object object;
 
-    // TODO: CSG, rectangle, rotation, translate
     if (object_type == "sphere")
         object = parse_sphere(json);
     else if (object_type == "capped_cone")
