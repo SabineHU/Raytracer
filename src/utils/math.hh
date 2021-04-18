@@ -57,4 +57,10 @@ inline int round_multiple(int nb, int multiple) {
     return m == 0 ? nb : nb - m;
 }
 
+inline double get_min_root_quadratic_opti(double a, double b, double c) {
+    double discriminant = b * b - a * c;
+    if (discriminant <= 0) return 0;
+    return (-b - std::sqrt(discriminant)) / a;
+}
+
 }

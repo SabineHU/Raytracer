@@ -20,12 +20,12 @@ bool Ellipsoid::find_intersection(const Ray& ray, double& t_min, double& t_max, 
     // Equation:
     // x^2 / a^2 + y^2 / b^2 + z^2 / c^2 - 1 = 0
 
-    Vect orig = (ray.origin - this->center) / this->radius;
+    Vect oc = (ray.origin - this->center) / this->radius;
     Vect dir = ray.direction / this->radius;
 
     double a = dir.square_length();
-    double b = vector::dot(orig, dir);
-    double c = orig.square_length() - 1;
+    double b = vector::dot(oc, dir);
+    double c = oc.square_length() - 1;
 
     double discriminant = b * b - a * c;
     if (discriminant < 0) return false;

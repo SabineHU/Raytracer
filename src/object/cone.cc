@@ -27,31 +27,25 @@ static void compute_uv(IntersectionInfo& info, double dist) {
 
 bool Cone::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     // Equation over z-axis is x^2 + y^2 = z^2
-    const Vect dir = ray.direction;
 
     // Position Origin vector
     Vect PO = (ray.origin - this->position) * Vect(1, -1, 1) + Vect(0, height, 0);
+    double angle = this->radius * this->radius / (this->height * this->height);
 
-    double tan = this->radius * this->radius / (this->height * this->height);
+    double a = ray.direction.dot_x() + ray.direction.dot_z() - angle * ray.direction.dot_y();
+    double b = (PO * ray.direction * Vect(1, angle, 1)).sum();
 
-    double a = dir.dot_x() + dir.dot_z() - tan * dir.dot_y();
-    double b = (PO * dir * Vect(1, tan, 1) * 2).sum();
-    double c = PO.dot_x() + PO.dot_z() - tan * PO.dot_y();
-
-    double discriminant = b * b - 4 * a * c;
+    double discriminant = b * b - a * (PO.dot_x() + PO.dot_z() - angle * PO.dot_y());
     if (discriminant <= 0) return false;
+    discriminant = std::sqrt(discriminant);
 
-    double roots[2] = { -1 };
-    math::quadratic_equation_roots(a, b, discriminant, roots);
-
-    double x = roots[0];
-    double r = ray.origin.y + ray.direction.y * x;
-    if (r <= position.y || r >= position.y + height)
+    double roots[2] = { (-b - discriminant) / a, (-b + discriminant) / a };
+    b = roots[0]; // min root
+    a = ray.origin.y + ray.direction.y * b;
+    if (a <= position.y || a >= position.y + height || b <= t_min || b >= t_max)
         return false;
 
-    if (x <= t_min || x >= t_max) return false;
-
-    t_max = x;
+    t_max = b;
     info.point = ray.origin + ray.direction * t_max;
     compute_uv(info, this->height);
 

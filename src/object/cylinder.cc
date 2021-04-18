@@ -19,8 +19,8 @@ static void compute_uv(IntersectionInfo& info, double dist) {
 bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
     // Equation over z-axis is x^2 + y^2 - 1 = 0
 
-    Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
+    Vect axis = this->bottom - this->top;
     double dist = axis.square_length(); // distance between top and bottom
 
     // Equation of the axis of the cylinder: y = dir * x + offs
@@ -39,9 +39,9 @@ bool Cylinder::find_intersection(const Ray& ray, double& t_min, double& t_max, I
     double t = roots[0];
 
     // Tube
-    double y = dir * t + offs;
-    if (y > 0 && y < dist && t > t_min && t < t_max) {
-        info.normal = (oc + ray.direction * t - axis * y / dist) / radius;
+    c = dir * t + offs;
+    if (c > 0 && c < dist && t > t_min && t < t_max) {
+        info.normal = (oc + ray.direction * t - axis * c / dist) / radius;
         t_max = t;
         info.point = ray.origin + ray.direction * t_max;
         compute_uv(info, dist);

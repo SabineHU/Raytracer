@@ -20,9 +20,10 @@ Vect Capsule::get_normal(const Point3& point) const {
 }
 
 bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const {
-    Vect axis = this->bottom - this->top;
     Vect oc = ray.origin - this->top;
+    Vect axis = this->bottom - this->top;
     double dist = axis.square_length();
+    double radius2 = radius * radius;
 
     // Equation of the axis of the capsule: y = dir * x + offs
     double dir = vector::dot(axis,ray.direction);
@@ -30,16 +31,14 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
 
     double a = dist - dir * dir;
     double b = dist * vector::dot(oc, ray.direction) - offs * dir;
-    double c = dist * oc.square_length() - radius * radius * dist - offs * offs;
+    double c = dist * oc.square_length() - radius2 * dist - offs * offs;
 
-    double discriminant = b * b - a * c;
-    if (discriminant <= 0) return false;
-
-    double t = (-b - std::sqrt(discriminant)) / a;
+    double t = math::get_min_root_quadratic_opti(a, b, c);
+    if (t == 0) return false;
 
     // Tube
-    double y = dir * t + offs;
-    if (y > 0 && y < dist && t > t_min && t < t_max) {
+    a = dir * t + offs;
+    if (c > 0 && c < dist && t > t_min && t < t_max) {
         t_max = t;
         info.point = ray.origin + ray.direction * t_max;
         info.normal = this->get_normal(info.point);
@@ -48,23 +47,17 @@ bool Capsule::find_intersection(const Ray& ray, double& t_min, double& t_max, In
     }
 
     // Top && bottom
-    if (y > 0)
-        oc = ray.origin - this->bottom;
+    if (a > 0) oc = ray.origin - this->bottom;
 
     b = vector::dot(oc, ray.direction);
-    c = oc.square_length() - radius * radius;
+    c = oc.square_length() - radius2;
 
-    discriminant = b * b - c;
-
-    if (discriminant <= 0) return false;
-    t = -b - std::sqrt(discriminant);
-
-    if (t <= t_min || t >= t_max) return false;
+    t = math::get_min_root_quadratic_opti(1, b, c);
+    if (t == 0 || t <= t_min || t >= t_max) return false;
 
     t_max = t;
     info.point = ray.origin + ray.direction * t_max;
     info.normal = this->get_normal(info.point);
-
     this->get_properties(info);
     return true;
 }

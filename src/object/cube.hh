@@ -11,6 +11,8 @@ public:
     virtual bool find_intersection(const Ray& ray, double& t_min, double& t_max, IntersectionInfo& info) const override;
 
 private:
+    void compute_uv(IntersectionInfo& info) const;
+
     /* Attributes */
     Point3 position; // lower left front
     double side;

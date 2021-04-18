@@ -66,19 +66,23 @@ bool Cube::find_intersection(const Ray& ray, double& t_min, double& t_max, Inter
     info.point = ray.origin + ray.direction * t_max;
     info.normal = nmin;
 
+    this->compute_uv(info);
+
+    this->get_properties(info);
+    return true;
+}
+
+void Cube::compute_uv(IntersectionInfo& info) const {
     auto OP = (info.point - position) / side;
-    if (std::fabs(nmin.z) > std::fabs(nmin.x)
-            && std::fabs(nmin.z) > std::fabs(nmin.y)) {
+    if (std::fabs(info.normal.z) > std::fabs(info.normal.x)
+            && std::fabs(info.normal.z) > std::fabs(info.normal.y)) {
         info.u = OP.x;
         info.v = OP.y;
-    } else if(std::fabs(nmin.y) > std::fabs(nmin.x)) {
+    } else if(std::fabs(info.normal.y) > std::fabs(info.normal.x)) {
         info.u = OP.x;
         info.v = OP.z;
     } else {
         info.u = OP.y;
         info.v = OP.z;
     }
-
-    this->get_properties(info);
-    return true;
 }
