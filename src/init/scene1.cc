@@ -119,7 +119,7 @@ Scene init_scene1() {
 
     add_boat(scene);
     add_rotated_cube(scene);
-    add_sphere(scene); // Bottom right
+    add_sphere(scene);
     add_sphere2(scene);
     add_capsule(scene);
     add_ellipsoid(scene);

@@ -127,13 +127,5 @@ Scene init_scene4() {
     scene.add_object(green_sphere);
     scene.add_object(blue_sphere);
 
-    //Blob blob = init_blob(); // 4 spheres
-    //Blob blob = init_blob2(); // 5 sphers
-    //Blob blob = init_blob3(); // 3 spheres
-    /* Add triangles to scene */
-    //for (auto& triangle: blob.get_triangles()) {
-    //    scene.add_object(std::make_shared<SmoothTriangle>(triangle));
-    //}
-
     return scene;
 }
