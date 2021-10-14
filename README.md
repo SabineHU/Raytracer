@@ -25,3 +25,11 @@ https://github.com/nlohmann/json
 * Add fog (linear, exp, square exp)
 * Blur from camera
 * Soft shadow
+
+# Images
+
+![plot](images/scene_1.jpg)
+![plot](images/scene_2.jpg)
+![plot](images/scene_3.jpg)
+![plot](images/scene_4.jpg)
+
